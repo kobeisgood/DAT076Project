@@ -29,11 +29,32 @@ and open the template in the editor.
   <div class="container-fluid">
       <div class="d-flex " style="justify-content:center">
         <div class="col-sm">
-            <div class="card">
-                 <p class=""> <span>January</span> <span>2021</span></p>
-                 <div class="circle_diagram"></div>
+            <div class="card box-shadow-money-left">
+                 <p class="card-name"> <span>January</span> <span>2021</span></p>
+                 <div class="circle_diagram">
+                     
+                     
+                     <div class="left-to-spend"> <p>Left to spend:</p><p>5000 kr</p></div>
+                <svg viewBox="0 0 63 63" class="pie">
+                    <circle r="25%" cx="50%" cy="50%" class="color-income" style="stroke-dasharray: 50 100;  stroke-dashoffset: -0;">
+                    </circle>
+                    <circle r="25%" cx="50%" cy="50%" class="color-expense" style="stroke-dasharray: 25 100;  stroke-dashoffset: -50;">
+                    </circle>
+                    <circle r="25%" cx="50%" cy="50%" class="color-saving" style="stroke-dasharray: 25 100;  stroke-dashoffset: -75;">
+                    </circle>
+                    <circle r="20%" cx="50%" cy="50%" class="color-money-left">
+                    </circle>
+                    
+                  </svg>
+                  
+                  
+                     
+                 </div>
                  <div class="row">
+                                             
+
                      <div class="col">
+                         <span class="dot color-income"></span>
                          Income:
                      </div>
                      <div class="col">
@@ -41,7 +62,10 @@ and open the template in the editor.
                      </div>
                  </div>
                 <div class="row">
+                                           
+
                      <div class="col">
+                         <span class="dot color-expense"></span>
                          Expenses:
                      </div>
                      <div class="col">
@@ -49,10 +73,65 @@ and open the template in the editor.
                      </div>
                  </div>
                 <div class="row">
-                    <svg xmlns="http://www.w3.org/2000/svg">
-    <circle cx="5" cy="5" r="5" fill="red" />
-</svg>
+                    
                      <div class="col">
+                        <span class="dot color-saving"></span>
+                         Savings:
+                     </div>
+                     <div class="col">
+                         3000 kr
+                     </div>
+                 </div>
+                
+                
+            </div>
+                 
+        </div>
+        <div class="col-sm">
+             <div class="card box-shadow-no-money-left">
+                 <p class="card-name"> <span>December</span> <span>2020</span></p>
+                 <div class="circle_diagram">
+                                          <div class="left-to-spend"> <p>Left to spend:</p><p>0 kr</p></div>
+
+                    <svg viewBox="0 0 63 63" class="pie">
+                    <circle r="25%" cx="50%" cy="50%" class="color-income" style="stroke-dasharray: 50 100;  stroke-dashoffset: -0;">
+                    </circle>
+                    <circle r="25%" cx="50%" cy="50%" class="color-expense" style="stroke-dasharray: 25 100;  stroke-dashoffset: -50;">
+                    </circle>
+                    <circle r="25%" cx="50%" cy="50%" class="color-saving" style="stroke-dasharray: 25 100;  stroke-dashoffset: -75;">
+                    </circle>
+                    <circle r="20%" cx="50%" cy="50%" class="color-no-money-left">
+                    </circle>
+                    
+                  </svg>
+                     
+                 </div>
+                 <div class="row">
+                                             
+
+                     <div class="col">
+                         <span class="dot color-income"></span>
+                         Income:
+                     </div>
+                     <div class="col">
+                         14400 kr
+                     </div>
+                 </div>
+                <div class="row">
+                                           
+
+                     <div class="col">
+                         <span class="dot color-expense"></span>
+                         Expenses:
+                     </div>
+                     <div class="col">
+                         7400 kr
+                     </div>
+                 </div>
+                <div class="row">
+                    
+                     <div class="col">
+                        <span class="dot color-saving"></span>
                          Savings:
                      </div>
                      <div class="col">
@@ -64,14 +143,112 @@ and open the template in the editor.
             </div>
         </div>
         <div class="col-sm">
-            <div class="card">2</div>
+                     <div class="card box-shadow-no-money-left">
+                 <p class="card-name"> <span>November</span> <span>2020</span></p>
+                 <div class="circle_diagram">
+                                          <div class="left-to-spend"> <p>Left to spend:</p><p>0 kr</p></div>
+
+                    <svg viewBox="0 0 63 63" class="pie">
+                    <circle r="25%" cx="50%" cy="50%" class="color-income" style="stroke-dasharray: 50 100;  stroke-dashoffset: -0;">
+                    </circle>
+                    <circle r="25%" cx="50%" cy="50%" class="color-expense" style="stroke-dasharray: 25 100;  stroke-dashoffset: -50;">
+                    </circle>
+                    <circle r="25%" cx="50%" cy="50%" class="color-saving" style="stroke-dasharray: 25 100;  stroke-dashoffset: -75;">
+                    </circle>
+                    <circle r="20%" cx="50%" cy="50%" class="color-no-money-left">
+                    </circle>
+                    
+                  </svg>
+                     
+                 </div>
+                 <div class="row">
+                                             
+
+                     <div class="col">
+                         <span class="dot color-income"></span>
+                         Income:
+                     </div>
+                     <div class="col">
+                         14400 kr
+                     </div>
+                 </div>
+                <div class="row">
+                                           
+
+                     <div class="col">
+                         <span class="dot color-expense"></span>
+                         Expenses:
+                     </div>
+                     <div class="col">
+                         7400 kr
+                     </div>
+                 </div>
+                <div class="row">
+                    
+                     <div class="col">
+                        <span class="dot color-saving"></span>
+                         Savings:
+                     </div>
+                     <div class="col">
+                         3000 kr
+                     </div>
+                 </div>
+                
+                
+            </div>
         </div>
         <div class="col-sm">
-            <div class="card">3</div>
-        </div>
-        <div class="col-sm">
-            <div class="card">
-               
+                      <div class="card box-shadow-no-money-left">
+                 <p class="card-name"> <span>October</span> <span>2020</span></p>
+                 <div class="circle_diagram">
+                                          <div class="left-to-spend"> <p>Left to spend:</p><p>0 kr</p></div>
+
+                    <svg viewBox="0 0 63 63" class="pie">
+                    <circle r="25%" cx="50%" cy="50%" class="color-income" style="stroke-dasharray: 50 100;  stroke-dashoffset: -0;">
+                    </circle>
+                    <circle r="25%" cx="50%" cy="50%" class="color-expense" style="stroke-dasharray: 25 100;  stroke-dashoffset: -50;">
+                    </circle>
+                    <circle r="25%" cx="50%" cy="50%" class="color-saving" style="stroke-dasharray: 25 100;  stroke-dashoffset: -75;">
+                    </circle>
+                    <circle r="20%" cx="50%" cy="50%" class="color-no-money-left">
+                    </circle>
+                    
+                  </svg>
+                     
+                 </div>
+                 <div class="row">
+                                             
+
+                     <div class="col">
+                         <span class="dot color-income"></span>
+                         Income:
+                     </div>
+                     <div class="col">
+                         14400 kr
+                     </div>
+                 </div>
+                <div class="row">
+                                           
+
+                     <div class="col">
+                         <span class="dot color-expense"></span>
+                         Expenses:
+                     </div>
+                     <div class="col">
+                         7400 kr
+                     </div>
+                 </div>
+                <div class="row">
+                    
+                     <div class="col">
+                        <span class="dot color-saving"></span>
+                         Savings:
+                     </div>
+                     <div class="col">
+                         3000 kr
+                     </div>
+                 </div>
+                
                 
             </div>
         </div>
@@ -85,6 +262,5 @@ and open the template in the editor.
     
     
     
-</div>
     </body>
 </html>
