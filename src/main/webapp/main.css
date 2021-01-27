@@ -56,7 +56,7 @@ body {
 }
 
 
-.card{
+.dashboard-card{
     width:200px;
     height:300px;
     background-color: var(--color-card-bg);
@@ -161,4 +161,19 @@ body {
 .box-shadow-money-left:hover{
      box-shadow: 5px 5px 5px  var(--color-income);
      cursor:pointer;
+}
+
+
+.no-padding{
+    padding:0px;
+}
+
+
+.monthly-card{
+    margin-bottom:10vh;
+}
+
+.monthly-month{
+    margin-bottom:10vh;
+font-size:150%;    
 }
