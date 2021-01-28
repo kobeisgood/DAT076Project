@@ -28,19 +28,6 @@ and open the template in the editor.
   display: inline-block;
 }
 
-.left-to-spend{
-    width: 120px;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    margin-top:40px;
-    flex-wrap: wrap;
-}
-
-.left-to-spend>p{
-    margin:0px;
-}
-
 .dashboard-card-name{
     margin:auto;
     margin-top:10px;
