@@ -55,31 +55,9 @@ body {
   .sidenav a {font-size: 18px;}
 }
 
-
-.dashboard-card{
-    width:200px;
-    height:300px;
-    background-color: var(--color-card-bg);
-}
-
-
-.savings_circle{
-    width:100px;
-    height:100px;
-    color:purple;
-}
-
 .wh-10{
     width: 10px;
     height: 10px;
-}
-
-
-.dot {
-  height: 10px;
-  width: 10px;
-  border-radius: 50%;
-  display: inline-block;
 }
 
 .color-income{
@@ -115,20 +93,6 @@ body {
   stroke-width: 32;
 }
 
-
-.left-to-spend{
-    width: 120px;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    margin-top:40px;
-    flex-wrap: wrap;
-}
-
-.left-to-spend>p{
-    margin:0px;
-}
-
 .color-money-left{
     fill:var(--color-income-light);
     stroke:var(--color-income-light);
@@ -139,41 +103,6 @@ body {
     stroke:var(--color-expense-light);
 }
 
-.card-name{
-    margin:auto;
-    margin-top:10px;
-    margin-bottom:30px;
-}
-
-.box-shadow-no-money-left{
-    box-shadow: 5px 5px 5px var(--color-expense-light);
-}
-
-.box-shadow-money-left{
-     box-shadow: 5px 5px 5px  var(--color-income-light);
-}
-
-.box-shadow-no-money-left:hover{
-    box-shadow: 5px 5px 5px var(--color-expense);
-     cursor:pointer;
-}
-
-.box-shadow-money-left:hover{
-     box-shadow: 5px 5px 5px  var(--color-income);
-     cursor:pointer;
-}
-
-
 .no-padding{
     padding:0px;
-}
-
-
-.monthly-card{
-    margin-bottom:10vh;
-}
-
-.monthly-month{
-    margin-bottom:10vh;
-font-size:150%;    
 }
