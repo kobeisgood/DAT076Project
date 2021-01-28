@@ -106,3 +106,16 @@ body {
 .no-padding{
     padding:0px;
 }
+
+.left-to-spend{
+    width: 120px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    margin-top:40px;
+    flex-wrap: wrap;
+}
+
+.left-to-spend>p{
+    margin:0px;
+}
