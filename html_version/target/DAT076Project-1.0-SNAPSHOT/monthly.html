@@ -10,6 +10,7 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+        <script src="script.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         
         
@@ -17,13 +18,14 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="main.css">
+        <link rel="stylesheet" type="text/css" href="monthly.css">
     </head>
     <body>
         
         
         <div class="sidenav">
-            <a href="#"> <img src="icons/icon.svg"/>Dashboard</a>
-            <a href="#">Montly</a>
+            <a href="/html_version/dashboard.html"> <img src="icons/icon.svg"/>Dashboard</a>
+            <a href="/html_version/monthly.html">Monthly</a>
             <a href="#">Graphs</a>
             <a href="#">Settings</a>
         </div>
@@ -50,7 +52,7 @@ and open the template in the editor.
                                             <div class="row">
                                                 <div class="col-6">Income <i class="fa fa-chevron-down"></i> </div>
                                                 <div class="col-3"> Planned</div>
-                                                <div class="col-3"> Recieved</div>
+                                                <div class="col-3"> Received</div>
                                                 
                                             </div>
                                         </div>
@@ -104,7 +106,7 @@ and open the template in the editor.
                                     </div>  
                                     <hr>
                                     <div class="row">
-                                        <div class="col"><button type="button" class="btn btn-success">Add income</button></div>
+                                        <div class="col"><button type="button" class="btn btn-success" onclick="addIncome()">Add income</button></div>
                                         
                                     </div>
                                 </div>
@@ -122,7 +124,7 @@ and open the template in the editor.
                                             <div class="row">
                                                 <div class="col-6">Housing <i class="fa fa-chevron-down"></i> </div>
                                                 <div class="col-3"> Planned</div>
-                                                <div class="col-3"> Recieved</div>
+                                                <div class="col-3"> Received</div>
                                                 
                                             </div>
                                         </div>
@@ -178,7 +180,7 @@ and open the template in the editor.
                                     <hr>
                                     
                                     <div class="row">
-                                        <div class="col"><button type="button" class="btn btn-success">Add expense</button></div>
+                                        <div class="col"><button type="button" class="btn btn-success" onclick="addExpense()">Add expense</button></div>
                                         
                                     </div>
                                 </div>
@@ -196,7 +198,7 @@ and open the template in the editor.
                                             <div class="row">
                                                 <div class="col-6">Food <i class="fa fa-chevron-down"></i> </div>
                                                 <div class="col-3"> Planned</div>
-                                                <div class="col-3"> Recieved</div>
+                                                <div class="col-3"> Received</div>
                                                 
                                             </div>
                                         </div>
@@ -251,7 +253,7 @@ and open the template in the editor.
                                     <hr>
                                     
                                     <div class="row">
-                                        <div class="col"><button type="button" class="btn btn-success">Add expense</button></div>
+                                        <div class="col"><button type="button" class="btn btn-success" onclick="addExpense()">Add expense</button></div>
                                         
                                     </div>
                                 </div>
@@ -266,15 +268,61 @@ and open the template in the editor.
                     
                 </div>
                 <div class="col-4">
-                    hej
+                    <div class="row">
+                        <div class="col"><button type="button" class="btn btn-success mt-50">Add category</button></div> 
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="circle_diagram mt-50">
+                                
+                                
+                                <div class="left-to-spend"> <p>Income:</p><p>5000 kr</p></div>
+                                <svg viewBox="0 0 63 63" class="pie">
+                                <circle r="25%" cx="50%" cy="50%" class="color-income" style="stroke-dasharray: 50 100;  stroke-dashoffset: -0;">
+                                </circle>
+                                <circle r="25%" cx="50%" cy="50%" class="color-expense" style="stroke-dasharray: 25 100;  stroke-dashoffset: -50;">
+                                </circle>
+                                <circle r="25%" cx="50%" cy="50%" class="color-saving" style="stroke-dasharray: 25 100;  stroke-dashoffset: -75;">
+                                </circle>
+                                <circle r="20%" cx="50%" cy="50%" class="color-money-left">
+                                </circle>
+                                
+                                </svg>
+                                
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <ul class="list-group mt-50">
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Housing
+    <span class="badge badge-primary badge-pill color-income">0</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Food
+    <span class="badge badge-primary badge-pill color-expense">0</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Clothes
+    <span class="badge badge-primary badge-pill color-saving">0</span>
+  </li>
+</ul>
+                        </div>
+                    </div>
+                   
+                </div>
+                                <div class="col-1">
+                    
                     
                 </div>
-                <div class="col-1">
-                    
+                      
+                    </div>
                     
                 </div>
-            </div>
-        </div>
+
         
     </body>
 </html>
