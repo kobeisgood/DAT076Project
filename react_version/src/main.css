@@ -1,0 +1,126 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 26, 2021, 1:40:32 PM
+    Author     : theok
+*/
+
+:root {
+  --color-savings: #8F85FF;
+  --color-expense: #FF7777;
+  --color-income: #5CFF80;
+  --color-card-bg: #C4C4C4;
+  --color-expense-light:#FFA5A5;
+  --color-income-light:#C1FFCF;
+}
+
+
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.wh-10{
+    width: 10px;
+    height: 10px;
+}
+
+.color-income{
+    background-color: var(--color-income);
+    stroke:var(--color-income);
+}
+
+.color-saving{
+    background-color: var(--color-savings);
+    stroke:var(--color-savings);
+}
+
+.color-expense{
+    background-color: var(--color-expense);
+    stroke:var(--color-expense);
+}
+
+
+.circle_diagram{
+      padding:0px 30px;
+}
+
+.pie {
+  width: 120px;
+  height: 120px;
+  background: white;
+  border-radius: 50%;
+
+}
+
+.pie circle {
+  stroke-width: 32;
+}
+
+.color-money-left{
+    fill:var(--color-income-light);
+    stroke:var(--color-income-light);
+}
+
+.color-no-money-left{
+    fill:var(--color-expense-light);
+    stroke:var(--color-expense-light);
+}
+
+.no-padding{
+    padding:0px;
+}
+
+.left-to-spend{
+    width: 120px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    margin-top:40px;
+    flex-wrap: wrap;
+    z-index:100;
+}
+
+.left-to-spend>p{
+    margin:0px;
+}
+
+.pie {
+    transform: rotateZ(-90deg);
+    opacity: 1;
+}

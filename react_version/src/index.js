@@ -4,10 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import CircleDiagram from "./components/CircleDiagram";
+
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <div>
+  <CircleDiagram money="500" income="10" expense="85" savings="5" /> 
+  <CircleDiagram money="0" income="0" expense="95" savings="5" /> 
+  <CircleDiagram money="5000" income="50" expense="25" savings="25" /> 
+  <CircleDiagram money="10000" income="75" expense="15" savings="15" /> 
+  </div>,
   document.getElementById('root')
 );
 
