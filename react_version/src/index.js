@@ -6,15 +6,36 @@ import reportWebVitals from './reportWebVitals';
 
 import CircleDiagram from "./components/CircleDiagram";
 import DashboardCard from "./components/DashboardCard";
+import NavigationBar from "./components/NavigationBar";
 
 
 ReactDOM.render(
-  <div>
-  <CircleDiagram money="500" income="10" expense="85" savings="5" />
-  <CircleDiagram money="0" income="0" expense="95" savings="5" />
-  <CircleDiagram money="5000" income="50" expense="25" savings="25" />
-  <CircleDiagram money="10000" income="75" expense="15" savings="15" />
-  <DashboardCard/>
+  <div class="row">
+    <div class="col-2">
+      <NavigationBar/>
+    </div>
+
+      <div class="container-fluid col-10">
+          <div class="d-flex " /*style="justify-content:center"*/>
+          <div class="col-sm">
+            <DashboardCard/>
+          </div>
+          <div class="col-sm">
+            <DashboardCard/>
+          </div>
+          <div class="col-sm">
+            <DashboardCard/>
+          </div>
+          <div class="col-sm">
+            <DashboardCard/>
+          </div>
+          </div>
+      </div>
+
+
+
+
+
   </div>,
   document.getElementById('root')
 );

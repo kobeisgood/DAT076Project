@@ -1,15 +1,29 @@
-.navigationBar {
-  height: 100vh;
-  width: 200px;
+.navigationBar  {
+  /*height: 100vh;
   background-color: #282828;
+  padding-top: 20px;
+  */
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
   padding-top: 20px;
 }
 
 .navigationBar a {
+  /*padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 2vw;
+  color: white;
+  display: block;
+  */
   padding: 6px 6px 6px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: white;
+  color: #818181;
   display: block;
 }
 
