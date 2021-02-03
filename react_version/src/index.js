@@ -5,14 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import CircleDiagram from "./components/CircleDiagram";
+import DashboardCard from "./components/DashboardCard";
 
 
 ReactDOM.render(
   <div>
-  <CircleDiagram money="500" income="10" expense="85" savings="5" /> 
-  <CircleDiagram money="0" income="0" expense="95" savings="5" /> 
-  <CircleDiagram money="5000" income="50" expense="25" savings="25" /> 
-  <CircleDiagram money="10000" income="75" expense="15" savings="15" /> 
+  <CircleDiagram money="500" income="10" expense="85" savings="5" />
+  <CircleDiagram money="0" income="0" expense="95" savings="5" />
+  <CircleDiagram money="5000" income="50" expense="25" savings="25" />
+  <CircleDiagram money="10000" income="75" expense="15" savings="15" />
+  <DashboardCard/>
   </div>,
   document.getElementById('root')
 );
