@@ -1,23 +1,23 @@
 import React from 'react';
 import "../css/NavigationBar.css";
-
+import {Link} from "react-router-dom";
 
 export default class NavigationBar extends React.Component {
     render() {
         return (
             <div className="navigationBar textStyling">
-                <a>
+                <Link to="/dashboard">
                     Dashboard
-                </a>
-                <a>
+                </Link>
+                <Link to="/monthly">
                     Monthly
-                </a>
-                <a>
+                </Link>
+                <Link to="">
                     Graph
-                </a>
-                <a>
+                </Link>
+                <Link to="">
                     Settings
-                </a>
+                </Link>
             </div>
             
 
