@@ -3,40 +3,27 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter , Route, IndexRoute } from "react-router-dom";
 
 import CircleDiagram from "./components/CircleDiagram";
 import DashboardCard from "./components/DashboardCard";
 import NavigationBar from "./components/NavigationBar";
-
+import Dashboard from "./pages/Dashboard";
+import Monthly from "./pages/Monthly";
 
 ReactDOM.render(
+
+<BrowserRouter>
   <div class="row">
     <div class="col-2">
       <NavigationBar/>
     </div>
-
-      <div class="container-fluid col-10">
-          <div class="d-flex " /*style="justify-content:center"*/>
-          <div class="col-sm">
-            <DashboardCard/>
-          </div>
-          <div class="col-sm">
-            <DashboardCard/>
-          </div>
-          <div class="col-sm">
-            <DashboardCard/>
-          </div>
-          <div class="col-sm">
-            <DashboardCard/>
-          </div>
-          </div>
-      </div>
-
-
-
-
-
-  </div>,
+    <div class="col-10">
+      <Route path="/dashboard" component={Dashboard}></Route>
+      <Route path="/monthly" component={Monthly}></Route>
+    </div>
+  </div>
+</BrowserRouter>,
   document.getElementById('root')
 );
 
