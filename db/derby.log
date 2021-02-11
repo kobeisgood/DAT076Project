@@ -1,0 +1,14 @@
+Thu Feb 11 16:43:05 CET 2021 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Thu Feb 11 16:43:06 CET 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0177-91c1-e8ed-ffffa4d28e9f 
+on database directory /Users/marcus/git/DAT076Project/db/Lab3database with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@799f7e29 
+Loaded from file:/Users/marcus/git/DAT076Project/db-derby-10.14.2.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=11.0.3+12-LTS
+user.dir=/Users/marcus/git/DAT076Project/db-derby-10.14.2.0-bin
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.16
+derby.system.home=/Users/marcus/git/DAT076Project/db
+Database Class Loader started - derby.database.classpath=''
