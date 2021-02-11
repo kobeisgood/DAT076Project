@@ -8,7 +8,7 @@ export default class DashBoardCard extends React.Component {
 
     return(
       <div class="dashboard-card box-shadow-no-money-left">
-      <p class="dashboard-card-name"> <span>January</span> <span>2021</span> </p>
+      <p class="dashboard-card-name"> <span>{this.props.month}</span> <span>{this.props.year}</span> </p>
       <CircleDiagram money="500" income="20" expense="75" savings="5" />
       <div class="row">
 
@@ -18,7 +18,7 @@ export default class DashBoardCard extends React.Component {
               Income:
           </div>
           <div class="col">
-              14400 kr
+          {this.props.income} kr
           </div>
       </div>
       <div class="row">
@@ -29,7 +29,7 @@ export default class DashBoardCard extends React.Component {
               Expenses:
           </div>
           <div class="col">
-              7400 kr
+          {this.props.expense} kr
           </div>
       </div>
       <div class="row">
@@ -39,7 +39,7 @@ export default class DashBoardCard extends React.Component {
               Savings:
           </div>
           <div class="col">
-              3000 kr
+          {this.props.savings} kr
           </div>
       </div>
       </div>
