@@ -1,3 +1,11 @@
-com/marcusaxelsson/lab3/model/dao/CarDAO.class
-com/marcusaxelsson/lab3/model/entity/Car.class
-com/marcusaxelsson/lab3/model/dao/AbstractDAO.class
+com\marcusaxelsson\lab3\model\dao\AbstractDAO.class
+com\marcusaxelsson\lab3\model\entity\Budget.class
+com\marcusaxelsson\lab3\model\entity\Transactions.class
+com\marcusaxelsson\lab3\model\entity\Account.class
+com\marcusaxelsson\lab3\model\dao\CarDAO.class
+com\marcusaxelsson\lab3\model\dao\TransactionDAO.class
+com\marcusaxelsson\lab3\model\dao\BudgetDAO.class
+com\marcusaxelsson\lab3\model\dao\AccountDAO.class
+com\marcusaxelsson\lab3\model\dao\CategoryDAO.class
+com\marcusaxelsson\lab3\model\entity\Car.class
+com\marcusaxelsson\lab3\model\entity\Category.class

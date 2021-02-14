@@ -7,13 +7,9 @@ package com.marcusaxelsson.lab3.model.entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,22 +22,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transaction implements Serializable {
-
-   
+public class Account implements Serializable {
 
     @Id
-    private String transactionId;
+    private String id;
+    private String mail;
+    private String password;
 
-    private String description;
-    private String date;    
-    private String amount;
     
-    private String type;
-    
-    
-    @ManyToMany
-    private Category category;
-   
     
 }
