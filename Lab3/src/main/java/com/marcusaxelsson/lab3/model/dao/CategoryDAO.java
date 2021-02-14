@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import lombok.Getter;
 
 @Stateless
@@ -18,4 +19,12 @@ public class CategoryDAO extends AbstractDAO<Category> {
 }
        public List<Category> findCarsMatchingName() {
                     throw new UnsupportedOperationException("Not yet implemented");
-} }
+} 
+
+ public int sumCategory(String catName, Account user) {
+        Query query = entityManager.createQuery("SELECT a FROM Account a");
+        query.setParameter("mail", mail);
+        return query.getResultList();
+    }
+
+}

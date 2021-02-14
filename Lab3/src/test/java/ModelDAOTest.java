@@ -13,6 +13,7 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -87,7 +88,11 @@ public class ModelDAOTest {
 }
     @Test
     public void test() {
-        assertTrue(true);
+        assertEquals(categoryDAO.count(),4);
+        assertEquals(accountDAO.count(),1);
+        assertEquals(transactionDAO.count(),5);
+        assertEquals(budgetDAO.count(),2);
+        assertEquals(accountDAO.findAccountByMail("jjaokk@gmail.com").size(),1);
     } 
     
     @After
@@ -98,7 +103,6 @@ public class ModelDAOTest {
         for (Budget b : budgets) {
             budgetDAO.remove(b);
         }
-           
         for (Category c : categories) {
             categoryDAO.remove(c);
         }
