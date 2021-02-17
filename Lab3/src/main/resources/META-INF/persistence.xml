@@ -5,11 +5,11 @@
     <jta-data-source>jdbc/Lab3database</jta-data-source>
     <class>com.marcusaxelsson.lab3.model.entity.Category</class>
     <class>com.marcusaxelsson.lab3.model.entity.Budget</class>
-    <class>com.marcusaxelsson.lab3.model.entity.Account</class>
     <class>com.marcusaxelsson.lab3.model.entity.Car</class>
     <class>com.marcusaxelsson.lab3.model.entity.Transactions</class>
+    <class>com.marcusaxelsson.lab3.model.entity.Users</class>
     <properties>
-      <property name="eclipselink.ddl-generation" value="create-tables"/>
+
     </properties>
   </persistence-unit>
 </persistence>

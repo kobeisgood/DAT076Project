@@ -7,7 +7,7 @@ import java.util.*;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public abstract class AbstractDAO<T> {
+public abstract class AbstractDAO<T,K> {
     
        private final Class<T> entityType;
        protected abstract EntityManager getEntityManager();
@@ -26,6 +26,22 @@ public abstract class AbstractDAO<T> {
         
         }
         
+        public boolean contains(T entity){
+            return getEntityManager().contains(entity);
+        }
+        
+         public void refresh(T entity){
+           getEntityManager().refresh(entity);
+        }
+         
+          public void flush(){
+           getEntityManager().flush();
+       }
+         
+         public T find(K key){
+           return getEntityManager().find(entityType, key);
+        }
+        
         public List<T> findAll() {
                 final CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
                 cq.select(cq.from(entityType));
@@ -33,6 +49,6 @@ public abstract class AbstractDAO<T> {
         }
         
         public void remove(T entity) {
-                getEntityManager().remove(getEntityManager().merge(entity));        
+                getEntityManager().remove(entity);        
         } 
     }
