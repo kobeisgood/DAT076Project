@@ -8,6 +8,7 @@ package com.marcusaxelsson.lab3.model.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,8 +33,11 @@ public class Users implements Serializable {
 
     @Id @GeneratedValue
     private int id;
+    
+    @Column(unique=true)
     @NonNull 
     private String mail;
+    
     @NonNull
     private String password;
 

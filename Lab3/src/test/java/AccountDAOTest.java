@@ -47,92 +47,101 @@ public class AccountDAOTest {
     @Inject
     private UserTransaction databaseTX;
     
-        
-    @Test
-    @InSequence(1)
-    public void savingsTest() throws Exception{
-        databaseTX.begin();
-        
-        
-        Transactions t1 = new Transactions("Sparande",1000,"SAVINGS",false,categoryDAO.findAll().get(0));
-        transactionDAO.create(t1);
-        transactionDAO.flush();
-        assertEquals(true,transactionDAO.contains(t1));
-        usersDAO.refresh(usersDAO.find(1));
-        int sum = 0;
-        for( Transactions t : categoryDAO.findAll().get(0).getTransactions()){
-            if(t.getType().equals("SAVINGS"))
-                sum += t.getAmount();
-        }
-        assertEquals(1000,sum);
-        
-        
-        databaseTX.commit();
-    }
-    
-            
 
     @Test
     @InSequence(0)
-    public void accountTest() throws Exception{
+    public void createAccountTest() throws Exception{
+        databaseTX.begin(); // begin Transaction
         
-        databaseTX.begin();
-        Users u1 = new Users("jjaokk@gmail.com","qwe123");
-        usersDAO.create(u1); // Skapa i databasen
-        usersDAO.flush(); // uppdatera databasen?
-        assertEquals(true,usersDAO.contains(u1)); // Finns u1 i databasen?
+        // Create 1 Users
+        Users u1 = new Users("jjaokk@gmail.com","qwe123"); 
+        usersDAO.create(u1); // add to database
+        usersDAO.flush(); // force the commit inside the Transacion
         
-            
-       
+        // Entity exists in DAO
+        assertEquals(true,usersDAO.contains(usersDAO.findAccountByMail("jjaokk@gmail.com")));
         
-        Category c1 = new Category("Mat",u1);
-        Category c2 = new Category("Nöje",u1);
-        Category c3 = new Category("Savings",u1);
+        // Equal entity in databse 
+        assertEquals(true,u1.equals(usersDAO.findAccountByMail("jjaokk@gmail.com"))); 
+        
+        databaseTX.commit();// end Transaction
+    }
+    
+    @Test
+    @InSequence(1)
+    public void createCategoriesTest() throws Exception{
+        databaseTX.begin(); // begin Transaction
+        
+        // Create 2 Categories
+        Category c1 = new Category("Mat",usersDAO.findAccountByMail("jjaokk@gmail.com"));
+        Category c2 = new Category("Nöje",usersDAO.findAccountByMail("jjaokk@gmail.com"));
         categoryDAO.create(c1);
         categoryDAO.create(c2); 
-        categoryDAO.create(c3); 
         categoryDAO.flush();
-        assertEquals(true,categoryDAO.contains(c1));
-        assertEquals(true,categoryDAO.contains(c2));
-       // u1 = usersDAO.find(u1.getId());
-        usersDAO.refresh(u1);
-        assertEquals(3,u1.getCategories().size());
-        
-                         
-        Budget b1 = new Budget("Resa",u1);
-        Budget b2 = new Budget("Husbygge",u1);
-        budgetDAO.create(b1);
-        budgetDAO.create(b2); 
-        budgetDAO.flush();
-        assertEquals(true,budgetDAO.contains(b1));
-        assertEquals(true,budgetDAO.contains(b2));
-        //u1 = usersDAO.find(u1.getId());
-        usersDAO.refresh(u1);
-        assertEquals(2,u1.getBudgets().size());
-        
-        
-        Transactions t1 = new Transactions("Hemköp",100,"EXPENSE",false,c1);
-        Transactions t2 = new Transactions("Hemköp",100,"EXPENSE",false,c2);
-        transactionDAO.create(t1);
-        transactionDAO.create(t2);
-        transactionDAO.flush();
-        assertEquals(true,transactionDAO.contains(t1));
-        assertEquals(true,transactionDAO.contains(t2));
-        usersDAO.refresh(u1);
-        categoryDAO.refresh(c1);
-        int sum = 0;
-        for( Transactions t : u1.getCategories().get(0).getTransactions()){
-            sum += t.getAmount();
-        }
-        assertEquals(-100,sum);
-        
-        databaseTX.commit();
 
+        // Does entitys exists in DAO
+        assertEquals(true,categoryDAO.contains(categoryDAO.find(new CategoryPK("Mat",usersDAO.findAccountByMail("jjaokk@gmail.com").getId()))));
+        assertEquals(true,categoryDAO.contains(categoryDAO.find(new CategoryPK("Nöje",usersDAO.findAccountByMail("jjaokk@gmail.com").getId()))));
         
-        
-        
+        // Does user has 2 categories
+        usersDAO.refresh(usersDAO.findAccountByMail("jjaokk@gmail.com"));
+        assertEquals(2,usersDAO.findAccountByMail("jjaokk@gmail.com").getCategories().size());
+                
+        databaseTX.commit();// end Transaction
 
     } 
     
+    @Test
+    @InSequence(2)
+    public void createBudgetsTest() throws Exception{
+        databaseTX.begin(); // begin Transaction
+
+        // Create 2 Budgets
+        Budget b1 = new Budget("Resa",usersDAO.findAccountByMail("jjaokk@gmail.com"));
+        Budget b2 = new Budget("Husbygge",usersDAO.findAccountByMail("jjaokk@gmail.com"));
+        budgetDAO.create(b1);
+        budgetDAO.create(b2); 
+        budgetDAO.flush();
+        
+        assertEquals(true,budgetDAO.contains(budgetDAO.find(new BudgetPK("Resa",usersDAO.findAccountByMail("jjaokk@gmail.com").getId()))));
+        assertEquals(true,budgetDAO.contains(budgetDAO.find(new BudgetPK("Husbygge",usersDAO.findAccountByMail("jjaokk@gmail.com").getId()))));
+        
+        // Does user has 2 budgets
+        usersDAO.refresh(usersDAO.findAccountByMail("jjaokk@gmail.com"));
+        assertEquals(2,usersDAO.findAccountByMail("jjaokk@gmail.com").getBudgets().size());
+        
+        databaseTX.commit();// end Transaction
+    }
     
+    
+    @Test
+    @InSequence(3)
+    public void createTransactionsTest() throws Exception{
+        databaseTX.begin(); // begin Transaction
+
+        Transactions t1 = new Transactions("Hemköp",100,"EXPENSE",categoryDAO.find(new CategoryPK("Mat",usersDAO.findAccountByMail("jjaokk@gmail.com").getId())));
+        Transactions t2 = new Transactions("Bio",200,"EXPENSE",categoryDAO.find(new CategoryPK("Nöje",usersDAO.findAccountByMail("jjaokk@gmail.com").getId())));
+        Transactions t3 = new Transactions("Sparande",5000,"SAVINGS",categoryDAO.find(new CategoryPK("Mat",usersDAO.findAccountByMail("jjaokk@gmail.com").getId())));
+        t3.setIgnore_monthly(true);
+        Transactions t4 = new Transactions("Borrmaskin",1599,"EXPENSE",categoryDAO.find(new CategoryPK("Mat",usersDAO.findAccountByMail("jjaokk@gmail.com").getId())));
+        t4.setBudget(budgetDAO.find(new BudgetPK("Husbygge",usersDAO.findAccountByMail("jjaokk@gmail.com").getId())));
+        t4.setIgnore_monthly(true);
+        transactionDAO.create(t1);
+        transactionDAO.create(t2);
+        transactionDAO.create(t3);
+        transactionDAO.create(t4);
+        transactionDAO.flush();
+        
+        // Should be 4 Transactions in DAO
+        assertEquals(4,transactionDAO.findAll().size());
+        
+        usersDAO.refresh(usersDAO.findAccountByMail("jjaokk@gmail.com"));
+        int sum = 0;
+        for(Transactions t : usersDAO.findAllTransactions(usersDAO.findAccountByMail("jjaokk@gmail.com").getId())){
+            sum += t.getAmount();
+        }
+        assertEquals(-1899+5000,sum);
+        
+        databaseTX.commit();// end Transaction
+    }
 }

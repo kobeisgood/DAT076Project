@@ -30,13 +30,13 @@ public abstract class AbstractDAO<T,K> {
             return getEntityManager().contains(entity);
         }
         
-         public void refresh(T entity){
+        public void refresh(T entity){
            getEntityManager().refresh(entity);
         }
          
-          public void flush(){
+        public void flush(){
            getEntityManager().flush();
-       }
+        }
          
          public T find(K key){
            return getEntityManager().find(entityType, key);

@@ -40,6 +40,7 @@ public class Transactions implements Serializable {
     @PrePersist
     private void prePersist(){
         date = new Date(System.currentTimeMillis());
+        ignore_monthly = false;
     }
 
     @Id @GeneratedValue
@@ -56,7 +57,7 @@ public class Transactions implements Serializable {
     
     @NonNull
     private String type; // INCOME, SAVINGS, EXPENSE
-    @NonNull
+    
     private boolean ignore_monthly;
     
     @NonNull @ManyToOne 
