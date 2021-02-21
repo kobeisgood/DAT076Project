@@ -12,14 +12,14 @@ export default class NavigationBar extends React.Component {
                 <Link to="/monthly">
                     Monthly
                 </Link>
-                <Link to="">
+                <Link to="/graph">
                     Graph
                 </Link>
                 <Link to="">
                     Settings
                 </Link>
             </div>
-            
+
 
         );
     }

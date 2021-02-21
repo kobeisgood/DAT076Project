@@ -10,6 +10,7 @@ import DashboardCard from "./components/DashboardCard";
 import NavigationBar from "./components/NavigationBar";
 import Dashboard from "./pages/Dashboard";
 import Monthly from "./pages/Monthly";
+import Graph from "./pages/Graph";
 
 ReactDOM.render(
 
@@ -21,6 +22,7 @@ ReactDOM.render(
     <div class="col-10">
       <Route path="/dashboard" component={Dashboard}></Route>
       <Route path="/monthly" component={Monthly}></Route>
+      <Route path="/graph" component={Graph}></Route>
     </div>
   </div>
 </BrowserRouter>,
