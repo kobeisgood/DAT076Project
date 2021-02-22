@@ -12,7 +12,7 @@ chartRef2 = React.createRef();
         const barChartRef = this.chartRef1.current.getContext("2d");
         const doughnutChartRef = this.chartRef2.current.getContext("2d");
 
-
+        // Horizontal bar code
         new Chart(barChartRef, {
             type: "horizontalBar",
             data: {
@@ -21,7 +21,7 @@ chartRef2 = React.createRef();
                 datasets: [
                     {
 
-                        label: ["Utgifter <månad, år>"],
+                        label: " Kronor",
                         backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
                         data: [5000, 3000, 3000],
                     }
@@ -39,11 +39,12 @@ chartRef2 = React.createRef();
                },
               title: {
                 display: true,
-                text: 'Utgifter <månad, år>'
+                text: 'Distribution av utgifter <månad, år>'
               }
             }
         });
 
+        // Doughnut chart code
         new Chart(doughnutChartRef, {
           type:"doughnut",
           data: {
@@ -57,6 +58,13 @@ chartRef2 = React.createRef();
                     data: [5000, 3000, 3000],
                 }
             ]
+          },
+
+          options: {
+            title: {
+              display: true,
+              text: 'Utgifter <månad, år> procentuellt'
+            }
           },
 
         });
@@ -112,11 +120,11 @@ chartRef2 = React.createRef();
           </div>
         </div>
 
-        <div class='row top-buffer'>
-          <div class='col-6' style={{position: 'relative'}}>
+        <div class='row'>
+          <div class='col-6 bar-top-buffer' style={{position: 'relative'}}>
             <canvas id="barChart" ref={this.chartRef1}></canvas>
          </div>
-         <div class='col-6' style={{position: 'relative'}}>
+         <div class='col-6 donut-top-buffer' style={{position: 'relative'}}>
            <canvas id="doughnutChart" ref={this.chartRef2}></canvas>
         </div>
        </div>

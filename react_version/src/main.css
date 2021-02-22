@@ -125,6 +125,10 @@ body {
     opacity: 1;
 }
 
-.top-buffer{
-  margin-top:5em
+.bar-top-buffer{
+  margin-top:3em
+}
+
+.donut-top-buffer{
+  margin-top:6em
 }

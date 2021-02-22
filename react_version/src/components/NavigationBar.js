@@ -1,22 +1,31 @@
 import React from 'react';
 import "../css/NavigationBar.css";
 import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faHome} from '@fortawesome/free-solid-svg-icons';
+import {faCalendarAlt} from '@fortawesome/free-solid-svg-icons';
+import {faChartBar} from '@fortawesome/free-solid-svg-icons';
+import {faCog} from '@fortawesome/free-solid-svg-icons';
+
+
+
 
 export default class NavigationBar extends React.Component {
     render() {
         return (
-            <div className="navigationBar textStyling">
+            <div class="navigationBar">
+            <h1 class='logo'> CashIt </h1>
                 <Link to="/dashboard">
-                    Dashboard
+                  <FontAwesomeIcon icon={faHome} color='white' size='lg'/>  Dashboard
                 </Link>
                 <Link to="/monthly">
-                    Monthly
+                  <FontAwesomeIcon icon={faCalendarAlt} color='white' size='lg'/>  Monthly
                 </Link>
                 <Link to="/graph">
-                    Graph
+                  <FontAwesomeIcon icon={faChartBar} color='white' size='lg'/>  Graph
                 </Link>
                 <Link to="">
-                    Settings
+                  <FontAwesomeIcon icon={faCog} color='white' size='lg'/>  Settings
                 </Link>
             </div>
 
