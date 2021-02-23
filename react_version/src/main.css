@@ -17,6 +17,9 @@ and open the template in the editor.
   --color-income-light:#C1FFCF;
 }
 
+html{
+  background-color: #F5F5F5;
+}
 
 body {
   font-family: "Lato", sans-serif;
@@ -126,9 +129,9 @@ body {
 }
 
 .bar-top-buffer{
-  margin-top:3em
+  padding-top:70px
 }
 
 .donut-top-buffer{
-  margin-top:6em
+  padding-top:140px
 }
