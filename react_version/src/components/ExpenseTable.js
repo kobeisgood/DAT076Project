@@ -18,7 +18,7 @@ export default class ExpenseTable extends React.Component{
    
 
       return (
-        <div class="row monthly-card no-margin">
+        <div class="row monthly-card no-margin box-shadow">
         <div class="card w-100">
             <div class="card-body no-padding">
                 <div class="accordion" id={this.state.accordion}>
