@@ -15,14 +15,16 @@ import Graph from "./pages/Graph";
 ReactDOM.render(
 
 <BrowserRouter>
-  <div class="row">
-    <div class="col-2">
-      <NavigationBar/>
-    </div>
-    <div class="col-10">
-      <Route path="/dashboard" component={Dashboard}></Route>
-      <Route path="/monthly" component={Monthly}></Route>
-      <Route path="/graph" component={Graph}></Route>
+  <div class="general-styling">
+    <div class="row">
+      <div class="col-2">
+        <NavigationBar/>
+      </div>
+      <div class="col-10">
+        <Route path="/dashboard" component={Dashboard}></Route>
+        <Route path="/monthly" component={Monthly}></Route>
+        <Route path="/graph" component={Graph}></Route>
+      </div>
     </div>
   </div>
 </BrowserRouter>,

@@ -11,14 +11,17 @@ and open the template in the editor.
 
 .monthly-card{
     margin-bottom:10vh;
-    
 }
 
 .monthly-month{
     margin-bottom:10vh;
-font-size:150%;    
+    font-size:150%;    
 }
 
 .mt-50{
     margin-top: 50px;
+}
+
+.box-shadow {
+    box-shadow: 5px 5px 5px #D3D3D3;
 }

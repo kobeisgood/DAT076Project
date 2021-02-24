@@ -1,8 +1,4 @@
 .navigationBar  {
-  /*height: 100vh;
-  background-color: #282828;
-  padding-top: 20px;
-  */
   height: 100%;
   position: fixed;
   z-index: 1;
@@ -14,16 +10,10 @@
 }
 
 .navigationBar a {
-  /*padding: 6px 6px 6px 32px;
+  padding: 6px 32px 6px 32px;
   text-decoration: none;
-  font-size: 2vw;
+  font-size: 20px;
   color: white;
-  display: block;
-  */
-  padding: 6px 6px 6px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
   display: block;
 }
 
@@ -32,7 +22,7 @@
 }
 
 .logo{
-  font-size: 50px;
+  font-size: 40px;
   color: white;
   text-align: center;
 

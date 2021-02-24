@@ -43,42 +43,41 @@ componentDidMount() {
   render() {
 
     return(
-      <div class="dashboard-card box-shadow-no-money-left">
-      <p class="dashboard-card-name"> <span>{this.props.month}</span> <span>{this.props.year}</span> </p>
-       <canvas id="doughnutChart" ref={this.chartRef2}></canvas>
+      <div class="dashboard-card box-shadow">
 
-      <div class="row">
+        <p class="dashboard-card-name"> <span>{this.props.month}</span> <span>{this.props.year}</span> </p>
 
+        <canvas id="doughnutChart" ref={this.chartRef2}></canvas>
 
-          <div class="col">
-              <span class="dot color-income"></span>
-              Income:
-          </div>
-          <div class="col">
-            {this.props.income} kr
-          </div>
-      </div>
-      <div class="row">
+        <div class="row">
+            <div class="col">
+                <span class="dot color-income"></span>
+                Income:
+            </div>
+            <div class="col">
+              {this.props.income} kr
+            </div>
+        </div>
 
-
-          <div class="col">
-              <span class="dot color-expense"></span>
-              Expenses:
-          </div>
-          <div class="col">
-          {this.props.expense} kr
-          </div>
-      </div>
-      <div class="row">
-
-          <div class="col">
-              <span class="dot color-saving"></span>
-              Savings:
-          </div>
-          <div class="col">
-          {this.props.savings} kr
-          </div>
-      </div>
+        <div class="row">
+            <div class="col">
+                <span class="dot color-expense"></span>
+                Expenses:
+            </div>
+            <div class="col">
+            {this.props.expense} kr
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <span class="dot color-saving"></span>
+                Savings:
+            </div>
+            <div class="col">
+              {this.props.savings} kr
+            </div>
+        </div>
       </div>
     );
   }

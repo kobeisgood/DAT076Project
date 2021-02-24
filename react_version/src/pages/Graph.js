@@ -1,6 +1,6 @@
 import React from 'react';
 import Chart from 'chart.js';
-import '../main.css'
+import '../css/graph.css'
 
 
 export default class Graph extends React.Component {
@@ -40,6 +40,9 @@ chartRef2 = React.createRef();
               title: {
                 display: true,
                 text: 'Distribution av utgifter <månad, år>'
+              },
+              legend: {
+                display: false
               }
             }
         });
@@ -77,8 +80,8 @@ chartRef2 = React.createRef();
     <div>
         <div class='row'>
 
-          <div class='col-2'>
-            <p>2021</p>
+          <div class='col-1'>
+            <p class="text-sorting" >2021</p>
             <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Välj år
@@ -91,8 +94,8 @@ chartRef2 = React.createRef();
               </div>
           </div>
 
-          <div class='col-2'>
-            <p>January</p>
+          <div class='col-1'>
+            <p class="text-sorting" >January</p>
             <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Välj månad
@@ -105,8 +108,8 @@ chartRef2 = React.createRef();
               </div>
           </div>
 
-          <div class='col-2'>
-            <p>21</p>
+          <div class='col-1'>
+            <p class="text-sorting" > 21</p>
             <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Välj dag
