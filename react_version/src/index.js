@@ -3,17 +3,27 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter , Route, IndexRoute } from "react-router-dom";
 
 import CircleDiagram from "./components/CircleDiagram";
-
+import DashboardCard from "./components/DashboardCard";
+import NavigationBar from "./components/NavigationBar";
+import Dashboard from "./pages/Dashboard";
+import Monthly from "./pages/Monthly";
 
 ReactDOM.render(
-  <div>
-  <CircleDiagram money="500" income="10" expense="85" savings="5" /> 
-  <CircleDiagram money="0" income="0" expense="95" savings="5" /> 
-  <CircleDiagram money="5000" income="50" expense="25" savings="25" /> 
-  <CircleDiagram money="10000" income="75" expense="15" savings="15" /> 
-  </div>,
+
+<BrowserRouter>
+  <div class="row">
+    <div class="col-2">
+      <NavigationBar/>
+    </div>
+    <div class="col-10">
+      <Route path="/dashboard" component={Dashboard}></Route>
+      <Route path="/monthly" component={Monthly}></Route>
+    </div>
+  </div>
+</BrowserRouter>,
   document.getElementById('root')
 );
 
