@@ -11,6 +11,7 @@ import NavigationBar from "./components/NavigationBar";
 import Dashboard from "./pages/Dashboard";
 import Monthly from "./pages/Monthly";
 import Graph from "./pages/Graph";
+import Sidebar from './components/Sidebar';
 
 ReactDOM.render(
 
