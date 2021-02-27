@@ -1,13 +1,18 @@
 .navbar {
-    background-color: #060b26;
+    background-color: #f5f5f5;
     height: 80px;
+    width: 50px;
     display: flex;
     justify-content: start;
     align-items: center;
 }
 
+.navbar:hover .change-hamburger-color{
+    color: #1a83ff;
+}
+
 .menu-bars {
-    margin-left: 2rem;
+    margin-left: 1rem;
     font-size: 2rem;
     background: none;
 }
@@ -69,4 +74,8 @@
 
 span {
     margin-left: 16px;
+}
+
+span:hover .change-close-color {
+    color:#1a83ff;
 }
