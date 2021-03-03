@@ -1,0 +1,18 @@
+table {
+	width: 100%;
+	padding: 10px;
+}
+
+td {
+	padding: 5px;
+}
+
+thead {
+	background-color: black;
+	color: #ddd;
+}
+
+th {
+	border-radius: 5px;
+	padding: 5px;
+}
