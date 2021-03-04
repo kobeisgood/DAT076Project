@@ -9,7 +9,7 @@ export default class Dashboard extends React.Component{
         <div class="container-fluid">
           <div class="d-flex">
             <div class="col-sm">
-              <DashboardCard month="Januari" year="2021" income="1" expense="2" savings="3"/>
+              <DashboardCard month="Januari" year="2021" income="1000000" expense="2" savings="3"/>
             </div>
             <div class="col-sm">
               <DashboardCard month="February" year="2021" income="4" expense="5" savings="6"/>

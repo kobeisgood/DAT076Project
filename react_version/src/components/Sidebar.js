@@ -21,7 +21,7 @@ function Sidebar() {
         <>
         <div class="navbar">
             <Link to="#" className="menu-bars">
-                <FontAwesomeIcon icon={faBars} color='black' size='2x' onClick={showSidebar} className="change-hamburger-color"/>
+                <FontAwesomeIcon icon={faBars} color='black' size='lg' onClick={showSidebar} className="change-hamburger-color"/>
             </Link>    
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

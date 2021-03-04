@@ -2,6 +2,7 @@ import React from 'react';
 import CircleDiagram from './CircleDiagram'
 import Chart from 'chart.js';
 import '../main.css'
+import { Link } from 'react-router-dom';
 
 
 export default class DashBoardCard extends React.Component {
@@ -45,14 +46,13 @@ componentDidMount() {
     return(
       <div class="dashboard-card box-shadow">
 
-        <p class="dashboard-card-name"> <span>{this.props.month}</span> <span>{this.props.year}</span> </p>
+        <p class="dashboard-card-name">{this.props.month} {this.props.year}</p>
 
-        <canvas id="doughnutChart" ref={this.chartRef2}></canvas>
+        <canvas className="chartStyling" id="doughnutChart" ref={this.chartRef2}></canvas>
 
         <div class="row">
             <div class="col">
-                <span class="dot color-income"></span>
-                Income:
+                <span class="dot color-income"></span> Income:
             </div>
             <div class="col">
               {this.props.income} kr
@@ -61,8 +61,7 @@ componentDidMount() {
 
         <div class="row">
             <div class="col">
-                <span class="dot color-expense"></span>
-                Expenses:
+                <span class="dot color-expense"></span> Expenses:
             </div>
             <div class="col">
             {this.props.expense} kr
@@ -71,12 +70,16 @@ componentDidMount() {
         
         <div class="row">
             <div class="col">
-                <span class="dot color-saving"></span>
-                Savings:
+                <span class="dot color-saving"></span> Savings:
             </div>
             <div class="col">
               {this.props.savings} kr
             </div>
+        </div>
+        <div className="buttonStyling">
+          <Link className="cardButtonText cardButton" to="/monthly">
+            Go to view
+          </Link>
         </div>
       </div>
     );
