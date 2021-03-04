@@ -5,22 +5,25 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter , Route, IndexRoute } from "react-router-dom";
 
-import CircleDiagram from "./components/CircleDiagram";
-import DashboardCard from "./components/DashboardCard";
 import NavigationBar from "./components/NavigationBar";
 import Dashboard from "./pages/Dashboard";
 import Monthly from "./pages/Monthly";
+import Graph from "./pages/Graph";
+import Sidebar from './components/Sidebar';
 
 ReactDOM.render(
 
 <BrowserRouter>
-  <div class="row">
-    <div class="col-2">
-      <NavigationBar/>
-    </div>
-    <div class="col-10">
-      <Route path="/dashboard" component={Dashboard}></Route>
-      <Route path="/monthly" component={Monthly}></Route>
+  <div class="general-styling">
+    <div class="row">
+      <div class="col-2">
+        <Sidebar/>
+      </div>
+      <div class="col-10">
+        <Route path="/dashboard" component={Dashboard}></Route>
+        <Route path="/monthly" component={Monthly}></Route>
+        <Route path="/graph" component={Graph}></Route>
+      </div>
     </div>
   </div>
 </BrowserRouter>,
