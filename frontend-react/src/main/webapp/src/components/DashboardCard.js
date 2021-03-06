@@ -13,42 +13,42 @@ chartRef2 = React.createRef();
 componentDidMount() {
   const doughnutChartRef = this.chartRef2.current.getContext("2d");
 
-        fetch("http://localhost:8080/frontend-react/api/users/1/transactions/")
+      fetch("http://localhost:8080/frontend-react/api/users/1/transactions/")
 			.then(res => res.json())
 			.then((json) => {
 				
                                 console.log(json);
 				
-                                 // Doughnut chart code
-                                    new Chart(doughnutChartRef, {
-                                      type:"doughnut",
-                                      data: {
-                                        //Bring in data
-                                        labels: ["Hyra", "Mat", "Shopping"],
-                                        datasets: [
-                                            {
-                                                label: ["Utgifter <månad, år>"],
-                                                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-                                                data: [json[0].amount, json[1].amount, json[0].amount],
-                                            }
-                                        ]
-                                      },
-
-                                      options: {
-                                        title: {
-                                          display: false,
-                                          text: 'Utgifter <månad, år> procentuellt'
-                                        },
-                                        legend: {
-                                          display: false
-                                        }
-                                      },
-
-                                    });
+                                
                                 
 			}).catch(console.log);
 
+ // Doughnut chart code
+ new Chart(doughnutChartRef, {
+  type:"doughnut",
+  data: {
+    //Bring in data
+    labels: ["Hyra", "Mat", "Shopping"],
+    datasets: [
+        {
+            label: ["Utgifter <månad, år>"],
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+            data: [100, 222, 2222],
+        }
+    ]
+  },
 
+  options: {
+    title: {
+      display: false,
+      text: 'Utgifter <månad, år> procentuellt'
+    },
+    legend: {
+      display: false
+    }
+  },
+
+});
  
 }
 
@@ -88,7 +88,7 @@ componentDidMount() {
             </div>
         </div>
         <div className="buttonStyling">
-          <Link className="cardButtonText cardButton" to="/monthly">
+          <Link className="cardButtonText cardButton" to="/frontend-react/monthly">
             Go to view
           </Link>
         </div>

@@ -29,7 +29,7 @@ componentDidMount() {
 
       options: {
         title: {
-          display: true,
+          display: false,
           text: 'Utgifter <månad, år> procentuellt'
         }
       },
@@ -42,14 +42,16 @@ render(){
     return(
     <div>
         <div class="row">
+        <div class="col-1"></div>
             <h1>January 2021</h1>
         </div>
         <div class="row">
+          <div class="col-1"></div>
             <div class="col-6">
             <ExpenseTable id="t1"/>
             <ExpenseTable id="t2"/>
             </div>
-        <div class="col-6">
+        <div class="col-5">
            <canvas id="doughnutChart" ref={this.chartRef2}></canvas>
         </div>
     </div>
