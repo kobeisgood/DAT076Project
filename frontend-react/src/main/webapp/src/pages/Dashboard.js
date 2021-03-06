@@ -2,7 +2,7 @@ import React from "react";
 
 import DashboardCard from "../components/DashboardCard";
 
-export default class Dashboard2 extends React.Component {
+export default class Dashboard extends React.Component {
     render() {
         return (
             <div class="container-fluid">

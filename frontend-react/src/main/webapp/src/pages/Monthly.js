@@ -1,29 +1,30 @@
 import React from "react";
 import ExpenseTable from "../components/ExpenseTable";
 import Chart from 'chart.js';
+import AddIncomePopup from '../components/AddIncomePopup';
 
 import '../css/monthly.css';
 
 export default class Monthly extends React.Component {
 
-chartRef2 = React.createRef();
+  chartRef2 = React.createRef();
 
-componentDidMount() {
+  componentDidMount() {
     const doughnutChartRef = this.chartRef2.current.getContext("2d");
 
     // Doughnut chart code
     new Chart(doughnutChartRef, {
-      type:"doughnut",
+      type: "doughnut",
       data: {
         //Bring in data
         labels: ["Hyra", "Mat", "Shopping"],
         datasets: [
-            {
+          {
 
-                label: ["Utgifter <månad, år>"],
-                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-                data: [5000, 3000, 3000],
-            }
+            label: ["Utgifter <månad, år>"],
+            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+            data: [5000, 3000, 3000],
+          }
         ]
       },
 
@@ -36,26 +37,28 @@ componentDidMount() {
 
     });
 
-}
+  }
 
-render(){
-    return(
-    <div>
+  render() {
+    return (
+      <div>
         <div class="row">
-        <div class="col-1"></div>
-            <h1>January 2021</h1>
+          <div class="col-1"></div>
+          <h1>January 2021</h1>
         </div>
         <div class="row">
           <div class="col-1"></div>
-            <div class="col-6">
-            <ExpenseTable id="t1"/>
-            <ExpenseTable id="t2"/>
-            </div>
-        <div class="col-5">
-           <canvas id="doughnutChart" ref={this.chartRef2}></canvas>
+          <div class="col-6">
+            <ExpenseTable id="t1" />
+            <ExpenseTable id="t2" />
+          </div>
+          <div class="col-5">
+            <canvas id="doughnutChart" ref={this.chartRef2}></canvas>
+          </div>
         </div>
-    </div>
-    </div>
-)};
+        <AddIncomePopup />
+      </div>
+    )
+  };
 
 }
