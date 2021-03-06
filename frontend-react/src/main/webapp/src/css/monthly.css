@@ -8,20 +8,23 @@ and open the template in the editor.
     Author     : theok
 */
 
-
-.monthly-card{
-    margin-bottom:10vh;
+.monthlyPadding {
+  padding-left: 100px;
 }
 
-.monthly-month{
-    margin-bottom:10vh;
-    font-size:150%;    
+.monthly-card {
+  margin-bottom: 10vh;
 }
 
-.mt-50{
-    margin-top: 50px;
+.monthly-month {
+  margin-bottom: 10vh;
+  font-size: 150%;
+}
+
+.mt-50 {
+  margin-top: 50px;
 }
 
 .box-shadow {
-    box-shadow: 5px 5px 5px #D3D3D3;
+  box-shadow: 5px 5px 5px #d3d3d3;
 }

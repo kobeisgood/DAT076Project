@@ -38,7 +38,7 @@ chartRef2 = React.createRef();
                    }]
                },
               title: {
-                display: true,
+                display: false,
                 text: 'Distribution av utgifter <månad, år>'
               },
               legend: {
@@ -65,7 +65,7 @@ chartRef2 = React.createRef();
 
           options: {
             title: {
-              display: true,
+              display: false,
               text: 'Utgifter <månad, år> procentuellt'
             }
           },
@@ -79,7 +79,7 @@ chartRef2 = React.createRef();
 
     <div>
         <div class='row'>
-
+        <div class="col-1"></div>
           <div class='col-1'>
             <p class="text-sorting" >2021</p>
             <div class="dropdown">
@@ -107,27 +107,14 @@ chartRef2 = React.createRef();
               </div>
               </div>
           </div>
-
-          <div class='col-1'>
-            <p class="text-sorting" > 21</p>
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Välj dag
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/#">Action</a>
-                <a class="dropdown-item" href="/#">Another action</a>
-                <a class="dropdown-item" href="/#">Something else here</a>
-              </div>
-              </div>
-          </div>
         </div>
 
         <div class='row'>
+        <div class="col-1"></div>
           <div class='col-6 bar-top-buffer' style={{position: 'relative'}}>
             <canvas id="barChart" ref={this.chartRef1}></canvas>
          </div>
-         <div class='col-6 donut-top-buffer' style={{position: 'relative'}}>
+         <div class='col-5 donut-top-buffer' style={{position: 'relative'}}>
            <canvas id="doughnutChart" ref={this.chartRef2}></canvas>
         </div>
        </div>
