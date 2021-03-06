@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Monthly from "./pages/Monthly";
 import Graph from "./pages/Graph";
 import Sidebar from './components/Sidebar';
+import Dashboard2 from './pages/Dashboard2';
 
 ReactDOM.render(
 
@@ -18,7 +19,7 @@ ReactDOM.render(
         <Sidebar/>
       </div>
       <div class="col-10">
-        <Route path="/frontend-react/dashboard" component={Dashboard}></Route>
+        <Route path="/frontend-react/dashboard" component={Dashboard2}></Route>
         <Route path="/frontend-react/monthly" component={Monthly}></Route>
         <Route path="/frontend-react/graph" component={Graph}></Route>
       </div>
