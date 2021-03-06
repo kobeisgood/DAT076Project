@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <persistence-unit name="Lab3database" transaction-type="JTA">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>jdbc/Lab3database</jta-data-source>
+    <class>com.marcusaxelsson.lab3.model.entity.Category</class>
+    <class>com.marcusaxelsson.lab3.model.entity.Budget</class>
+    <class>com.marcusaxelsson.lab3.model.entity.Car</class>
+    <class>com.marcusaxelsson.lab3.model.entity.Transactions</class>
+    <class>com.marcusaxelsson.lab3.model.entity.Users</class>
+    <properties>
+
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -1,1 +1,3 @@
 /target/
+/frontend-react/target/
+*node_modules*

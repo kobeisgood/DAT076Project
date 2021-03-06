@@ -1,0 +1,69 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Jan 26, 2021, 1:40:32 PM
+    Author     : theok
+*/
+
+:root {
+  --color-savings: #8f85ff;
+  --color-expense: #ff7777;
+  --color-income: #5cff80;
+  --color-card-bg: white;
+  --color-expense-light: #ffa5a5;
+  --color-income-light: #c1ffcf;
+}
+
+html {
+  background-color: #f5f5f5;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.color-income {
+  background-color: var(--color-income);
+  stroke: var(--color-income);
+}
+
+.color-saving {
+  background-color: var(--color-savings);
+  stroke: var(--color-savings);
+}
+
+.color-expense {
+  background-color: var(--color-expense);
+  stroke: var(--color-expense);
+}
+
+.color-money-left {
+  fill: var(--color-income-light);
+  stroke: var(--color-income-light);
+}
+
+.color-no-money-left {
+  fill: var(--color-expense-light);
+  stroke: var(--color-expense-light);
+}
+
+.no-padding {
+  padding: 0px;
+}
+
+.left-to-spend {
+  width: 120px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  flex-wrap: wrap;
+  z-index: 100;
+}
+
+.left-to-spend > p {
+  margin: 0px;
+}
