@@ -29,7 +29,8 @@ export default class Dashboard extends React.Component{
 
           var ret = [];
           for(let asd of this.state.cards){
-            ret.push(<DashboardCard data={asd}/>)
+            ret.push(<div class="col-3 margin-top"><DashboardCard data={asd}/></div>);
+            ret.push(<div class="col-3 margin-top"><DashboardCard data={asd}/></div>);
           }
           return ret;
 
@@ -38,10 +39,10 @@ export default class Dashboard extends React.Component{
       return (
         <div class="container-fluid">
           <div class="d-flex" id="slideshow">
-          <div>
+          <div class="dashboard-container">
             {this.createCards()}
 
-          </div>
+            </div>
           </div>
         </div>
 
