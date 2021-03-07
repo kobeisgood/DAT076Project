@@ -79,4 +79,34 @@
 .right-info-item {
   margin-right: 2vh;
   font-size: 2.3vh;
+  font-weight: bold;
+}
+
+.save-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  height: 7vh;
+  background-color: green;
+  margin: auto;
+  border-radius: 1vh;
+  color: white;
+  transition: background-color 0.2s ease-out;
+
+  /* Moves text down a bit */
+  padding-top: 1vh;
+  /* Moves container down a bit */
+  margin-top: 5vh;
+}
+
+.save-container p {
+  font-size: 2.3vh;
+  font-weight: bold;
+}
+
+.save-container:hover {
+  background-color: yellow;
+  transition-delay: 0.5ms;
+  cursor: pointer;
 }
