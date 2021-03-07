@@ -54,8 +54,12 @@ public class TransactionsAPI {
         if(!json.containsKey("ignore_monthly")){
             json.appendField("ignore_monthly", false);
         }
+
+        if(!json.containsKey("date") || json.get("date") == null){
+            json.appendField("date", "CURRENT_TIMESTAMP");
+        }
         
-        String[] data = {"description","amount","type","category","user","ignore_monthly"};
+        String[] data = {"description","amount","type","category","user","ignore_monthly","date"};
         
         String error = API.matchDataInput(data, json);
 
@@ -103,8 +107,11 @@ public class TransactionsAPI {
         try {
             Transactions newTransaction = new Transactions(json.getAsString("description"), amount, json.getAsString("type"),category);
             transactionsDAO.create(newTransaction);
-            if(json.get("ignore_monthly").equals("true")){
+            if(json.getAsString("ignore_monthly").equalsIgnoreCase("true")){
                 newTransaction.setIgnore_monthly(true);
+            }
+            if(!json.get("date").equals("CURRENT_TIMESTAMP")){
+                // TODO: set date with correct format
             }
             return Response
                     .status(Response.Status.CREATED)
