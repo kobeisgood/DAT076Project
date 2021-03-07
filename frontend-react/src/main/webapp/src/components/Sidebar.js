@@ -15,7 +15,7 @@ function Sidebar() {
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
             <ul className="nav-menu-items" onClick={showSidebar}>
                 <li className="navbar-toggle">
-                <h1 class='logo'> CashIt </h1>
+                <h1 class='logo'> CashIT </h1>
                  
                 
                 </li>
