@@ -14,12 +14,16 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
+import net.minidev.json.JSONObject;
 
 @Path("transactions")
 public class TransactionsAPI {
     
     @EJB
     private TransactionDAO transactionsDAO;
+    
+    @EJB
+    private CategoryDAO categoryDAO;
      
     @GET
     @Path("{tid}")
@@ -45,30 +49,75 @@ public class TransactionsAPI {
     }
     
     @POST
-    public Response add(Transactions transaction){
+    public Response add(JSONObject json){
+                
+        if(!json.containsKey("ignore_monthly")){
+            json.appendField("ignore_monthly", false);
+        }
         
-        if(transaction.getDescription() != null && transaction.getAmount() != 0 && transaction.getType() != null && transaction.getCategory() != null){
-            
-            try{
-                transactionsDAO.create(transaction);
-                return Response
-                        .status(Response.Status.OK)
-                        .entity(transaction)
-                        .build();
-            }
-            catch(Exception e){
-                return Response
-                        .status(Response.Status.CONFLICT)
-                        .entity("oops")
-                        .build();
-            } 
-        }  
-        else{
+        String[] data = {"description","amount","type","category","user","ignore_monthly"};
+        
+        String error = API.matchDataInput(data, json);
+
+        String type = json.getAsString("type");
+        
+    
+        if(!(type.equals("INCOME") || type.equals("EXPENSE") || type.equals("SAVINGS"))){
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("buuuuuuuuu")
+                    .entity(API.error("Wrong type."))
                     .build();
         }
+
+        
+        if(!error.isEmpty()){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(error))
+                    .build();
+        }
+        
+        
+        int amount,userId;
+        try{
+            amount = Integer.parseInt(json.getAsString("amount"));
+            userId = Integer.parseInt(json.getAsString("user"));
+        }catch(NumberFormatException e){
+             return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(e.getMessage()))
+                    .build();
+        }
+       
+
+        CategoryPK key = new CategoryPK(json.getAsString("category"),userId);
+        Category category = categoryDAO.find(key);
+        
+        if(category == null){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(key.toString()))
+                    .build();
+        }
+                
+        try {
+            Transactions newTransaction = new Transactions(json.getAsString("description"), amount, json.getAsString("type"),category);
+            transactionsDAO.create(newTransaction);
+            if(json.get("ignore_monthly").equals("true")){
+                newTransaction.setIgnore_monthly(true);
+            }
+            return Response
+                    .status(Response.Status.CREATED)
+                    .entity(newTransaction)
+                    .build();
+        } catch (Exception e) { // Should not happen
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(API.error(e.getMessage()))
+                    .build();
+        }
+        
+        
     }
     
 }
