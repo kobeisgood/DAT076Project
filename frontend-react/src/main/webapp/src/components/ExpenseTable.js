@@ -15,7 +15,8 @@ export default class ExpenseTable extends React.Component {
     }
 
     openAddIncome() {
-        console.log("open add income");
+        var element = document.getElementById("add-income-popup");
+        element.style.visibility = "visible";
     }
 
     render() {
