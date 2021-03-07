@@ -49,7 +49,7 @@ export default class Profile extends React.Component {
                             {this.state.editState === false ? <span className="left-info-item"> Name:</span> : <span className="left-info-item"> New name: </span> }
 
                             {this.state.editState === false ? <span className="right-info-item"> Marcus </span> 
-                            : <input type="text" name="firstNameValue" value={this.state.nameValue} onChange={this.handleChange}/> } 
+                            : <input type="text" name="nameValue" value={this.state.nameValue} onChange={this.handleChange}/> } 
 
                         </div>
                         <div className="info-row">
