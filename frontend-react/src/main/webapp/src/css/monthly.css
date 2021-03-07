@@ -32,14 +32,22 @@ and open the template in the editor.
 .full-page-container {
   width: 100%;
   height: 100%;
-  background-color: blue;
-  position: absolute;
+  position: fixed;
   top: 0;
-  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .flexbox-container {
-  background-color: cornflowerblue;
   display: flex;
-  justify-content: center;
+  width: 100%;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.add-income-popup {
+  background-color: white;
+  border-radius: 15px;
+  text-align: center;
+  padding: 30px;
 }
