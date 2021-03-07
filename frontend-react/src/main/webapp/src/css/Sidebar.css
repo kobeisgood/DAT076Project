@@ -1,44 +1,20 @@
-.navbar {
-  background-color: #f5f5f5;
-  height: 80px;
-  width: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.navbar:hover .change-hamburger-color {
-  color: #1a83ff;
-}
-
-.menu-bars {
-  margin-left: 1rem;
-  font-size: 2rem;
-  background: none;
-}
-
 .nav-menu {
   background-color: #060b26;
   width: 250px;
   height: 100vh;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
   position: fixed;
   top: 0;
-  left: -100%;
-  transition: 850ms;
-}
-
-.nav-menu.active {
   left: 0;
-  transition: 350ms;
 }
 
 .nav-text {
   display: flex;
   justify-content: start;
   align-items: center;
-  padding: 8px 0px 8px 16px;
+  padding: 8px 0px;
   list-style: none;
   height: 60px;
 }
@@ -47,12 +23,13 @@
   text-decoration: none;
   color: #f5f5f5;
   font-size: 18px;
-  width: 95%;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   padding: 0 16px;
-  border-radius: 4px;
+  border-radius: 4px 0 0 4px;
+  transition: 0.2s;
 }
 
 .nav-text a:hover {
@@ -72,8 +49,8 @@
   align-items: center;
 }
 
-span {
-  margin-left: 16px;
+.nav-menu-item-title {
+  margin-left: 8px;
 }
 
 span:hover .change-close-color {
@@ -86,4 +63,6 @@ span:hover .change-close-color {
   display: flex;
   justify-content: center;
   text-align: center;
+  margin-top: 30px;
+  font-weight: bold;
 }

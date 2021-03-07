@@ -4,11 +4,14 @@ import com.ejwa.frontend.model.dao.*;
 import com.ejwa.frontend.model.entity.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -60,6 +63,66 @@ public class UsersAPI {
             return Response
                     .status(Response.Status.OK)
                     .entity(usersDAO.findAllTransactions(id))
+                    .build();
+        }
+        else{
+            return Response
+                    .status(Response.Status.NO_CONTENT)
+                    .entity("[]")
+                    .build();
+        }
+        
+    }
+    
+    
+    @GET
+    @Path("{uid}/dashboard")
+    public Response getUserDashboard(@PathParam("uid") String uid) {
+        
+        int id = Integer.parseInt(uid);
+        
+        if(usersDAO.find(id) != null){
+            
+            Map<String,List<String>> lables = new HashMap<String, List<String>>();
+            Map<String,List<Integer>> data = new HashMap<String, List<Integer>>();
+            Map<String,Map<String,Integer>> summary = new HashMap<String, Map<String,Integer>>();
+            List<Object[]> rows = usersDAO.getDashboardInfo(id);
+            
+            for(Object[] row : rows){
+                String month = row[0].toString() + "-" + row[1].toString();
+                String label = row[2].toString();
+                String amount = row[3].toString();
+                String type = row[4].toString();
+                
+                lables.putIfAbsent(month, new ArrayList<String>());
+                data.putIfAbsent(month, new ArrayList<Integer>());
+                summary.putIfAbsent(month, new HashMap<String,Integer>());
+                summary.get(month).putIfAbsent(type,0);
+                
+                lables.get(month).add(label);
+                data.get(month).add(Integer.parseInt(amount));
+                summary.get(month).put(type,summary.get(month).get(type)+Integer.parseInt(amount));
+                
+            }
+            
+            List<JSONObject> result = new ArrayList<>();
+            
+            for (String m : lables.keySet()) {
+                JSONObject json = new JSONObject();
+                
+                json.appendField("month",Integer.parseInt(m.substring(5)));
+                json.appendField("year",Integer.parseInt(m.substring(0,4)));
+                json.appendField("labels",lables.get(m));
+                json.appendField("data",data.get(m));
+                json.appendField("summary",summary.get(m));
+                
+                result.add(json);
+     
+            }
+            
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(result)
                     .build();
         }
         else{

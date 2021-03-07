@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import lombok.Getter;
+import net.minidev.json.JSONObject;
 
 @Stateless
 public class UsersDAO extends AbstractDAO<Users,Integer> {
@@ -31,7 +32,7 @@ public class UsersDAO extends AbstractDAO<Users,Integer> {
        
        
 
-  public List<Transactions> findAllTransactions(int userId) {
+    public List<Transactions> findAllTransactions(int userId) {
         TypedQuery<Transactions> query = entityManager.createQuery("SELECT t FROM Users u, Category c, Transactions t"
                 +" WHERE c.categoryUser = u AND t.category = c AND u.id = :id"
                 ,Transactions.class);
@@ -40,5 +41,19 @@ public class UsersDAO extends AbstractDAO<Users,Integer> {
         query.setParameter("id", userId);
         return query.getResultList();
         }
+    
+    
+    public List<Object[]> getDashboardInfo(int userId) {
+        TypedQuery<Object[]> query = entityManager.createQuery("SELECT FUNC('YEAR',t.date) AS y, FUNC('MONTH',t.date) AS m, c.categoryName, t.amount, t.type FROM Users u, Category c, Transactions t"
+                +" WHERE c.categoryUser = u AND t.category = c AND u.id = :id "
+                ,Object[].class);
+        
+        
+        query.setParameter("id", userId);
+        return query.getResultList();
+        }
+    
+    
+     
   
 }
