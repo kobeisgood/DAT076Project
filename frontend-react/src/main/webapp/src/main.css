@@ -42,11 +42,13 @@ body {
 
 .color-money-left {
   fill: var(--color-income-light);
+  color: var(--color-income-light);
   stroke: var(--color-income-light);
 }
 
 .color-no-money-left {
   fill: var(--color-expense-light);
+  color: var(--color-expense-light);
   stroke: var(--color-expense-light);
 }
 

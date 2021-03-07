@@ -28,9 +28,9 @@ export default class Dashboard extends React.Component{
             return;
 
           var ret = [];
-          for(let asd of this.state.cards){
-            ret.push(<div class="col-3 margin-top"><DashboardCard data={asd}/></div>);
-            ret.push(<div class="col-3 margin-top"><DashboardCard data={asd}/></div>);
+          for(let card of this.state.cards){
+            ret.push(<div class="col-3 margin-top"><DashboardCard data={card}/></div>);
+            ret.push(<div class="col-3 margin-top"><DashboardCard data={card}/></div>);
           }
           return ret;
 
