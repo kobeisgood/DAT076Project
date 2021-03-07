@@ -1,0 +1,112 @@
+.profile-page-container {
+}
+
+.profile-card-container {
+  margin: auto;
+  height: 88vh;
+  width: 80vh;
+  background-color: white;
+  border-radius: 2vh;
+  padding-top: 5vh;
+}
+
+.profile-pic {
+  margin: auto;
+  height: 25vh;
+  width: 25vh;
+  border-radius: 50%;
+  background-color: purple;
+}
+
+.profile-info {
+  width: 90%;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-top: 8vh;
+  margin: auto;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: space-between;
+  margin: auto;
+  width: 90%;
+  height: 7vh;
+  border-color: #060b26;
+  border-style: solid;
+  border-radius: 1vh;
+  border-width: 0.3vh;
+  align-items: center;
+}
+
+.edit-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  height: 7vh;
+  background-color: #060b26;
+  margin: auto;
+  border-radius: 1vh;
+  color: white;
+  transition: background-color 0.2s ease-out;
+
+  /* Moves text down a bit */
+  padding-top: 1vh;
+  /* Moves container down a bit */
+  margin-top: 5vh;
+}
+
+.edit-container p {
+  font-size: 2.3vh;
+  font-weight: bold;
+}
+
+.edit-container:hover {
+  background-color: #ec6113;
+  transition-delay: 0.5ms;
+  cursor: pointer;
+}
+
+.left-info-item {
+  font-size: 2.3vh;
+}
+
+.right-info-item {
+  margin-right: 2vh;
+  font-size: 2.3vh;
+  font-weight: bold;
+}
+
+.save-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  height: 7vh;
+  background-color: green;
+  margin: auto;
+  border-radius: 1vh;
+  color: white;
+  transition: background-color 0.2s ease-out;
+
+  /* Moves text down a bit */
+  padding-top: 1vh;
+  /* Moves container down a bit */
+  margin-top: 5vh;
+}
+
+.save-container p {
+  font-size: 2.3vh;
+  font-weight: bold;
+}
+
+.save-container:hover {
+  background-color: yellow;
+  transition-delay: 0.5ms;
+  cursor: pointer;
+}
