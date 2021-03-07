@@ -47,7 +47,8 @@ export default class Monthly extends React.Component {
           {this.createChart()}
         </div>
         <AddIncomePopup />
-      </div>
+        </div>
+        </div>
     )
   };
 
