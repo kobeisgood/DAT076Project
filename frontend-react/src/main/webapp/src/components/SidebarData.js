@@ -29,5 +29,11 @@ export const SidebarData = [
         path: "/frontend-react/settings",
         icon: <FontAwesomeIcon icon={faCog} color='white' size='lg'/>,
         cName: "nav-text"
+    },
+    {
+        title: "Start",
+        path: "/frontend-react/start",
+        icon: <FontAwesomeIcon icon={faCog} color='white' size='lg'/>,
+        cName: "nav-text"
     }
 ]

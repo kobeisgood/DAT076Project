@@ -7,6 +7,7 @@ import {BrowserRouter , Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Monthly from "./pages/Monthly";
 import Graph from "./pages/Graph";
+import Start from "./pages/Start";
 import Sidebar from './components/Sidebar';
 
 ReactDOM.render(
@@ -21,6 +22,7 @@ ReactDOM.render(
         <Route path="/frontend-react/dashboard" component={Dashboard}></Route>
         <Route path="/frontend-react/monthly" component={Monthly}></Route>
         <Route path="/frontend-react/graph" component={Graph}></Route>
+        <Route path="/frontend-react/start" component={Start}></Route>
       </div>
     </div>
   </div>
