@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Monthly from "./pages/Monthly";
 import Graph from "./pages/Graph";
 import Sidebar from './components/Sidebar';
+import Profile from './pages/Profile';
 
 ReactDOM.render(
 
@@ -21,6 +22,7 @@ ReactDOM.render(
         <Route path="/frontend-react/dashboard" component={Dashboard}></Route>
         <Route path="/frontend-react/monthly" component={Monthly}></Route>
         <Route path="/frontend-react/graph" component={Graph}></Route>
+        <Route path="/frontend-react/profile" component={Profile}></Route>
       </div>
     </div>
   </div>

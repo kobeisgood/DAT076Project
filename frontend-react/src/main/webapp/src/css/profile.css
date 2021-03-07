@@ -1,0 +1,61 @@
+.profile-page-container {
+}
+
+.profile-card-container {
+  margin: auto;
+  height: 88vh;
+  width: 80vh;
+  background-color: white;
+  border-radius: 2vh;
+  padding-top: 5vh;
+}
+
+.profile-pic {
+  margin: auto;
+  height: 25vh;
+  width: 25vh;
+  border-radius: 50%;
+  background-color: tomato;
+}
+
+.profile-info {
+  width: 90%;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-top: 8vh;
+  margin: auto;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  margin: auto;
+  width: 90%;
+  height: 7vh;
+  border-color: #060b26;
+  border-style: solid;
+  border-radius: 1vh;
+  border-width: 0.3vh;
+  align-items: center;
+}
+
+.edit-container {
+  width: 30%;
+  height: 7vh;
+  background-color: #060b26;
+  margin: auto;
+  text-align: center;
+  border-radius: 1vh;
+}
+
+.edit-button-text {
+  color: white;
+  font-size: 2.3vh;
+}
+
+.edit-button-text:hover {
+  color: wheat;
+}
