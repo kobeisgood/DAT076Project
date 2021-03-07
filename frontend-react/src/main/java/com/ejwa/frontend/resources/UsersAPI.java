@@ -53,16 +53,68 @@ public class UsersAPI {
         }
     }
     
-    @GET
-    @Path("{uid}/transactions")
-    public Response getUserTransactions(@PathParam("uid") String uid) {
+    
+    @POST
+    @Path("login")
+    public Response checkCredentials(JSONObject json) throws IOException  {
+        String[] data = {"mail","password"};
         
-        int id = Integer.parseInt(uid);
+        String error = API.matchDataInput(data, json);
+        
+        if(!error.isEmpty()){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(error))
+                    .build();
+        }
+        
+        String mail = json.getAsString("mail");
+        String password = json.getAsString("password");
+ 
+        try {
+            Users user = usersDAO.findAccountByMail(mail);
+            if(user.getPassword().equals(password)){
+                return Response
+                    .status(Response.Status.OK)
+                    .entity(user)
+                    .build();                
+            }else{
+                return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("Wrong password."))
+                    .build(); 
+            }
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity("Wrong mail.")
+                    .build();
+        }
+        
+    }
+    
+    @GET
+    @Path("{uid}/transactions/{year}/{month}")
+    public Response getUserTransactions(@PathParam("uid") String uid, @PathParam("year") String year, @PathParam("month") String month) {
+        
+        int id,y,m;
+        
+        try{
+            id = Integer.parseInt(uid);
+            y = Integer.parseInt(year);
+            m = Integer.parseInt(month);
+        }catch(NumberFormatException e){
+             return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(e.getMessage()))
+                    .build();
+        }
+        
         
         if(usersDAO.find(id) != null){
             return Response
                     .status(Response.Status.OK)
-                    .entity(usersDAO.findAllTransactions(id))
+                    .entity(usersDAO.findAllTransactions(id,y,m))
                     .build();
         }
         else{
@@ -84,6 +136,7 @@ public class UsersAPI {
         if(usersDAO.find(id) != null){
             
             Map<String,List<String>> lables = new HashMap<String, List<String>>();
+            Map<String,List<String>> colors = new HashMap<String, List<String>>();
             Map<String,List<Integer>> data = new HashMap<String, List<Integer>>();
             Map<String,Map<String,Integer>> summary = new HashMap<String, Map<String,Integer>>();
             List<Object[]> rows = usersDAO.getDashboardInfo(id);
@@ -91,15 +144,18 @@ public class UsersAPI {
             for(Object[] row : rows){
                 String month = row[0].toString() + "-" + row[1].toString();
                 String label = row[2].toString();
-                String amount = row[3].toString();
-                String type = row[4].toString();
+                String color = row[3].toString();
+                String amount = row[4].toString();
+                String type = row[5].toString();
                 
                 lables.putIfAbsent(month, new ArrayList<String>());
+                colors.putIfAbsent(month, new ArrayList<String>());
                 data.putIfAbsent(month, new ArrayList<Integer>());
                 summary.putIfAbsent(month, new HashMap<String,Integer>());
                 summary.get(month).putIfAbsent(type,0);
                 
                 lables.get(month).add(label);
+                colors.get(month).add(color);
                 data.get(month).add(Integer.parseInt(amount));
                 summary.get(month).put(type,summary.get(month).get(type)+Integer.parseInt(amount));
                 
@@ -112,7 +168,8 @@ public class UsersAPI {
                 
                 json.appendField("month",Integer.parseInt(m.substring(5)));
                 json.appendField("year",Integer.parseInt(m.substring(0,4)));
-                json.appendField("labels",lables.get(m));
+                json.appendField("lables",lables.get(m));
+                json.appendField("colors",colors.get(m));
                 json.appendField("data",data.get(m));
                 json.appendField("summary",summary.get(m));
                 
@@ -144,7 +201,7 @@ public class UsersAPI {
         if(!error.isEmpty()){
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("{\"error\":\""+error+"\"}")
+                    .entity(API.error(error))
                     .build();
         }
         
@@ -158,7 +215,7 @@ public class UsersAPI {
         } catch (Exception e) {
             return Response
                     .status(Response.Status.CONFLICT)
-                    .entity("{\"error\":\"Duplicate mail\"}")
+                    .entity(API.error("Duplicate mail."))
                     .build();
         }
         
