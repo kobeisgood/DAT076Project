@@ -6,25 +6,23 @@ import { SidebarData } from './SidebarData';
 import '../css/Sidebar.css';
 
 function Sidebar() {
-    const [sidebar, setSidebar] = useState(true)
-
-    const showSidebar = () => setSidebar(true)
-
     return(
-        
-        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-            <ul className="nav-menu-items" onClick={showSidebar}>
-                <li className="navbar-toggle">
-                <h1 class='logo'> CashIt </h1>
-                 
+        /*
+        <nav className={"nav-menu"}>
+            <ul className="nav-menu-items">
                 
-                </li>
+            </ul>
+        </nav>*/
+        <nav className={'nav-menu'}>
+            <h1 class='logo'> CashIT </h1>
+            <ul className="nav-menu-items">
+                 
                 {SidebarData.map((item, index) => {
                     return (
                         <li key={index} className={item.cName}>
                             <Link to={item.path}>
                                 {item.icon}
-                                <span>
+                                <span className="nav-menu-item-title">
                                     {item.title}
                                 </span>
                             </Link>
