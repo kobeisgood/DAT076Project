@@ -7,9 +7,9 @@ export default class Profile extends React.Component {
         super(props);
         this.state = {
           editState: false, 
-          nameValue: '',
-          lastNameValue: '',
-          mailValue: ''
+          nameValue: '', // first name from db
+          lastNameValue: '', // last name from db
+          mailValue: '' // mail from db
         };
         this.setEditState = this.setEditState.bind(this);
         this.handleChange = this.handleChange.bind(this);     
