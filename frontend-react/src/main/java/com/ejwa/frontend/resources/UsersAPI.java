@@ -220,6 +220,69 @@ public class UsersAPI {
         }
         
     }
+    
+    
+    @PUT
+    public Response updateUser(JSONObject json) {
+        
+        String[] data = {"id","mail","password","firstName","lastName"};
+        
+        String error = API.matchDataInput(data, json);
+        
+        if(!error.isEmpty()){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(error))
+                    .build();
+        }
+        
+        String firstName,lastName,mail,password;
+        int userId;
+        
+        try{
+           userId = Integer.parseInt(json.getAsString("id"));
+           firstName = json.getAsString("firstName");
+           lastName = json.getAsString("lastName");
+           mail = json.getAsString("mail");
+           password = json.getAsString("password");
+        }
+        catch(NumberFormatException e){
+             return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(e.getMessage()))                            
+                    .build();
+        }
+                
+        
+        Users user = usersDAO.find(userId);
+        
+        
+
+        if(user == null){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("No such user."))
+                    .build();            
+        }
+        
+        
+        try {
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setMail(mail);
+            user.setPassword(password);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(user)
+                    .build();
+        } catch (Exception e) { // should not happen
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(API.error("Server error."))
+                    .build();
+        }
+        
+    }
 
     
 }
