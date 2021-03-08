@@ -194,7 +194,7 @@ public class UsersAPI {
     @POST
     public Response newUser(JSONObject json) {
         
-        String[] data = {"mail","password"};
+        String[] data = {"mail","password","firstName","lastName"};
         
         String error = API.matchDataInput(data, json);
         
@@ -206,7 +206,7 @@ public class UsersAPI {
         }
         
         try {
-            Users newUser = new Users(json.getAsString("mail"),json.getAsString("password"));
+            Users newUser = new Users(json.getAsString("firstName"),json.getAsString("lastName"),json.getAsString("mail"),json.getAsString("password"));
             usersDAO.create(newUser);
             return Response
                     .status(Response.Status.CREATED)
@@ -220,5 +220,6 @@ public class UsersAPI {
         }
         
     }
+
     
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { ResponsiveEmbed } from 'react-bootstrap';
 import '../css/monthly.css';
 
 export default class AddIncomePopup extends React.Component {

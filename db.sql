@@ -1,4 +1,4 @@
-INSERT INTO APP.USERS VALUES (1,'jjaokk@gmail.com','qwe123');
+INSERT INTO APP.USERS VALUES (1,'Joakim','Ohlsson','jjaokk@gmail.com','qwe123');
 
 INSERT INTO APP.CATEGORY VALUES ('Mat','#7ad0ff',1);
 INSERT INTO APP.CATEGORY VALUES ('Nöje','#40a072',1);
