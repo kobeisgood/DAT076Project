@@ -45,6 +45,12 @@ public class Users implements Serializable {
     @Column(unique=true)
     @NonNull 
     private String mail;
+    
+    @NonNull 
+    private String firstName;
+    
+    @NonNull 
+    private String lastName;
         
     // @JsonbTransient  ??????? 
     @NonNull
