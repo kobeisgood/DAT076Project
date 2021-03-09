@@ -16,18 +16,42 @@ export default class CreateAccount extends React.Component {
         event.preventDefault();
         const data = new FormData(event.target);
 
-        fetch('/api/users/login', {
-            method: 'post',
+
+        if(data.get("repeatpassword") != data.get('password')){
+            // TODO
+            alert("PASSWORD MISSMATCH!");
+            return;
+        }
+
+        const requestOptions = {
+            method: 'POST',
             body: JSON.stringify({
-                firstname: data.get('firstname'),
-                surname: data.get('surname'),
-                email: data.get('email'),
+                firstName: data.get('name'),
+                lastName: data.get('surname'),
+                mail: data.get('email'),
                 password: data.get('password')
             }),
             headers: {
                 'Content-Type': 'application/json'
             }
-        });
+        };
+
+
+        fetch('http://localhost:8080/frontend-react/api/users/',requestOptions)
+        .then(response => response.json())
+          .then(response => {
+              console.log(response);
+              if(response.id != null){
+                // SAVE USER ID
+                alert("Account created successfully!<br>" + response);
+
+                //GO TO DASHBOARD
+              }
+              
+          });
+
+
+       
         console.log('The email input was:', data.get('email'))
     }
 

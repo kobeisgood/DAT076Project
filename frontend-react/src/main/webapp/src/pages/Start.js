@@ -17,16 +17,35 @@ export default class Start extends React.Component {
         event.preventDefault();
         const data = new FormData(event.target);
 
-        fetch('/api/users/sign-up', {
-            method: 'post',
+
+        const requestOptions = {
+            method: 'POST',
             body: JSON.stringify({
-                email: data.get('email'),
+                mail: data.get('email'),
                 password: data.get('password')
             }),
             headers: {
                 'Content-Type': 'application/json'
             }
-        });
+        };
+
+
+        fetch('http://localhost:8080/frontend-react/api/users/login',requestOptions)
+        .then(response => response.json())
+          .then(response => {
+              console.log(response);
+              if(response.id != null){
+                // SAVE USER ID
+                alert("Login success!");
+
+                //GO TO DASHBOARD
+
+              }
+              
+          });
+
+
+
         console.log('The email input was:', data.get('email'))
     }
 

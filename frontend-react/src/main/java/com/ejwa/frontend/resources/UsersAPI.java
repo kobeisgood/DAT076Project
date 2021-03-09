@@ -121,7 +121,7 @@ public class UsersAPI {
         } catch (Exception e) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("Wrong mail.")
+                    .entity(API.error("Wrong mail."))
                     .build();
         }
         
