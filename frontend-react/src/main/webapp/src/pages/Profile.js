@@ -3,28 +3,59 @@ import "../css/profile.css";
 
 export default class Profile extends React.Component {
 
+    async componentDidMount() {
+        const url = "http://localhost:8080/frontend-react/api/users/1";
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        this.setState({nameValue: data.firstName, lastNameValue: data.lastName, mailValue: data.mail});
+        }
+
     constructor(props) {
         super(props);
         this.state = {
           editState: false, 
-          nameValue: '',
-          lastNameValue: '',
-          mailValue: ''
+          nameValue: '', // first name from db
+          lastNameValue: '', // last name from db
+          mailValue: '' // mail from db
         };
         this.setEditState = this.setEditState.bind(this);
-        this.handleChange = this.handleChange.bind(this);     
+        this.handleChange = this.handleChange.bind(this);
+        this.saveInfo = this.saveInfo.bind(this)     
     }
-
 
       setEditState() {
           this.setState({editState: true})
-          console.log("edit state is now " + this.state.editState)
+          //console.log("edit state is now " + this.state.editState)
       }
 
       saveInfo() {
           this.setState({editState: false})
-          // save to database
-          console.log("edit state is now " + this.state.editState)
+          
+          const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(
+                {
+                mail: this.state.mailValue,
+                firstName: this.state.nameValue, 
+                lastName: this.state.lastNameValue,
+                password: 'qwe123',
+                id: 1
+                })
+        };
+
+          console.log(requestOptions.body);
+          //console.log("edit state is now " + this.state.editState)
+
+          fetch('http://localhost:8080/frontend-react/api/users', requestOptions)
+          .then(response => response.json())
+          .then(transaction => {
+              console.log(transaction);
+              // UPDATE USER INFO
+              
+          });
+
       }
 
       handleChange(event) {
@@ -48,20 +79,20 @@ export default class Profile extends React.Component {
 
                             {this.state.editState === false ? <span className="left-info-item"> Name:</span> : <span className="left-info-item"> New name: </span> }
 
-                            {this.state.editState === false ? <span className="right-info-item"> Marcus </span> 
+                            {this.state.editState === false ? <span className="right-info-item"> {this.state.nameValue} </span> 
                             : <input type="text" name="nameValue" value={this.state.nameValue} onChange={this.handleChange}/> } 
 
                         </div>
                         <div className="info-row">
                             {this.state.editState === false ? <span className="left-info-item">Last name:</span> : <span className="left-info-item"> New last name: </span>}
 
-                            {this.state.editState === false ? <span className="right-info-item">Axelsson</span> 
+                            {this.state.editState === false ? <span className="right-info-item">{this.state.lastNameValue}</span> 
                             : <input type="text" name="lastNameValue" value={this.state.lastNameValue} onChange={this.handleChange}/> }   {/*should be taken from DB*/}
                         </div>
                         <div className="info-row">
                             {this.state.editState === false ? <span className="left-info-item">Email:</span> : <span className="left-info-item"> New mail: </span> }
 
-                            {this.state.editState === false ? <span className="right-info-item">marcusaxelsson52@gmail.com</span> 
+                            {this.state.editState === false ? <span className="right-info-item">{this.state.mailValue}</span> 
                             : <input type="text" name="mailValue" value={this.state.mailValue} onChange={this.handleChange}/>  } {/*should be taken from DB*/} 
                         </div> 
                     </div>
