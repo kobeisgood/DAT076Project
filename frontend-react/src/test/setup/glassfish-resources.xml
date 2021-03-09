@@ -3,14 +3,14 @@
 
 <resources>
        <jdbc-connection-pool datasource-classname="org.apache.derby.jdbc.ClientDataSource"
-                         name="derby_net_Lab3database_appPool" res-type="javax.sql.DataSource">
+                         name="derby_net_TestDatabase_appPool" res-type="javax.sql.DataSource">
                <property name="serverName" value="localhost"/>
                <property name="portNumber" value="1527"/>
-               <property name="databaseName" value="Lab3database"/>
+               <property name="databaseName" value="TestDatabase"/>
                <property name="User" value=""/>
                <property name="Password" value=""/>
                <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
        </jdbc-connection-pool>
-       <jdbc-resource enabled="true" jndi-name="jdbc/Lab3database"
-       object-type="user" pool-name="derby_net_Lab3database_appPool"/>
+       <jdbc-resource enabled="true" jndi-name="jdbc/TestDatabase"
+       object-type="user" pool-name="derby_net_TestDatabase_appPool"/>
 </resources>
