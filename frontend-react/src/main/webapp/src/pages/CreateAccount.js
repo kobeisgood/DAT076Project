@@ -65,7 +65,6 @@ export default class CreateAccount extends React.Component {
                     <input type="password" name="repeatpassword" placeholder="Repeat password" required />
                     <button type="submit">Create Account</button>
                 </form >
-                <a href="/frontend-react/sign-up"></a>
             </div >
         )
     };

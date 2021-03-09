@@ -4,6 +4,7 @@ import {faTachometerAlt} from '@fortawesome/free-solid-svg-icons';
 import {faCalendarAlt} from '@fortawesome/free-solid-svg-icons';
 import {faChartBar} from '@fortawesome/free-solid-svg-icons';
 import {faUserCircle} from '@fortawesome/free-solid-svg-icons';
+import {faCog} from '@fortawesome/free-solid-svg-icons';
 
 export const SidebarData = [
     {

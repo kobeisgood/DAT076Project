@@ -1,8 +1,6 @@
 import React from "react";
 
 import '../css/start.css';
-import CreateAccount from "./CreateAccount";
-import {BrowserRouter , Route } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
 export default class Start extends React.Component {
