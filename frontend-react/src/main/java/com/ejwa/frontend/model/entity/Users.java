@@ -22,9 +22,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 /**
  *
@@ -58,10 +60,14 @@ public class Users implements Serializable {
 
     @JsonbTransient
     @OneToMany(mappedBy = "budgetUser", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Budget> budgets;
     
     @JsonbTransient
     @OneToMany(mappedBy = "categoryUser", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Category> categories;
     
      
