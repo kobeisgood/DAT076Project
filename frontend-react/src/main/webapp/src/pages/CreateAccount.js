@@ -1,11 +1,8 @@
 import React from "react";
 
 import '../css/start.css';
-import CreateAccount from "./CreateAccount";
-import {BrowserRouter , Route } from "react-router-dom";
-import { Link } from 'react-router-dom';
 
-export default class Start extends React.Component {
+export default class CreateAccount extends React.Component {
 
     constructor() {
         super();
@@ -19,9 +16,11 @@ export default class Start extends React.Component {
         event.preventDefault();
         const data = new FormData(event.target);
 
-        fetch('/api/users/sign-up', {
+        fetch('/api/users/login', {
             method: 'post',
             body: JSON.stringify({
+                firstname: data.get('firstname'),
+                surname: data.get('surname'),
                 email: data.get('email'),
                 password: data.get('password')
             }),
@@ -37,27 +36,37 @@ export default class Start extends React.Component {
 
             <div className="flex-column d-flex align-items-center justify-content-center col-md-8 offset-md-2" style={{
                 padding: "10px",
-                width: "25rem"
+                width: "30rem"
             }}>
+
                 <form onSubmit={this.handleSubmit}>
-                    {/* TODO:   connect button to home page
-                            connect this start page to db
-                            make this the starting page
-                            connect don't have an account yet 
-                            add noValidate to form and create own error messages */}
-                    <h4><b>Log in</b></h4>
+                    <h4><b>Sign up</b></h4>
+                    <hr></hr>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                            <label htmlFor="name"><b>First name</b></label>
+                            <input type="name" id="name " name="name" placeholder="Enter first name" required />
+                            </div>
+
+                            <div class="col-md-6">
+                            <label htmlFor="surname"><b>Surname</b></label>
+                            <input type="name" id="surname " name="surname" placeholder="Enter surname" required />
+                            </div>
+                        </div>
 
                     <label htmlFor="email"><b>Email</b></label>
                     <input type="email" id="email " name="email" placeholder="Enter email" required />
 
                     <label htmlFor="password"><b>Password</b></label>
                     <input type="password" name="password" placeholder="Enter password" required />
-                    <button type="submit">Login</button>
-                </form>
-                <Link to="/frontend-react/sign-up">
-                    Don't have an account yet?
-                </Link>
-            </div>
+
+                    <label htmlFor="repeatpassword"><b>Repeat Password</b></label>
+                    <input type="password" name="repeatpassword" placeholder="Repeat password" required />
+                    <button type="submit">Create Account</button>
+                </form >
+                <a href="/frontend-react/sign-up"></a>
+            </div >
         )
     };
 }

@@ -9,6 +9,7 @@ import Monthly from "./pages/Monthly";
 import Graph from "./pages/Graph";
 import Start from "./pages/Start";
 import Sidebar from './components/Sidebar';
+import CreateAccount from './pages/CreateAccount';
 
 ReactDOM.render(
 
@@ -23,6 +24,7 @@ ReactDOM.render(
         <Route path="/frontend-react/monthly" component={Monthly}></Route>
         <Route path="/frontend-react/graph" component={Graph}></Route>
         <Route path="/frontend-react/start" component={Start}></Route>
+        <Route path="/frontend-react/sign-up" component={CreateAccount}></Route>
       </div>
     </div>
   </div>
