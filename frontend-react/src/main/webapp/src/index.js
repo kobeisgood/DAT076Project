@@ -11,6 +11,8 @@ import Start from "./pages/Start";
 import Sidebar from './components/Sidebar';
 import CreateAccount from './pages/CreateAccount';
 
+import Profile from './pages/Profile';
+
 ReactDOM.render(
 
 <BrowserRouter>
@@ -25,6 +27,7 @@ ReactDOM.render(
         <Route path="/frontend-react/graph" component={Graph}></Route>
         <Route path="/frontend-react/start" component={Start}></Route>
         <Route path="/frontend-react/sign-up" component={CreateAccount}></Route>
+        <Route path="/frontend-react/profile" component={Profile}></Route>
       </div>
     </div>
   </div>

@@ -24,6 +24,14 @@
 <version>1.6.0.Final</version>	
 <scope>provided</scope>
 </dependency>	
+
+<dependency>
+<groupId>junit</groupId>
+<artifactId>junit</artifactId>
+<version>4.13.1</version>
+<scope>test</scope>
+</dependency>
+
 <dependency>	
 <groupId>fish.payara.arquillian</groupId>	
 <artifactId>arquillian-payara-server-embedded</artifactId>	

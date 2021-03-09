@@ -3,21 +3,45 @@ import React from "react";
 import DashboardCard from "../components/DashboardCard";
 
 export default class Dashboard extends React.Component{
+        
+        
+        
+        state= {
+            cards:null
+        };
+        
+        async componentDidMount() {
+
+
+        const url = "http://localhost:8080/frontend-react/api/users/1/dashboard";
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        this.setState({cards:data});
+    
+        }
+        
+        
+
+        createCards(){
+          if(!this.state.cards)
+            return;
+
+          var ret = [];
+          for(let card of this.state.cards){
+            ret.push(<div class="col-3 margin-top"><DashboardCard data={card}/></div>);
+            ret.push(<div class="col-3 margin-top"><DashboardCard data={card}/></div>);
+          }
+          return ret;
+
+        }
     render() {
       return (
         <div class="container-fluid">
-          <div class="d-flex">
-            <div class="col-sm">
-              <DashboardCard month="Januari" year="2021" income="1000000" expense="2" savings="3"/>
-            </div>
-            <div class="col-sm">
-              <DashboardCard month="February" year="2021" income="4" expense="5" savings="6"/>
-            </div>
-            <div class="col-sm">
-              <DashboardCard month="March" year="2021" income="7" expense="8" savings="9"/>
-            </div>
-            <div class="col-sm">
-              <DashboardCard month="April" year="2021" income="10" expense="11" savings="12"/>
+          <div class="d-flex" id="slideshow">
+          <div class="dashboard-container">
+            {this.createCards()}
+
             </div>
           </div>
         </div>

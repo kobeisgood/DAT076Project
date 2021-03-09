@@ -1,59 +1,55 @@
 import React from "react";
 import ExpenseTable from "../components/ExpenseTable";
-import Chart from 'chart.js';
+import AddIncomePopup from '../components/AddIncomePopup';
+import DoughnutChartComponent from "../components/DoughnutChartComponent";
 
 import '../css/monthly.css';
 
 export default class Monthly extends React.Component {
 
-chartRef2 = React.createRef();
+  state= {
+    result:null
+  };
 
-componentDidMount() {
-    const doughnutChartRef = this.chartRef2.current.getContext("2d");
+  async componentDidMount() {
 
-    // Doughnut chart code
-    new Chart(doughnutChartRef, {
-      type:"doughnut",
-      data: {
-        //Bring in data
-        labels: ["Hyra", "Mat", "Shopping"],
-        datasets: [
-            {
 
-                label: ["Utgifter <månad, år>"],
-                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-                data: [5000, 3000, 3000],
-            }
-        ]
-      },
+    const url = "http://localhost:8080/frontend-react/api/users/1/dashboard";
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    this.setState({result:data});
 
-      options: {
-        title: {
-          display: true,
-          text: 'Utgifter <månad, år> procentuellt'
-        }
-      },
+    }
 
-    });
+    createChart(){
+      if(!this.state.result)
+        return;
 
-}
+      return <DoughnutChartComponent title="test" data={this.state.result[0].data} lables={this.state.result[0].lables} colors={this.state.result[0].colors}/>;
 
-render(){
-    return(
-    <div>
+    }
+
+  render() {
+    return (
+      <div>
         <div class="row">
-            <h1>January 2021</h1>
+          <div class="col-1"></div>
+          <h1>January 2021</h1>
         </div>
         <div class="row">
+          <div class="col-1"></div>
             <div class="col-6">
             <ExpenseTable id="t1"/>
             <ExpenseTable id="t2"/>
             </div>
-        <div class="col-6">
-           <canvas id="doughnutChart" ref={this.chartRef2}></canvas>
+        <div class="col-5">
+          {this.createChart()}
         </div>
-    </div>
-    </div>
-)};
+        <AddIncomePopup />
+        </div>
+        </div>
+    )
+  };
 
 }

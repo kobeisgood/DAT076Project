@@ -32,7 +32,7 @@ public class API {
         }
         else{
             for (String attribute : attributes) {
-                if(!data.containsKey(attribute) || data.get(attribute).equals("")){
+                if(!data.containsKey(attribute) || data.get(attribute) == null || data.getAsString(attribute).equals("")){
                     error += "Missing " + attribute + ". ";
                 }
             }

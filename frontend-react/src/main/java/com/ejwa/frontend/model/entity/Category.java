@@ -46,8 +46,15 @@ public class Category implements Serializable {
     @Id @NonNull 
     private String categoryName;
     
-    @Id @ManyToOne @NonNull 
+    @Id @ManyToOne @NonNull
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Users categoryUser;
+    
+    @NonNull 
+    private String color;
+    
+    
     
     @JsonbTransient
     @OneToMany(mappedBy = "category", cascade = CascadeType.REFRESH) // ,orphanRemoval = true 
