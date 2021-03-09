@@ -15,22 +15,44 @@ import java.util.Map;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.transaction.UserTransaction;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.Response;
 import net.minidev.json.JSONObject;
 import org.eclipse.persistence.exceptions.DatabaseException;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.asset.Asset;
+
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 @Path("users")
+@ApplicationScoped
 public class UsersAPI {
     
+    
+    
+   
+        
     @EJB
     private UsersDAO usersDAO;
+    
+    @Inject
+        private UserTransaction databaseTX;
+
+    
     
     @GET
     public List<Users> getAllUsers() {
         return usersDAO.findAll();
     }
+    
+    
+    
     
     @GET
     @Path("{uid}")
@@ -191,6 +213,8 @@ public class UsersAPI {
         
     }
     
+    
+    
     @POST
     public Response newUser(JSONObject json) {
         
@@ -224,7 +248,6 @@ public class UsersAPI {
     
     @PUT
     public Response updateUser(JSONObject json) {
-        
         String[] data = {"id","mail","password","firstName","lastName"};
         
         String error = API.matchDataInput(data, json);
@@ -253,7 +276,15 @@ public class UsersAPI {
                     .build();
         }
                 
-        
+        try{
+            databaseTX.begin();
+        }
+        catch(Exception e){
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(API.error("Internal server error."))
+                    .build();     
+        }
         Users user = usersDAO.find(userId);
         
         
@@ -266,14 +297,25 @@ public class UsersAPI {
         }
         
         
+       
         try {
+        
+        
+            
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setMail(mail);
             user.setPassword(password);
+            
+            usersDAO.flush();
+            usersDAO.refresh(user);
+            
+            databaseTX.commit();
+          
+
             return Response
                     .status(Response.Status.OK)
-                    .entity(user)
+                    .entity(usersDAO.find(1))
                     .build();
         } catch (Exception e) { // should not happen
             return Response

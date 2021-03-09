@@ -10,6 +10,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.transaction.UserTransaction;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
@@ -17,6 +20,8 @@ import javax.ws.rs.core.Response;
 import net.minidev.json.JSONObject;
 
 @Path("transactions")
+@ApplicationScoped
+
 public class TransactionsAPI {
     
     @EJB
@@ -25,6 +30,10 @@ public class TransactionsAPI {
     @EJB
     private CategoryDAO categoryDAO;
      
+     @Inject
+        private UserTransaction databaseTX;
+
+    
     @GET
     @Path("{tid}")
     public Response getTransactionById(@PathParam("tid") String tid) {
