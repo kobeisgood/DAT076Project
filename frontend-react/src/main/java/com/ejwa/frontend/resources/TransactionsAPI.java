@@ -21,7 +21,6 @@ import net.minidev.json.JSONObject;
 
 @Path("transactions")
 @ApplicationScoped
-
 public class TransactionsAPI {
     
     @EJB
@@ -38,7 +37,16 @@ public class TransactionsAPI {
     @Path("{tid}")
     public Response getTransactionById(@PathParam("tid") String tid) {
         
-        int id = Integer.parseInt(tid);
+         int id;
+                
+        try{
+            id = Integer.parseInt(tid);        
+        }catch(NumberFormatException e){
+             return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(e.getMessage()))
+                    .build();
+        }
         
         Transactions t = transactionsDAO.find(id);
         
@@ -102,7 +110,7 @@ public class TransactionsAPI {
                     .build();
         }
        
-
+     // TODO BEGIN TRANSATCION
         CategoryPK key = new CategoryPK(json.getAsString("category"),userId);
         Category category = categoryDAO.find(key);
         
@@ -122,6 +130,9 @@ public class TransactionsAPI {
             if(!json.get("date").equals("CURRENT_TIMESTAMP")){
                 // TODO: set date with correct format
             }
+            
+            // COMMIT TRANSACTION
+            
             return Response
                     .status(Response.Status.CREATED)
                     .entity(newTransaction)

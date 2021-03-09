@@ -57,7 +57,19 @@ public class UsersAPI {
     @GET
     @Path("{uid}")
     public Response getUserById(@PathParam("uid") String uid) throws IOException  {
-        int id = Integer.parseInt(uid);
+        
+        int id;
+                
+        try{
+            id = Integer.parseInt(uid);
+        
+        }catch(NumberFormatException e){
+             return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(e.getMessage()))
+                    .build();
+        }
+        
         
         Users u = usersDAO.find(id);
         
@@ -113,6 +125,8 @@ public class UsersAPI {
                     .build();
         }
         
+        
+        
     }
     
     @GET
@@ -153,7 +167,17 @@ public class UsersAPI {
     @Path("{uid}/dashboard")
     public Response getUserDashboard(@PathParam("uid") String uid) {
         
-        int id = Integer.parseInt(uid);
+        int id;
+                
+        try{
+            id = Integer.parseInt(uid);
+        
+        }catch(NumberFormatException e){
+             return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(e.getMessage()))
+                    .build();
+        }
         
         if(usersDAO.find(id) != null){
             
@@ -162,7 +186,7 @@ public class UsersAPI {
             Map<String,List<Integer>> data = new HashMap<String, List<Integer>>();
             Map<String,Map<String,Integer>> summary = new HashMap<String, Map<String,Integer>>();
             List<Object[]> rows = usersDAO.getDashboardInfo(id);
-            
+            // year,month,categoryName,color,amount,type
             for(Object[] row : rows){
                 String month = row[0].toString() + "-" + row[1].toString();
                 String label = row[2].toString();
@@ -282,7 +306,7 @@ public class UsersAPI {
         catch(Exception e){
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(API.error("Internal server error."))
+                    .entity(API.error("Transaction error."))
                     .build();     
         }
         Users user = usersDAO.find(userId);
@@ -315,7 +339,7 @@ public class UsersAPI {
 
             return Response
                     .status(Response.Status.OK)
-                    .entity(usersDAO.find(1))
+                    .entity(usersDAO.find(userId))
                     .build();
         } catch (Exception e) { // should not happen
             return Response
