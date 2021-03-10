@@ -221,6 +221,7 @@ public class TransactionsAPI {
             transaction.setDate(new Date());
             transaction.setType(type);
             transaction.setDescription(description);
+           
             
             transactionsDAO.flush();
             transactionsDAO.refresh(transaction);
@@ -244,6 +245,64 @@ public class TransactionsAPI {
     @DELETE
     @Path("{tid")
     public Response deleteTransaction(@PathParam("tid") String tid) {
+        
+        int id;
+        
+        try{
+            id = Integer.parseInt(tid);
+        
+        }catch(NumberFormatException e){
+             return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(e.getMessage()))
+                    .build();
+        }
+        
+        Transactions transaction = transactionsDAO.find(id);
+        
+       try {
+           databaseTX.begin();
+       
+       }
+       catch(Exception e){
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(API.error("Transaction error."))
+                    .build();     
+        }
+       
+        if(transaction == null){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("No such transaction."))
+                    .build();            
+        }
+        
+        try {
+        
+        
+            
+           transactionsDAO.remove(transaction);
+           
+            
+            transactionsDAO.flush();
+            transactionsDAO.refresh(transaction);
+            
+            databaseTX.commit();
+          
+
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(API.message("Transaction success"))
+                    .build();
+        } catch (Exception e) { // should not happen
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(API.error("Server error."))
+                    .build();
+        }
+        
+     
         
     }
 }

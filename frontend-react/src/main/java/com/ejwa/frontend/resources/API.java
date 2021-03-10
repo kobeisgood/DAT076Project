@@ -41,4 +41,11 @@ public class API {
         
     }
     
+    
+    public static String message(String msg){
+    
+        return "{\"message\":\""+msg+"\"}";
+    
+    }
+    
 }
