@@ -14,7 +14,7 @@ export default class Monthly extends React.Component {
   async componentDidMount() {
 
 
-    const url = "http://localhost:8080/frontend-react/api/users/1/dashboard";
+    const url = "http://localhost:8080/frontend-react/api/users/1/transactions/2021/3";
     const response = await fetch(url);
     const data = await response.json();
     console.log(data);

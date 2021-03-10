@@ -244,7 +244,7 @@ public class TransactionsAPI {
     
     @DELETE
     @Path("{tid")
-    public Response deleteTransaction(@PathParam("tid") String tid) {
+    public Response deleteTransaction(@PathParam("{tid}") String tid) {
         
         int id;
         

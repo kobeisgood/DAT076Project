@@ -146,11 +146,23 @@ public class UsersAPI {
                     .build();
         }
         
+        List<Transactions> transactions = usersDAO.findAllTransactions(id,y,m);
+        
+        Map<String,List<Transactions>> result = new HashMap<String, List<Transactions>>();
+
+        for(Transactions transaction : transactions){
+            String catName = transaction.getCategory().getCategoryName();
+            result.putIfAbsent(catName, new ArrayList<Transactions>());
+            
+            result.get(catName).add(transaction);
+            
+        }
+
         
         if(usersDAO.find(id) != null){
             return Response
                     .status(Response.Status.OK)
-                    .entity(usersDAO.findAllTransactions(id,y,m))
+                    .entity(result)
                     .build();
         }
         else{
