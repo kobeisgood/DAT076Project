@@ -16,36 +16,25 @@ export default class MonthlyTransaction extends React.Component {
             editState: false,
             result: null
         };
+
+        this.deleteTransaction = this.deleteTransaction.bind(this);
     }
 
-    async componentDidMount() {
-
-        const url = "http://localhost:8080/frontend-react/api/users/1/transactions";
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data);
-        this.setState({result:data});
-    
-        }
+  
 
     deleteTransaction() {
         
         const requestOptions = {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(
-                {
-                id: this.props.transId
-                })
+            headers: { 'Content-Type': 'application/json' }
         };
 
-        console.log(requestOptions.body);
-
-          fetch('http://localhost:8080/frontend-react/api/transactions', requestOptions)
+        console.log("BODY" + requestOptions.body);
+            console.log(this.props.data.transactionId);
+          fetch('http://localhost:8080/frontend-react/api/transactions/'+this.props.data.transactionId, requestOptions)
           .then(response => response.json())
           .then(transaction => {
-              console.log(transaction);
-              // DELETE TRANSACTION
+              // UNMOUNT THIS COMPONENT
               
           });
     }
@@ -62,7 +51,7 @@ export default class MonthlyTransaction extends React.Component {
                         <div class="edit-button">
                             <FontAwesomeIcon icon={faEdit} color='white' size='sm'/>
                         </div>
-                        <div class="delete-button" onClick={() => this.deleteTransaction()}>
+                        <div class="delete-button" onClick={this.deleteTransaction}>
                             <FontAwesomeIcon icon={faTrashAlt} color='white' size='sm'/>
                         </div>
                     

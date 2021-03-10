@@ -148,16 +148,33 @@ public class UsersAPI {
         
         List<Transactions> transactions = usersDAO.findAllTransactions(id,y,m);
         
-        Map<String,List<Transactions>> result = new HashMap<String, List<Transactions>>();
+        
+        List<JSONObject> result = new ArrayList<>();
+        
+        
+        Map<String,List<Transactions>> category = new HashMap<String, List<Transactions>>();
 
         for(Transactions transaction : transactions){
             String catName = transaction.getCategory().getCategoryName();
-            result.putIfAbsent(catName, new ArrayList<Transactions>());
             
-            result.get(catName).add(transaction);
+            category.putIfAbsent(catName, new ArrayList<Transactions>());
+            
+            category.get(catName).add(transaction);
+            
+            
             
         }
 
+        for(String c : category.keySet()){
+            JSONObject json = new JSONObject();
+            json.appendField("name", c);
+            json.appendField("data", category.get(c));
+            
+            result.add(json);
+            
+            
+            
+        }
         
         if(usersDAO.find(id) != null){
             return Response
@@ -206,15 +223,29 @@ public class UsersAPI {
                 String amount = row[4].toString();
                 String type = row[5].toString();
                 
+                
+                
                 lables.putIfAbsent(month, new ArrayList<String>());
                 colors.putIfAbsent(month, new ArrayList<String>());
                 data.putIfAbsent(month, new ArrayList<Integer>());
                 summary.putIfAbsent(month, new HashMap<String,Integer>());
                 summary.get(month).putIfAbsent(type,0);
                 
-                lables.get(month).add(label);
-                colors.get(month).add(color);
-                data.get(month).add(Integer.parseInt(amount));
+                if(!lables.get(month).contains(label))
+                    lables.get(month).add(label);
+                
+                if(!colors.get(month).contains(color))
+                    colors.get(month).add(color);
+                
+                int index = lables.get(month).indexOf(label);
+                
+                
+                if(data.get(month).size() == index)
+                    data.get(month).add(0);
+                
+                
+                data.get(month).set(index, data.get(month).get(index) + Integer.parseInt(amount));
+                
                 summary.get(month).put(type,summary.get(month).get(type)+Integer.parseInt(amount));
                 
             }
@@ -236,7 +267,7 @@ public class UsersAPI {
             }
             
             return Response
-                    .status(Response.Status.OK)
+                    .status(Response.Status.ACCEPTED)
                     .entity(result)
                     .build();
         }

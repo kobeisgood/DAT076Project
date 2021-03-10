@@ -8,26 +8,51 @@ import '../css/monthly.css';
 export default class Monthly extends React.Component {
 
   state= {
-    result:null
+    chart:null,
+    transactions: null
   };
 
   async componentDidMount() {
 
 
-    const url = "http://localhost:8080/frontend-react/api/users/1/transactions/2021/3";
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    this.setState({result:data});
+    const url1 = "http://localhost:8080/frontend-react/api/users/1/transactions/2021/3";
+    const response1 = await fetch(url1);
+    const transactionsData = await response1.json();
+
+    const url2 = "http://localhost:8080/frontend-react/api/users/1/dashboard";
+    const response2 = await fetch(url2);
+    const chartData = await response2.json();
+    console.log(chartData);
+
+
+    this.setState({
+      chart:chartData,
+    transactions:transactionsData});
+
+    }
+
+    createExpenseTables(){
+      if(!this.state.transactions)
+        return;
+
+      var ret = [];
+          for(let category of this.state.transactions){
+            console.log("ADD EXPENSE TABLE");
+            ret.push(<ExpenseTable title={category.name} data={category.data}/>);
+          }
+      
+          return ret;
 
     }
 
     createChart(){
-      if(!this.state.result)
+      if(!this.state.chart)
         return;
-
-      return <DoughnutChartComponent title="test" data={this.state.result[0].data} lables={this.state.result[0].lables} colors={this.state.result[0].colors}/>;
-
+        for(let month of this.state.chart){
+          if(month.month === 3 && month.year === 2021)
+          console.log(month);
+            return <DoughnutChartComponent title="test" data={month.data} lables={month.lables} colors={month.colors}/>;
+        }
     }
 
   render() {
@@ -39,14 +64,12 @@ export default class Monthly extends React.Component {
         </div>
         <div class="row">
           <div class="col-1"></div>
-            <div class="col-6">
-            <ExpenseTable id="t1"/>
-            <ExpenseTable id="t2"/>
+            <div class="col-6">{this.createExpenseTables()}
             </div>
         <div class="col-5">
-          {this.createChart()}
+        {this.createChart()}
         </div>
-        <AddIncomePopup />
+        <AddIncomePopup  />
         </div>
         </div>
     )

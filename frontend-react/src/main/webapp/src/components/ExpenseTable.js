@@ -8,37 +8,42 @@ export default class ExpenseTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            collapse: "collapse" + this.props.id,
-            dataTarget: "#collapse" + this.props.id,
-            accordion: "accordion" + this.props.id,
-            dataParent: "#accordion" + this.props.id,
-            categoryCards:null
+            collapse: "collapse" + this.props.title,
+            dataTarget: "#collapse" + this.props.title,
+            accordion: "accordion" + this.props.title,
+            dataParent: "#accordion" + this.props.title,
+            categoryCards:null,
+            category:this.props.title
         };
+
+        this.openAddIncome = this.openAddIncome.bind(this);
     }
 
     async componentDidMount() {
 
-        const url = "http://localhost:8080/frontend-react/api/users/1/transactions";
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data);
-        this.setState({categoryCards:data});
-    
+       
         }
+
+        
 
     openAddIncome() {
         var element = document.getElementById("add-income-popup");
+        element.setAttribute("category",this.state.category);
         element.style.visibility = "visible";
     }
 
     createCategoryCards(){
-        if(!this.state.categoryCards)
+        if(!this.props.data)
           return;
 
         var ret = [];
-        for(let card of this.state.categoryCards){
-          ret.push(<MonthlyTransaction data={card}/>);
+        var sum = 0;
+        for(let transaction of this.props.data){
+            sum += transaction.amount;
+          ret.push(<MonthlyTransaction data={transaction}/>);
         }
+        this.state.sum = sum;
+
         return ret;
 
       }
@@ -53,9 +58,9 @@ export default class ExpenseTable extends React.Component {
                                 <div class="card-header collapsed" id={this.props.id} data-toggle="collapse" data-target={this.state.dataTarget} aria-expanded="false">
 
                                     <div class="row">
-                                        <div class="col-6">*categoryName* {/* should be name of category prop */} <i class="fa fa-chevron-down"></i> </div>
+                                        <div class="col-6"> {this.props.title} <i class="fa fa-chevron-down"></i> </div>
                                         <div class="col-3"> Amount</div>
-
+                                        <div class="col-3"> Action</div>
                                     </div>
 
                                 </div>
@@ -76,14 +81,13 @@ export default class ExpenseTable extends React.Component {
 
 
                             <div class="row">
-                                <div class="col-6">Income total: </div>
-                                <div class="col-3">10000 kr</div>
-                                <div class="col-3">0 kr</div>
+                                <div class="col-6">{this.props.title} total: </div>
+                                <div class="col-3">{this.state.sum} kr</div>
 
                             </div>
                             <hr />
                             <div class="row">
-                                <div class="col"><button type="button" class="btn btn-success" onClick={this.openAddIncome}>Add income</button></div>
+                                <div class="col"><button type="button" class="btn btn-success" onClick={this.openAddIncome}>Add new transaction</button></div>
                             </div>
                         </div>
                     </div>

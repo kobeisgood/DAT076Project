@@ -46,7 +46,7 @@ public class TransactionsAPI {
         }catch(NumberFormatException e){
              return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error(e.getMessage()))
+                    .entity(API.error("HEJDÅ" + tid))
                     .build();
         }
         
@@ -243,8 +243,8 @@ public class TransactionsAPI {
     }
     
     @DELETE
-    @Path("{tid")
-    public Response deleteTransaction(@PathParam("{tid}") String tid) {
+    @Path("{tid}")
+    public Response deleteTransaction(@PathParam("tid") String tid) {
         
         int id;
         
@@ -254,7 +254,7 @@ public class TransactionsAPI {
         }catch(NumberFormatException e){
              return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error(e.getMessage()))
+                    .entity(API.error("HEJ" + tid))
                     .build();
         }
         
@@ -281,19 +281,18 @@ public class TransactionsAPI {
         try {
         
         
-            
-           transactionsDAO.remove(transaction);
            
             
+            transactionsDAO.remove(transaction);
+
             transactionsDAO.flush();
-            transactionsDAO.refresh(transaction);
             
             databaseTX.commit();
           
 
             return Response
                     .status(Response.Status.OK)
-                    .entity(API.message("Transaction success"))
+                    .entity(API.message("Transaction removed"))
                     .build();
         } catch (Exception e) { // should not happen
             return Response
