@@ -1,0 +1,13 @@
+.edit-button {
+    height: 20px;
+    width: 20px;
+    background-color: #060b26;
+
+}
+
+.delete-button {
+    height: 20px;
+    width: 20px;
+    background-color: red;
+
+}

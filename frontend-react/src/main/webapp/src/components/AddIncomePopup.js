@@ -3,6 +3,9 @@ import '../css/monthly.css';
 
 export default class AddIncomePopup extends React.Component {
 
+
+    state = {category:null};
+
     cancelAddIncome() {
         var element = document.getElementById("add-income-popup");
         element.style.visibility = "hidden";
@@ -20,7 +23,7 @@ export default class AddIncomePopup extends React.Component {
                 amount : document.getElementById("amount").value, 
                 type : 'INCOME', // TODO: ADD RADIO BUTTONS?
                 user : 1, // TODO: GET FROM LOGIN
-                category : 'Mat', // TODO: GET FROM FORM/DIV
+                category : document.getElementById("add-income-popup").getAttribute("category"), // TODO: GET FROM FORM/DIV
                 ignore_monthly: false, // DEFAULT, NOT IMPLEMENTED FOR TRUE
                 date: null // TODO: ADD INPUT FIELD
                 })
@@ -50,7 +53,7 @@ export default class AddIncomePopup extends React.Component {
             <div id="add-income-popup" className="full-page-container">
                 <div className="flexbox-container">
                     <div className="add-income-popup">
-                        <h3>Add income</h3>
+                        <h3>Add income to {this.state.category}</h3>
                         <div className="add-income-input-container">
                             <input id="desc" className="add-income-name-input add-income-input" placeholder="Name (e.g. salary)"></input>
                             <br></br>

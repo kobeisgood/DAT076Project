@@ -5,6 +5,7 @@ import com.ejwa.frontend.model.dao.*;
 import com.ejwa.frontend.model.entity.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Date;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -13,6 +14,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.UserTransaction;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
@@ -44,7 +46,7 @@ public class TransactionsAPI {
         }catch(NumberFormatException e){
              return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error(e.getMessage()))
+                    .entity(API.error("HEJDÅ" + tid))
                     .build();
         }
         
@@ -82,6 +84,13 @@ public class TransactionsAPI {
 
         String type = json.getAsString("type");
         
+         if(!error.isEmpty()){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(error))
+                    .build();
+        }
+        
     
         if(!(type.equals("INCOME") || type.equals("EXPENSE") || type.equals("SAVINGS"))){
             return Response
@@ -89,15 +98,6 @@ public class TransactionsAPI {
                     .entity(API.error("Wrong type."))
                     .build();
         }
-
-        
-        if(!error.isEmpty()){
-            return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error(error))
-                    .build();
-        }
-        
         
         int amount,userId;
         try{
@@ -143,8 +143,165 @@ public class TransactionsAPI {
                     .entity(API.error(e.getMessage()))
                     .build();
         }
-        
-        
     }
     
+    
+    @PUT
+    public Response updateTransaction(JSONObject json){
+        
+        // Maybe add ignore_monthly and budget
+        String[] data = {"id", "description", "date", "amount", "type"};
+        
+        String error = API.matchDataInput(data, json);
+        
+        if(!error.isEmpty()){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(error))
+                    .build();
+        }
+        
+        
+        String description, type, date;
+        int transactionId, amount;
+        
+         try{
+           transactionId = Integer.parseInt(json.getAsString("id"));
+           amount = Integer.parseInt(json.getAsString("amount"));
+           description = json.getAsString("description");
+           date = json.getAsString("date");
+           type = json.getAsString("type");
+        }
+        catch(NumberFormatException e){
+             return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(e.getMessage()))                            
+                    .build();
+        }
+         
+        if(!error.isEmpty()){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(error))
+                    .build();
+        }
+         
+        if(!(type.equals("INCOME") || type.equals("EXPENSE") || type.equals("SAVINGS"))){
+           return Response
+                   .status(Response.Status.BAD_REQUEST)
+                   .entity(API.error("Wrong type."))
+                   .build();
+       }
+        
+       try {
+           databaseTX.begin();
+       
+       }
+       catch(Exception e){
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(API.error("Transaction error."))
+                    .build();     
+        }
+       
+       Transactions transaction = transactionsDAO.find(transactionId);
+       
+       if(transaction == null){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("No such transaction."))
+                    .build();            
+        }
+        
+        try {
+        
+        
+            
+            transaction.setAmount(amount);
+            transaction.setDate(new Date());
+            transaction.setType(type);
+            transaction.setDescription(description);
+           
+            
+            transactionsDAO.flush();
+            transactionsDAO.refresh(transaction);
+            
+            databaseTX.commit();
+          
+
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(transactionsDAO.find(transactionId))
+                    .build();
+        } catch (Exception e) { // should not happen
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(API.error("Server error."))
+                    .build();
+        }
+       
+    }
+    
+    @DELETE
+    @Path("{tid}")
+    public Response deleteTransaction(@PathParam("tid") String tid) {
+        
+        int id;
+        
+        try{
+            id = Integer.parseInt(tid);
+        
+        }catch(NumberFormatException e){
+             return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("HEJ" + tid))
+                    .build();
+        }
+        
+        Transactions transaction = transactionsDAO.find(id);
+        
+       try {
+           databaseTX.begin();
+       
+       }
+       catch(Exception e){
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(API.error("Transaction error."))
+                    .build();     
+        }
+       
+        if(transaction == null){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("No such transaction."))
+                    .build();            
+        }
+        
+        try {
+        
+        
+           
+            
+            transactionsDAO.remove(transaction);
+
+            transactionsDAO.flush();
+            
+            databaseTX.commit();
+          
+
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(API.message("Transaction removed"))
+                    .build();
+        } catch (Exception e) { // should not happen
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(API.error("Server error."))
+                    .build();
+        }
+        
+     
+        
+    }
 }

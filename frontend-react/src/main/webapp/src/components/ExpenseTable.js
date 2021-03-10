@@ -1,4 +1,5 @@
 import React from "react";
+import MonthlyTransaction from "./MonthlyTransaction";
 
 
 export default class ExpenseTable extends React.Component {
@@ -7,17 +8,45 @@ export default class ExpenseTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            collapse: "collapse" + this.props.id,
-            dataTarget: "#collapse" + this.props.id,
-            accordion: "accordion" + this.props.id,
-            dataParent: "#accordion" + this.props.id
+            collapse: "collapse" + this.props.title,
+            dataTarget: "#collapse" + this.props.title,
+            accordion: "accordion" + this.props.title,
+            dataParent: "#accordion" + this.props.title,
+            categoryCards:null,
+            category:this.props.title
         };
+
+        this.openAddIncome = this.openAddIncome.bind(this);
     }
+
+    async componentDidMount() {
+
+       
+        }
+
+        
 
     openAddIncome() {
         var element = document.getElementById("add-income-popup");
+        element.setAttribute("category",this.state.category);
         element.style.visibility = "visible";
     }
+
+    createCategoryCards(){
+        if(!this.props.data)
+          return;
+
+        var ret = [];
+        var sum = 0;
+        for(let transaction of this.props.data){
+            sum += transaction.amount;
+          ret.push(<MonthlyTransaction data={transaction}/>);
+        }
+        this.state.sum = sum;
+
+        return ret;
+
+      }
 
     render() {
         return (
@@ -27,42 +56,18 @@ export default class ExpenseTable extends React.Component {
                         <div class="accordion" id={this.state.accordion}>
                             <div class="card">
                                 <div class="card-header collapsed" id={this.props.id} data-toggle="collapse" data-target={this.state.dataTarget} aria-expanded="false">
-                                    <div class="row">
-                                        <div class="col-6">Income <i class="fa fa-chevron-down"></i> </div>
-                                        <div class="col-3"> Planned</div>
-                                        <div class="col-3"> Received</div>
 
+                                    <div class="row">
+                                        <div class="col-6"> {this.props.title} <i class="fa fa-chevron-down"></i> </div>
+                                        <div class="col-3"> Amount</div>
+                                        <div class="col-3"> Action</div>
                                     </div>
+
                                 </div>
+
                                 <div id={this.state.collapse} class="collapse" aria-labelledby={this.props.id} data-parent={this.state.dataParent} >
                                     <div class="card-body" id="income">
-                                        <div class="row">
-                                            <div class="col-6">Paycheck 1</div>
-                                            <div class="col-3"> 2500 kr</div>
-                                            <div class="col-3"> 0 kr</div>
-
-                                        </div>
-                                        <hr />
-                                        <div class="row">
-                                            <div class="col-6">Paycheck 2</div>
-                                            <div class="col-3"> 2500 kr</div>
-                                            <div class="col-3"> 0 kr</div>
-
-                                        </div>
-                                        <hr />
-                                        <div class="row">
-                                            <div class="col-6">Paycheck 3</div>
-                                            <div class="col-3"> 2500 kr</div>
-                                            <div class="col-3"> 0 kr</div>
-
-                                        </div>
-                                        <hr />
-                                        <div class="row">
-                                            <div class="col-6">Paycheck 4</div>
-                                            <div class="col-3"> 2500 kr</div>
-                                            <div class="col-3"> 0 kr</div>
-                                        </div>
-
+                                        {this.createCategoryCards()}
 
                                     </div>
                                 </div>
@@ -76,14 +81,13 @@ export default class ExpenseTable extends React.Component {
 
 
                             <div class="row">
-                                <div class="col-6">Income total: </div>
-                                <div class="col-3">10000 kr</div>
-                                <div class="col-3">0 kr</div>
+                                <div class="col-6">{this.props.title} total: </div>
+                                <div class="col-3">{this.state.sum} kr</div>
 
                             </div>
                             <hr />
                             <div class="row">
-                                <div class="col"><button type="button" class="btn btn-success" onClick={this.openAddIncome}>Add income</button></div>
+                                <div class="col"><button type="button" class="btn btn-success" onClick={this.openAddIncome}>Add new transaction</button></div>
                             </div>
                         </div>
                     </div>
