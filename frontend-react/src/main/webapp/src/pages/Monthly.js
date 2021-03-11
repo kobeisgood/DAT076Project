@@ -1,7 +1,10 @@
 import React from "react";
 import ExpenseTable from "../components/ExpenseTable";
 import AddIncomePopup from '../components/AddIncomePopup';
+import AddCategoryPopup from '../components/AddCategoryPopup';
+import AddTransactionPopup from '../components/AddTransactionPopup';
 import DoughnutChartComponent from "../components/DoughnutChartComponent";
+import MonthlyFloatingButtons from "../components/MonthlyFloatingButtons"
 
 import '../css/monthly.css';
 
@@ -78,6 +81,12 @@ console.log("GET DATA API");
         console.log(this.state.chartComponent);
     }
 
+    /*openAddCategoryPopup() {
+      var element = document.getElementById("add-category-popup");
+       // element.setAttribute("category",this.state.category);
+        element.style.visibility = "visible";
+    }*/
+
   render() {
     return (
       <div>
@@ -93,7 +102,10 @@ console.log("GET DATA API");
         {this.state.chartComponent}
         </div>
         <AddIncomePopup parent={this} />
+        <AddCategoryPopup parent={this} />
+        <AddTransactionPopup parent={this} />
         </div>
+        <MonthlyFloatingButtons/>
         </div>
     )
   };
