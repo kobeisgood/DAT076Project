@@ -192,6 +192,93 @@ public class UsersAPI {
     }
     
     
+    
+    @GET
+    @Path("{uid}/transactions/between/{from}/{to}")
+    public Response getUserTransactionsBetween(@PathParam("uid") String uid, @PathParam("from") String from, @PathParam("to") String to) {
+        
+        int id;
+        
+       
+        try{
+            id = Integer.parseInt(uid);
+           
+        }catch(NumberFormatException e){
+             return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(e.getMessage()))
+                    .build();
+        }
+        List<Transactions> transactions = null;
+        try{
+         transactions = usersDAO.findAllTransactions(id,from,to);
+        }
+        catch(Exception e){
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(API.error("error"))
+                    .build();
+        }
+        
+        JSONObject result = new JSONObject();
+        
+        
+        List<Integer> data = new ArrayList<Integer>();
+        List<String> categories = new ArrayList<String>();
+        List<String> colors = new ArrayList<String>();
+
+        for(Transactions transaction : transactions){
+            String catName = transaction.getCategory().getCategoryName();
+            int amount = transaction.getAmount();
+            
+            if(!categories.contains(catName)){
+                categories.add(catName);
+            }
+            
+            int index = categories.indexOf(catName);
+            
+            
+            if(data.size() == index){
+                data.add(0);
+            }
+           
+            data.set(index, data.get(index) + amount);
+            
+            if(colors.size() == index){
+                colors.add(transaction.getCategory().getColor());
+            }
+           
+           
+            
+            
+            
+        }
+
+        
+            result.appendField("data", data);
+            result.appendField("lables", categories);
+            result.appendField("colors", colors);
+            
+       
+        
+        if(usersDAO.find(id) != null){
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(result)
+                    .build();
+        }
+        else{
+            return Response
+                    .status(Response.Status.NO_CONTENT)
+                    .entity("[]")
+                    .build();
+        }
+        
+    }
+    
+    
+    
+    
     @GET
     @Path("{uid}/dashboard")
     public Response getUserDashboard(@PathParam("uid") String uid) {

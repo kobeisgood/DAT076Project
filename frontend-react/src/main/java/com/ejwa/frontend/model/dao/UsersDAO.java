@@ -2,6 +2,9 @@ package com.ejwa.frontend.model.dao;
 
 
 import com.ejwa.frontend.model.entity.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -43,6 +46,22 @@ public class UsersDAO extends AbstractDAO<Users,Integer> {
         query.setParameter("id", userId);
         query.setParameter("year", year);
         query.setParameter("month", month);
+        
+        return query.getResultList();
+        }
+    
+     public List<Transactions> findAllTransactions(int userId, String from, String to) throws ParseException  {
+        TypedQuery<Transactions> query = entityManager.createQuery("SELECT t FROM Users u, Category c, Transactions t"
+                +" WHERE c.categoryUser = u AND t.category = c AND u.id = :id AND t.date BETWEEN :from AND :to"
+                ,Transactions.class);
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date f = formatter.parse(from);
+        Date t = formatter.parse(to);
+        
+        query.setParameter("id", userId);
+        query.setParameter("from", f);
+        query.setParameter("to", t);
         
         return query.getResultList();
         }

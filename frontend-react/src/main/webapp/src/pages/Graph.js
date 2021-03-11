@@ -5,10 +5,35 @@ import '../css/graph.css'
 
 export default class Graph extends React.Component {
 
+  constructor(props) {
+    super(props);
+    
+    this.fetchData = this.fetchData.bind(this);
+}
+
+  state = {
+    data:null
+  };
+
+
+
+  max(arr){
+    var max = 0;
+    Math.max(arr);
+    console.log(max);
+    return max;
+  }
 chartRef1 = React.createRef();
 chartRef2 = React.createRef();
 
-    componentDidMount() {
+    componentDidUpdate() {
+      console.log(this.state.data);
+
+      if(this.state.data == null)
+        return;
+
+        console.log("OOO" + this.state.data);
+
         const barChartRef = this.chartRef1.current.getContext("2d");
         const doughnutChartRef = this.chartRef2.current.getContext("2d");
 
@@ -17,13 +42,14 @@ chartRef2 = React.createRef();
             type: "horizontalBar",
             data: {
                 //Bring in data
-                labels: ["Hyra", "Mat", "Shopping"],
+                labels: this.state.data.lables,
                 datasets: [
                     {
 
                         label: " Kronor",
-                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-                        data: [5000, 3000, 3000],
+                        backgroundColor: this.state.data.colors,
+
+                        data: this.state.data.data,
                     }
                 ]
             },
@@ -33,7 +59,7 @@ chartRef2 = React.createRef();
                   xAxes: [{
                       ticks: {
                           beginAtZero: true,
-                          max:7000 //TODO take data array, find max value, max of graph should be max value + constant
+                          
                           }
                    }]
                },
@@ -52,13 +78,13 @@ chartRef2 = React.createRef();
           type:"doughnut",
           data: {
             //Bring in data
-            labels: ["Hyra", "Mat", "Shopping"],
+            labels: this.state.data.lables,
             datasets: [
                 {
 
                     label: ["Utgifter <månad, år>"],
-                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-                    data: [5000, 3000, 3000],
+                    backgroundColor: this.state.data.colors,
+                    data: this.state.data.data,
                 }
             ]
           },
@@ -74,6 +100,30 @@ chartRef2 = React.createRef();
 
       }
 
+
+
+
+      fetchData(){
+
+        
+
+
+      var from =  document.getElementById("from").value;
+      var to =  document.getElementById("to").value ;
+        console.log()
+      fetch('http://localhost:8080/frontend-react/api/users/1/transactions/between/'+ from +'/' + to)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            this.setState({data});
+            console.log(this.state.data);
+
+
+          });
+        
+
+      }
+
   render() {
     return(
 
@@ -82,32 +132,24 @@ chartRef2 = React.createRef();
         <div class="col-1"></div>
           <div class='col-1'>
             <p class="text-sorting" >2021</p>
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Välj år
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/#">Action</a>
-                <a class="dropdown-item" href="/#">Another action</a>
-                <a class="dropdown-item" href="/#">Something else here</a>
-              </div>
-              </div>
+             
+              
           </div>
 
           <div class='col-1'>
             <p class="text-sorting" >January</p>
             <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Välj månad
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/#">Action</a>
-                <a class="dropdown-item" href="/#">Another action</a>
-                <a class="dropdown-item" href="/#">Something else here</a>
-              </div>
+             
               </div>
           </div>
         </div>
+        <div class='row'>
+
+        <input id="from" type="date"></input>
+        <input id="to" type="date"></input>
+              <button type="button" className="btn btn-cancel" onClick={this.fetchData}>Cancel</button>
+              </div>
+
 
         <div class='row'>
         <div class="col-1"></div>

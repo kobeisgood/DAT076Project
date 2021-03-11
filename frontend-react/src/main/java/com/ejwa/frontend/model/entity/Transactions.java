@@ -75,11 +75,7 @@ public class Transactions implements Serializable {
         else
             return null;
     }
-    
-    public CategoryPK getCategory(){
-        return new CategoryPK(category.getCategoryName(), category.getCategoryUser().getId());
-    }
-    
+   
     
     
     
