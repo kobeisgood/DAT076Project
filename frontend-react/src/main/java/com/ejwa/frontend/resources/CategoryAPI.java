@@ -40,7 +40,7 @@ public class CategoryAPI {
     @POST
     public Response addCategory(JSONObject json) throws IOException  {
 
-        String[] data = {"user","categoryName","color"};
+        String[] data = {"user","categoryName","color","type"};
         
         String error = API.matchDataInput(data, json);
         
@@ -51,11 +51,12 @@ public class CategoryAPI {
                     .build();
         }
         
-        String name,color;
+        String name,color,type;
         int userId;
         
         try{
            name = json.getAsString("categoryName");
+           type = json.getAsString("type");
            userId = Integer.parseInt(json.getAsString("user"));
            color = json.getAsString("color");
              
@@ -77,7 +78,7 @@ public class CategoryAPI {
         }
         
         try {
-            Category newCategory = new Category(name, user, color);
+            Category newCategory = new Category(name, user, color,type);
             categoryDAO.create(newCategory);
             return Response
                     .status(Response.Status.CREATED)
@@ -94,7 +95,7 @@ public class CategoryAPI {
     @PUT
     public Response updateCategory(JSONObject json) throws IOException  {
 
-        String[] data = {"user","categoryName","color"};
+        String[] data = {"user","categoryName","color","type"};
         
         String error = API.matchDataInput(data, json);
         
@@ -105,11 +106,12 @@ public class CategoryAPI {
                     .build();
         }
         
-        String name,color;
+        String name,color,type;
         int userId;
         
         try{
            name = json.getAsString("categoryName");
+           type = json.getAsString("type");
            userId = Integer.parseInt(json.getAsString("user"));
            color = json.getAsString("color");
         }

@@ -78,11 +78,10 @@ public class TransactionsAPI {
             json.appendField("date", "CURRENT_TIMESTAMP");
         }
         
-        String[] data = {"description","amount","type","category","user","ignore_monthly","date"};
+        String[] data = {"description","amount","category","user","ignore_monthly","date"};
         
         String error = API.matchDataInput(data, json);
 
-        String type = json.getAsString("type");
         
          if(!error.isEmpty()){
             return Response
@@ -92,13 +91,7 @@ public class TransactionsAPI {
         }
         
     
-        if(!(type.equals("INCOME") || type.equals("EXPENSE") || type.equals("SAVINGS"))){
-            return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error("Wrong type."))
-                    .build();
-        }
-        
+       
         int amount,userId;
         try{
             amount = Integer.parseInt(json.getAsString("amount"));
@@ -122,7 +115,7 @@ public class TransactionsAPI {
         }
                 
         try {
-            Transactions newTransaction = new Transactions(json.getAsString("description"), amount, json.getAsString("type"),category);
+            Transactions newTransaction = new Transactions(json.getAsString("description"), amount, category.getType(),category);
             transactionsDAO.create(newTransaction);
             if(json.getAsString("ignore_monthly").equalsIgnoreCase("true")){
                 newTransaction.setIgnore_monthly(true);
@@ -150,7 +143,7 @@ public class TransactionsAPI {
     public Response updateTransaction(JSONObject json){
         
         // Maybe add ignore_monthly and budget
-        String[] data = {"id", "description", "date", "amount", "type"};
+        String[] data = {"id", "description", "date", "amount"};
         
         String error = API.matchDataInput(data, json);
         
@@ -170,7 +163,6 @@ public class TransactionsAPI {
            amount = Integer.parseInt(json.getAsString("amount"));
            description = json.getAsString("description");
            date = json.getAsString("date");
-           type = json.getAsString("type");
         }
         catch(NumberFormatException e){
              return Response
@@ -186,12 +178,7 @@ public class TransactionsAPI {
                     .build();
         }
          
-        if(!(type.equals("INCOME") || type.equals("EXPENSE") || type.equals("SAVINGS"))){
-           return Response
-                   .status(Response.Status.BAD_REQUEST)
-                   .entity(API.error("Wrong type."))
-                   .build();
-       }
+        
         
        try {
            databaseTX.begin();
@@ -219,7 +206,6 @@ public class TransactionsAPI {
             
             transaction.setAmount(amount);
             transaction.setDate(new Date());
-            transaction.setType(type);
             transaction.setDescription(description);
            
             

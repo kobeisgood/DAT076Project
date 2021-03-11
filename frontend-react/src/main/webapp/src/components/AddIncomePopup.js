@@ -27,7 +27,6 @@ export default class AddIncomePopup extends React.Component {
                 {
                 description : document.getElementById("desc").value,
                 amount : document.getElementById("amount").value, 
-                type : 'INCOME', // TODO: ADD RADIO BUTTONS?
                 user : 1, // TODO: GET FROM LOGIN
                 category : document.getElementById("add-income-popup").getAttribute("category"), // TODO: GET FROM FORM/DIV
                 ignore_monthly: false, // DEFAULT, NOT IMPLEMENTED FOR TRUE
