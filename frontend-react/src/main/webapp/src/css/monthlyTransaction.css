@@ -15,6 +15,18 @@
     
 }
 
+.category-circle-picker{
+    width:2vh;
+    height:2vh;
+    border-radius:100%;
+}
+
+.category-setting-container{
+    display:flex;
+    flex-direction: row;
+
+}
+
 .delete-button {
     height: 40px;
     width: 40px;

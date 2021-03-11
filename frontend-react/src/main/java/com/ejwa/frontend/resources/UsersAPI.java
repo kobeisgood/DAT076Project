@@ -88,6 +88,40 @@ public class UsersAPI {
     }
     
     
+    @GET
+    @Path("{uid}/categories")
+    public Response getUserCategories(@PathParam("uid") String uid)  {
+        
+        int id;
+                
+        try{
+            id = Integer.parseInt(uid);
+        
+        }catch(NumberFormatException e){
+             return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(e.getMessage()))
+                    .build();
+        }
+        
+        
+        Users u = usersDAO.find(id);
+        
+        if(u != null){
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(u.getCategories())
+                    .build();
+        }
+        else{
+            return Response
+                    .status(Response.Status.NO_CONTENT)
+                    .entity("{}")
+                    .build();
+        }
+    }
+    
+    
     @POST
     @Path("login")
     public Response checkCredentials(JSONObject json) throws IOException  {

@@ -1,10 +1,23 @@
 .profile-page-container {
+
+  display:flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+}
+
+.profile-categories-container{
+  display:flex;
+  flex-direction: column;
+  height: 88vh;
+  width: 50vw;
+
 }
 
 .profile-card-container {
   margin: auto;
   height: 88vh;
-  width: 80vh;
+  width: 50vw;
   background-color: white;
   border-radius: 2vh;
   padding-top: 5vh;
