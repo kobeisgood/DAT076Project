@@ -17,7 +17,7 @@ export default class CreateAccount extends React.Component {
         const data = new FormData(event.target);
 
 
-        if(data.get("repeatpassword") != data.get('password')){
+        if(data.get("repeatpassword") !== data.get('password')){
             // TODO
             alert("PASSWORD MISSMATCH!");
             return;
