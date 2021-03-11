@@ -67,7 +67,7 @@ export default class MonthlyTransaction extends React.Component {
             headers: { 'Content-Type': 'application/json' }, 
             body: JSON.stringify(
                 {
-                amount: this.state.amountValue,
+                amount: Math.abs(this.state.amountValue),
                 description: this.state.descriptionValue,
                 id: this.props.data.transactionId, 
                 date: this.props.data.date
