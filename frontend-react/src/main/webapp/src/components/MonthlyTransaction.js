@@ -70,7 +70,6 @@ export default class MonthlyTransaction extends React.Component {
                 amount: this.state.amountValue,
                 description: this.state.descriptionValue,
                 id: this.props.data.transactionId, 
-                type: this.props.data.type,
                 date: this.props.data.date
                 })
         };
