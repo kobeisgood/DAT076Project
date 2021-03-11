@@ -54,6 +54,8 @@ public class Category implements Serializable {
     @NonNull 
     private String color;
     
+    @NonNull
+    private String type; // INCOME, SAVINGS, EXPENSE
     
     
     @JsonbTransient
