@@ -8,10 +8,7 @@ import { ChromePicker } from 'react-color'
 
 export default class MonthlyTransaction extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-    }
+  
 
     componentDidMount(){
         if(this.state.color == null)
