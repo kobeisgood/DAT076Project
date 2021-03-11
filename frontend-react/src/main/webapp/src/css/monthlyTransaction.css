@@ -1,13 +1,57 @@
 .edit-button {
-    height: 20px;
-    width: 20px;
+    height: 40px;
+    width: 40px;
     background-color: #060b26;
+    margin:auto;
+    display: flex;
+    align-items: center;
+    padding-left: 0.4vw;
+    border-radius: 10%;
+}
 
+.edit-button:hover {
+    cursor: pointer;
+    opacity: 50%;
+    
 }
 
 .delete-button {
-    height: 20px;
-    width: 20px;
+    height: 40px;
+    width: 40px;
     background-color: red;
+    margin:auto;
+    display: flex;
+    align-items: center;
+    padding-left: 0.4vw;
+    border-radius: 10%;
+}
 
+.delete-button:hover {
+    cursor: pointer;
+    opacity: 50%;
+}
+
+.button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+    
+}
+
+.save-button {
+    text-align: center;
+    height: 60px;
+    width: 5vw;
+    border-radius: 5%;
+    background-color: green;
+    color: white;
+    padding: 18px;
+    margin-top: 8px;
+    transition: opacity 0.1s ease-out;
+}
+
+.save-button:hover {
+    cursor: pointer;
+    opacity: 50%;
+    
 }

@@ -63,7 +63,7 @@ export default class ExpenseTable extends React.Component {
                                     <div class="row">
                                         <div class="col-6"> {this.props.title} <i class="fa fa-chevron-down"></i> </div>
                                         <div class="col-3"> Amount</div>
-                                        <div class="col-3"> Action</div>
+                                        <div class="col-3"> Edit/Delete a Transaction</div>
                                     </div>
 
                                 </div>
