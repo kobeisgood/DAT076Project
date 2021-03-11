@@ -11,13 +11,15 @@ export default class DashBoardCard extends React.Component {
 
   // title, labels[], data[], colors[]
 constructor(props){
-  super();
+  super(props);
   this.props = props;
+  this.createChart = this.createChart.bind(this);
 }
   
 chartRef = React.createRef();
 
-componentDidMount() {
+
+createChart(){
   const doughnutChartRef = this.chartRef.current.getContext("2d");
 
  
@@ -38,16 +40,27 @@ componentDidMount() {
 
         options: {
           title: {
-            display: false,
-            text: 'Utgifter <månad, år> procentuellt'
+            display: true,
+            text: 'Utgifer'
           },
           legend: {
-            display: false
+            display: true
           }
         },
 
         });
 
+}
+componentDidMount() {
+
+  this.createChart();
+  
+}
+
+componentDidUpdate() {
+
+  this.createChart();
+  
 }
 
   render() {

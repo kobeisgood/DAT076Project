@@ -4,6 +4,12 @@ import '../css/monthly.css';
 export default class AddIncomePopup extends React.Component {
 
 
+    constructor(props) {
+        super(props);
+        
+        this.addIncome = this.addIncome.bind(this);
+    }
+
     state = {category:null};
 
     cancelAddIncome() {
@@ -29,14 +35,18 @@ export default class AddIncomePopup extends React.Component {
                 })
         };
 
+        document.getElementById("amount").value = null;
+        document.getElementById("desc").value = null;
         console.log(requestOptions.body);
 
         
+        var parent = this.props.parent;
+
         fetch('http://localhost:8080/frontend-react/api/transactions', requestOptions)
             .then(response => response.json())
             .then(transaction => {
                 console.log(transaction);
-                // ADD TRANSACTION TO LIST AND UPDATE CHART
+                parent.getDataFromAPI();
                 
             });
             

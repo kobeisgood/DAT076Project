@@ -21,9 +21,11 @@ export default class ExpenseTable extends React.Component {
 
     async componentDidMount() {
 
-       
+        this.createCategoryCards();
+
         }
 
+    
         
 
     openAddIncome() {
@@ -36,15 +38,16 @@ export default class ExpenseTable extends React.Component {
         if(!this.props.data)
           return;
 
-        var ret = [];
+        var categoryCards = [];
         var sum = 0;
         for(let transaction of this.props.data){
             sum += transaction.amount;
-          ret.push(<MonthlyTransaction data={transaction}/>);
+            categoryCards.push(<MonthlyTransaction parent={this.props.parent} data={transaction}/>);
         }
-        this.state.sum = sum;
 
-        return ret;
+        this.setState({sum,categoryCards});
+
+
 
       }
 
@@ -67,7 +70,7 @@ export default class ExpenseTable extends React.Component {
 
                                 <div id={this.state.collapse} class="collapse" aria-labelledby={this.props.id} data-parent={this.state.dataParent} >
                                     <div class="card-body" id="income">
-                                        {this.createCategoryCards()}
+                                        {this.state.categoryCards}
 
                                     </div>
                                 </div>
