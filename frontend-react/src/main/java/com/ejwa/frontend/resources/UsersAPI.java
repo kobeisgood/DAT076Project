@@ -1,6 +1,7 @@
 package com.ejwa.frontend.resources;
 
 import com.ejwa.frontend.model.dao.*;
+import com.ejwa.frontend.model.*;
 import com.ejwa.frontend.model.entity.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -44,7 +46,7 @@ public class UsersAPI {
     private UsersDAO usersDAO;
     
     @Inject
-        private UserTransaction databaseTX;
+    private UserTransaction databaseTX;
 
     
     
@@ -100,6 +102,7 @@ public class UsersAPI {
     
     @GET
     @Path("{uid}/categories")
+    @Transactional
     public Response getUserCategories(@PathParam("uid") String uid)  {
         
         int id;
@@ -116,6 +119,8 @@ public class UsersAPI {
         
         
         Users u = usersDAO.find(id);
+        
+        usersDAO.refresh(u);
         
         if(u != null){
             return Response
@@ -152,6 +157,9 @@ public class UsersAPI {
         try {
             Users user = usersDAO.findAccountByMail(mail);
             if(user.getPassword().equals(password)){
+                
+                userSession.setUser(user);
+                
                 return Response
                     .status(Response.Status.OK)
                     .entity(user)

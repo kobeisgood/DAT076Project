@@ -15,6 +15,7 @@ import javax.ejb.EJBException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -39,6 +40,7 @@ public class CategoryAPI {
 
  
     @POST
+    @Transactional
     public Response addCategory(JSONObject json) throws IOException  {
 
         String[] data = {"user","categoryName","color","type"};
@@ -71,6 +73,9 @@ public class CategoryAPI {
         
         Users user = usersDAO.find(userId);
         
+        CategoryPK key = new CategoryPK(name, userId);
+
+                
         if(user == null){
             return Response
                     .status(Response.Status.BAD_REQUEST)
@@ -79,27 +84,19 @@ public class CategoryAPI {
         }
         
         
-        try{
-            databaseTX.begin();
-        }
-        catch(Exception e){
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(API.error("Transaction error."))
-                    .build();     
-        }
-        
+    
         
         
         try {
             Category newCategory = new Category(name, user, color,type);
             categoryDAO.create(newCategory);
+            
             categoryDAO.flush();
-            databaseTX.commit();
+            
             
             return Response
-                    .status(Response.Status.CREATED)
-                    .entity(newCategory)
+                    .status(Response.Status.OK)
+                    .entity(categoryDAO.find(key))
                     .build();
         } catch (Exception e) {
             return Response
