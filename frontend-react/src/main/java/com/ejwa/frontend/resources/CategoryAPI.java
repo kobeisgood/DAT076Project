@@ -77,9 +77,25 @@ public class CategoryAPI {
                     .build();            
         }
         
+        
+        try{
+            databaseTX.begin();
+        }
+        catch(Exception e){
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(API.error("Transaction error."))
+                    .build();     
+        }
+        
+        
+        
         try {
             Category newCategory = new Category(name, user, color,type);
             categoryDAO.create(newCategory);
+            categoryDAO.flush();
+            databaseTX.commit();
+            
             return Response
                     .status(Response.Status.CREATED)
                     .entity(newCategory)

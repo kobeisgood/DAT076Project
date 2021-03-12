@@ -18,10 +18,10 @@ export default class MonthlyFloatingButtons extends React.Component {
     render() {
         return(
             <div>
-                <div class="float2" onClick={this.openAddTransactionPopup}>
+                <div className="float2" onClick={this.openAddTransactionPopup}>
                 Add New Transaction
             </div>
-            <div class="float1" onClick={this.openAddCategoryPopup}>
+            <div className="float1" onClick={this.openAddCategoryPopup}>
                 Add New Category
             </div>
 

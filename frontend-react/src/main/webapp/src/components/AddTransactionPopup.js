@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/popups.css'
+import '../css/popups.css';
 
 
 export default class AddTransactionPopup extends React.Component {
@@ -9,7 +9,13 @@ export default class AddTransactionPopup extends React.Component {
         
     this.cancelAddCategory = this.cancelAddTransaction.bind(this)
     this.addCategory = this.addTransaction.bind(this)
+    this.getCategories = this.getCategories.bind(this)
     }
+
+
+    state={
+        categoryOptions:null
+    };
 
     cancelAddTransaction() {
         var element = document.getElementById("add-transaction-popup");
@@ -20,6 +26,26 @@ export default class AddTransactionPopup extends React.Component {
         // db stuff
     }
 
+
+    componentDidMount(){
+        this.getCategories();
+    }
+
+
+    async getCategories(){
+
+        fetch('http://localhost:8080/frontend-react/api/users/1/categories')
+        .then(response => response.json())
+        .then(data => {
+            var categoryOptions = [];
+            for(let category of data){
+                categoryOptions.push(<option key ={category.categoryName}  name={category.categoryName}>{category.categoryName}</option>);
+            }
+            this.setState({categoryOptions})
+
+        });
+    }
+
     render() {
         return(
             <div id="add-transaction-popup" className="full-page-container">
@@ -27,11 +53,14 @@ export default class AddTransactionPopup extends React.Component {
                     <div className="add-popup">
                         <h3>Add New Transaction</h3>
                         <div className="add-transaction-input-container">
-                            <input id="categoryName" className="add-category-name-input add-input" placeholder="Category Name (e.g. Food)"></input>
+
+                        <select id="categoryName" name="categoryName">
+                            {this.state.categoryOptions}
+                        </select>
                             <br></br>
-                            <input id="desc" className="add-income-name-input add-income-input" placeholder="Description (e.g. Willys)"></input>
+                            <input id="newTransactionDesc" className="add-income-name-input add-income-input" placeholder="Description (e.g. Willys)"></input>
                             <br></br>
-                            <input id="amount" className="add-income-amount-input add-income-input" placeholder="Amount (SEK)"></input>
+                            <input id="newTransactionAmount" className="add-income-amount-input add-income-input" placeholder="Amount (SEK)"></input>
                             <br></br>
                             <input id="date" type="date"></input>
                         </div>

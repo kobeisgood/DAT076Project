@@ -91,33 +91,33 @@ export default class MonthlyTransaction extends React.Component {
         return(
 
             <div> 
-                <div class="row">
+                <div className="row">
 
-                {this.state.editState === false ? <div class="col-6">{this.props.data.description}</div> : 
-               <div class="col-6">
+                {this.state.editState === false ? <div className="col-6">{this.props.data.description}</div> : 
+               <div className="col-6">
                    <p> <b>Edit transaction description:</b></p>
                    <input  type="text" name="descriptionValue" value={this.state.descriptionValue} onChange={this.handleChange}/> 
                 </div> }
 
-                {this.state.editState === false ? <div class="col-4"> {this.props.data.amount}</div> :
-                     <div class="col-4">
+                {this.state.editState === false ? <div className="col-4"> {this.props.data.amount}</div> :
+                     <div className="col-4">
                          <p> <b>Edit transaction amount:</b></p>
                          <input  type="text" name="amountValue" value={Math.abs(this.state.amountValue)} onChange={this.handleChange}/>
                      </div>
                 }
 
-                    <div class="col-2"> 
-                    {this.state.editState === false ? <div class="button-container">
+                    <div className="col-2"> 
+                    {this.state.editState === false ? <div className="button-container">
                             
-                            <div class="edit-button" onClick={this.editTransaction}>
+                            <div className="edit-button" onClick={this.editTransaction}>
                                 <FontAwesomeIcon icon={faEdit} color='white' size='lg'/>
                             </div>
-                            <div class="delete-button" onClick={this.deleteTransaction}>
+                            <div className="delete-button" onClick={this.deleteTransaction}>
                                 <FontAwesomeIcon icon={faTrashAlt} color='white' size='lg'/>
                             </div>
                         
                          </div> : 
-                            <div class="save-button" onClick={this.saveTransaction}>
+                            <div className="save-button" onClick={this.saveTransaction}>
                                 Save
                             </div>
                          }

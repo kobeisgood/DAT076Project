@@ -16,12 +16,12 @@ import Profile from './pages/Profile';
 ReactDOM.render(
 
 <BrowserRouter>
-  <div class="general-styling">
-    <div class="row">
-      <div class="col-2">
+  <div className="general-styling">
+    <div className="row">
+      <div className="col-2">
         <Sidebar/>
       </div>
-      <div class="col-10">
+      <div className="col-10">
         <Route path="/frontend-react/dashboard" component={Dashboard}></Route>
         <Route path="/frontend-react/monthly" component={Monthly}></Route>
         <Route path="/frontend-react/graph" component={Graph}></Route>

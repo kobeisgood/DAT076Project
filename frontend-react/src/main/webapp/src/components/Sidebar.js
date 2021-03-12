@@ -14,7 +14,7 @@ function Sidebar() {
             </ul>
         </nav>*/
         <nav className={'nav-menu'}>
-            <h1 class='logo'> CashIT </h1>
+            <h1 className='logo'> CashIT </h1>
             <ul className="nav-menu-items">
                  
                 {SidebarData.map((item, index) => {

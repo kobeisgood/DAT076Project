@@ -421,7 +421,7 @@ public class UsersAPI {
             Users newUser = new Users(json.getAsString("firstName"),json.getAsString("lastName"),json.getAsString("mail"),json.getAsString("password"));
             usersDAO.create(newUser);
             return Response
-                    .status(Response.Status.CREATED)
+                    .status(Response.Status.OK)
                     .entity(newUser)
                     .build();
         } catch (Exception e) {

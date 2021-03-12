@@ -53,23 +53,23 @@ export default class ExpenseTable extends React.Component {
 
     render() {
         return (
-            <div class="row monthly-card no-margin box-shadow">
-                <div class="card w-100">
-                    <div class="card-body no-padding">
-                        <div class="accordion" id={this.state.accordion}>
-                            <div class="card">
-                                <div class="card-header collapsed" id={this.props.id} data-toggle="collapse" data-target={this.state.dataTarget} aria-expanded="false">
+            <div className="row monthly-card no-margin box-shadow">
+                <div className="card w-100">
+                    <div className="card-body no-padding">
+                        <div className="accordion" id={this.state.accordion}>
+                            <div className="card">
+                                <div className="card-header collapsed" id={this.props.id} data-toggle="collapse" data-target={this.state.dataTarget} aria-expanded="false">
 
-                                    <div class="row">
-                                        <div class="col-6"> {this.props.title} <i class="fa fa-chevron-down"></i> </div>
-                                        <div class="col-3"> Amount</div>
-                                        <div class="col-3"> Edit/Delete a Transaction</div>
+                                    <div className="row">
+                                        <div className="col-6"> {this.props.title} <i className="fa fa-chevron-down"></i> </div>
+                                        <div className="col-3"> Amount</div>
+                                        <div className="col-3"> Edit/Delete a Transaction</div>
                                     </div>
 
                                 </div>
 
-                                <div id={this.state.collapse} class="collapse" aria-labelledby={this.props.id} data-parent={this.state.dataParent} >
-                                    <div class="card-body" id="income">
+                                <div id={this.state.collapse} className="collapse" aria-labelledby={this.props.id} data-parent={this.state.dataParent} >
+                                    <div className="card-body" id="income">
                                         {this.state.categoryCards}
 
                                     </div>
@@ -83,14 +83,14 @@ export default class ExpenseTable extends React.Component {
 
 
 
-                            <div class="row">
-                                <div class="col-6">{this.props.title} total: </div>
-                                <div class="col-3">{this.state.sum} kr</div>
+                            <div className="row">
+                                <div className="col-6">{this.props.title} total: </div>
+                                <div className="col-3">{this.state.sum} kr</div>
 
                             </div>
                             <hr />
-                            <div class="row">
-                                <div class="col"><button type="button" class="btn btn-success" onClick={this.openAddIncome}>Add new transaction</button></div>
+                            <div className="row">
+                                <div className="col"><button type="button" className="btn btn-success" onClick={this.openAddIncome}>Add new transaction</button></div>
                             </div>
                         </div>
                     </div>

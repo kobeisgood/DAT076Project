@@ -23,16 +23,14 @@ export default class Graph extends React.Component {
     console.log(max);
     return max;
   }
+  
 chartRef1 = React.createRef();
 chartRef2 = React.createRef();
 
     componentDidUpdate() {
-      console.log(this.state.data);
 
       if(this.state.data == null)
         return;
-
-        console.log("OOO" + this.state.data);
 
         const barChartRef = this.chartRef1.current.getContext("2d");
         const doughnutChartRef = this.chartRef2.current.getContext("2d");
