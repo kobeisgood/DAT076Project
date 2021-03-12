@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.POST;
@@ -24,6 +25,7 @@ import org.eclipse.persistence.exceptions.DatabaseException;
 
 @Path("category")
 @ApplicationScoped
+@RequestScoped
 public class CategoryAPI {
     
     @EJB

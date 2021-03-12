@@ -16,6 +16,7 @@ import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.POST;
@@ -32,11 +33,14 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 @Path("users")
 @ApplicationScoped
+@RequestScoped
 public class UsersAPI {
     
     
     
    
+    @Inject
+    private User userSession;
         
     @EJB
     private UsersDAO usersDAO;
@@ -52,6 +56,14 @@ public class UsersAPI {
     }
     
     
+    @GET
+    @Path("/session")
+    public Response isLoggedIn(){
+          return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(userSession.getUser())
+                    .build();
+    }
     
     
     @GET

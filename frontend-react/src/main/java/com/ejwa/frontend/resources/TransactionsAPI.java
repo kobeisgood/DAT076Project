@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.DELETE;
@@ -23,6 +24,7 @@ import net.minidev.json.JSONObject;
 
 @Path("transactions")
 @ApplicationScoped
+@RequestScoped
 public class TransactionsAPI {
     
     @EJB
