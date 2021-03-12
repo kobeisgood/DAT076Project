@@ -1,6 +1,10 @@
 
+import com.ejwa.frontend.JAXRSConfiguration;
 import com.ejwa.frontend.model.dao.*;
+import com.ejwa.frontend.model.*;
 import com.ejwa.frontend.model.entity.*;
+import com.ejwa.frontend.resources.*;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,10 +16,17 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import net.minidev.json.JSONObject;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -35,10 +46,13 @@ public class AccountDAOTest {
         @Deployment
         public static WebArchive createDeployment() {
                 return ShrinkWrap.create(WebArchive.class)
-                    .addClasses(CategoryDAO.class, Category.class, UsersDAO.class, Users.class, BudgetDAO.class, Budget.class, TransactionDAO.class,Transactions.class, BudgetPK.class, CategoryPK.class)
+                    .addClasses(User.class,API.class,JAXRSConfiguration.class,UsersAPI.class,CategoryDAO.class, Category.class, UsersDAO.class, Users.class, BudgetDAO.class, Budget.class, TransactionDAO.class,Transactions.class, BudgetPK.class, CategoryPK.class)
                     .addAsResource("META-INF/persistence.xml")
                     .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
 }
+        @ArquillianResource
+        private URL deploymentURL;
+        
     @EJB
     private CategoryDAO categoryDAO;
     @EJB
@@ -52,9 +66,39 @@ public class AccountDAOTest {
     private UserTransaction databaseTX;
     
 
+    
     @Test
     @InSequence(0)
+    @RunAsClient
     public void createAccountTest() throws Exception{
+        
+
+       // assertEquals(deploymentURL + "/api/users/isloggedin", "test");
+        Client client = ClientBuilder.newClient();
+       
+
+        JSONObject user = new JSONObject();
+        
+        user.appendField("mail","jjaokk@gmail.com");
+        user.appendField("firstName","Joakim");
+        user.appendField("lastName","Ohlsson");
+        user.appendField("password","qwe123");
+        
+        Response response = client.target(deploymentURL + "api/users/")
+        .request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+        
+        
+        
+        
+        JSONObject json = client.target(deploymentURL + "api/users/1")
+        .request(MediaType.APPLICATION_JSON)
+        .get(JSONObject.class);
+        
+        //assertEquals(json,"Joakim");
+        
+        
+    }
     
 }
       /*  databaseTX.begin(); // begin Transaction

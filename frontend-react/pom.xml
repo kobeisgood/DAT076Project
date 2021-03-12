@@ -56,7 +56,14 @@
 			<artifactId>javafaker</artifactId>
 			<version>1.0.2</version>
 		</dependency>
-		<dependency>
+	 <dependency>
+	  <groupId>org.arquillian.universe</groupId>
+	  <artifactId>arquillian-jacoco</artifactId>
+	  <version>1.5.0.0</version>
+	  <type>pom</type>
+          <scope>test</scope>
+	 </dependency>
+	 <dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>${jakartaee}</version>
