@@ -24,7 +24,6 @@ import net.minidev.json.JSONObject;
 import org.eclipse.persistence.exceptions.DatabaseException;
 
 @Path("category")
-@ApplicationScoped
 @RequestScoped
 public class CategoryAPI {
     

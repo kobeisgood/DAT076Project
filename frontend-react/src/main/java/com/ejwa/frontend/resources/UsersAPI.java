@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.UserTransaction;
@@ -32,7 +31,6 @@ import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 @Path("users")
-@ApplicationScoped
 @RequestScoped
 public class UsersAPI {
     
