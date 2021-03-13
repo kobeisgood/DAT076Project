@@ -16,6 +16,10 @@ export default class AddIncomePopup extends React.Component {
     cancelAddIncome() {
         var element = document.getElementById("add-income-popup");
         element.style.visibility = "hidden";
+
+        // Make floating buttons visible again 
+        document.getElementById("newTransactionFloat").style.visibility = "visible"
+        document.getElementById("newCategoryFloat").style.visibility = "visible"
     }
 
     // Adds transaction in a category card 
@@ -38,6 +42,7 @@ export default class AddIncomePopup extends React.Component {
 
         document.getElementById("amount").value = null;
         document.getElementById("desc").value = null;
+        document.getElementById("transactionDate").value = null;
         console.log(requestOptions.body);
 
         

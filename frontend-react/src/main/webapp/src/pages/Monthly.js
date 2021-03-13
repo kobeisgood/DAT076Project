@@ -72,11 +72,6 @@ export default class Monthly extends React.Component {
         this.setState({chartComponent});
     }
 
-    /*openAddCategoryPopup() {
-      var element = document.getElementById("add-category-popup");
-       // element.setAttribute("category",this.state.category);
-        element.style.visibility = "visible";
-    }*/
 
   render() {
     return (
