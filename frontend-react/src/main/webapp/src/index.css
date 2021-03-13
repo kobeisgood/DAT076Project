@@ -32,5 +32,4 @@ code {
   width: calc(100vw - 250px);
   height: 100vh;
   overflow: auto;
-  background-color: rgb(252, 246, 246);
 }

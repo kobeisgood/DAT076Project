@@ -29,6 +29,7 @@ and open the template in the editor.
   background-color: var(--color-card-bg);
   border-radius: 10px;
   padding: 20px;
+  background-color: rgb(252, 246, 246);
 }
 
 .dashboard-card-flexbox {
