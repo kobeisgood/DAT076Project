@@ -8,6 +8,7 @@ export default class AddIncomePopup extends React.Component {
         super(props);
         
         this.addIncome = this.addIncome.bind(this);
+        this.cancelAddIncome = this.cancelAddIncome.bind(this);
     }
 
     state = {category:null};
@@ -17,6 +18,7 @@ export default class AddIncomePopup extends React.Component {
         element.style.visibility = "hidden";
     }
 
+    // Adds transaction in a category card 
     addIncome() {
 
         
@@ -30,7 +32,7 @@ export default class AddIncomePopup extends React.Component {
                 user : 1, // TODO: GET FROM LOGIN
                 category : document.getElementById("add-income-popup").getAttribute("category"), // TODO: GET FROM FORM/DIV
                 ignore_monthly: false, // DEFAULT, NOT IMPLEMENTED FOR TRUE
-                date: null // TODO: ADD INPUT FIELD
+                date: document.getElementById("transactionDate").value // TODO: ADD INPUT FIELD
                 })
         };
 
@@ -64,9 +66,11 @@ export default class AddIncomePopup extends React.Component {
                     <div className="add-income-popup">
                         <h3>Add income to {this.state.category}</h3>
                         <div className="add-income-input-container">
-                            <input id="desc" className="add-income-name-input add-income-input" placeholder="Name (e.g. salary)"></input>
+                            <input id="desc" className="add-income-name-input add-income-input" placeholder="Description (e.g. Bought Groceries at Willys)"></input>
                             <br></br>
                             <input id="amount" className="add-income-amount-input add-income-input" placeholder="Amount (SEK)"></input>
+                            <br></br>
+                            <input id="transactionDate" type="date"></input>
                         </div>
                         <div className="confirm-buttons-container">
                             <button type="button" className="btn btn-cancel" onClick={this.cancelAddIncome}>Cancel</button>
