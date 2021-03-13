@@ -40,7 +40,7 @@ public class CategoryAPI {
     
     boolean hasNoUserSession(){
 //        return userSession.getUser() == null;
-        return true; // ONLY FOR TESTING IN VS CODE
+        return false; // ONLY FOR TESTING IN VS CODE
     }
     
     @POST

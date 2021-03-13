@@ -52,13 +52,13 @@
 
 .save-button {
     text-align: center;
-    height: 60px;
+    height: 40px;
     width: 5vw;
     border-radius: 5%;
     background-color: green;
     color: white;
-    padding: 18px;
-    margin-top: 8px;
+    padding: 12px;
+    margin-top: 0.3vh;
     transition: opacity 0.1s ease-out;
 }
 

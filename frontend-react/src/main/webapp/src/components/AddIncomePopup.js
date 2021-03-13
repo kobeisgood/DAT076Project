@@ -53,12 +53,12 @@ export default class AddIncomePopup extends React.Component {
                 
             });
             
-
-       
-
-
         var element = document.getElementById("add-income-popup");
         element.style.visibility = "hidden";
+
+        // Make floating buttons visible again 
+        document.getElementById("newTransactionFloat").style.visibility = "visible"
+        document.getElementById("newCategoryFloat").style.visibility = "visible"
     }
 
     render() {

@@ -4,7 +4,7 @@
 import React from "react";
 import '../css/monthlyTransaction.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faEdit} from '@fortawesome/free-solid-svg-icons';
+import {faEdit, faThumbsDown} from '@fortawesome/free-solid-svg-icons';
 import {faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 
 
@@ -99,14 +99,15 @@ export default class MonthlyTransaction extends React.Component {
                 {this.state.editState === false ? <div className="col-2"> {this.props.data.amount}</div> :
                      <div className="col-2">
                          <p> <b>Edit amount:</b></p>
-                         <input  type="text" name="amountValue" value={Math.abs(this.state.amountValue)} onChange={this.handleChange}/>
+                         <input  type="text" name="amountValue" value={Math.abs(this.state.amountValue)} size="6" onChange={this.handleChange}/>
                      </div>
                 }
 
-                {this.state.editState === false ? <div class="col-2"> {this.props.data.date} </div> : <></>
+                {this.state.editState === false ? <div class="col-2"> {this.props.data.date} </div> : 
+                <div class="col-2"> {this.props.data.date}</div>
                 }
 
-                    <div className="col-2"> 
+                    <div className="col-2 ml-auto"> 
                     {this.state.editState === false ? <div className="button-container">
                             
                             <div className="edit-button" onClick={this.editTransaction}>

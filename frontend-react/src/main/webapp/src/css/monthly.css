@@ -81,3 +81,8 @@ and open the template in the editor.
   color: white;
   background-color: rgba(150, 150, 150, 1);
 }
+
+.pad {
+  padding-left:0.4vw;
+  padding-top: 1vh;
+}

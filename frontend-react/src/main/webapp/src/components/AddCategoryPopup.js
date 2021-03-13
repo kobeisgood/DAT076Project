@@ -54,6 +54,10 @@ export default class AddCategoryPopup extends React.Component {
 
             var element = document.getElementById("add-category-popup");
             element.style.visibility = "hidden";
+
+        // Make floating buttons visible again 
+        document.getElementById("newTransactionFloat").style.visibility = "visible"
+        document.getElementById("newCategoryFloat").style.visibility = "visible"
         
 
     }

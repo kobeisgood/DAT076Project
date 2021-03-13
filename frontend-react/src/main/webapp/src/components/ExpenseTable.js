@@ -1,5 +1,6 @@
 import React from "react";
 import MonthlyTransaction from "./MonthlyTransaction";
+import '../css/monthly.css'
 
 
 export default class ExpenseTable extends React.Component {
@@ -65,10 +66,10 @@ export default class ExpenseTable extends React.Component {
                                 <div className="card-header collapsed" id={this.props.id} data-toggle="collapse" data-target={this.state.dataTarget} aria-expanded="false">
 
                                     <div className="row">
-                                        <div className="col-4"> {this.props.title} <i className="fa fa-chevron-down"></i> </div>
+                                        <div className="col-4"><b>{this.props.title}</b>  <i className="fa fa-chevron-down"></i> </div>
                                         <div className="col-2"> Amount</div>
                                         <div className="col-2"> Date</div>
-                                        <div className="col-2"> Edit/Delete a Transaction</div>
+                                        <div className="col-2 ml-auto"> Edit/Delete a Transaction</div>
                                     </div>
 
                                 </div>
@@ -88,9 +89,9 @@ export default class ExpenseTable extends React.Component {
 
 
 
-                            <div className="row">
-                                <div className="col-6">{this.props.title} total: </div>
-                                <div className="col-3">{this.state.sum} kr</div>
+                            <div className="row pad">
+                                <div className="col-4">{this.props.title} total: </div>
+                                <div className="col-2">{this.state.sum} kr</div>
 
                             </div>
                             <hr />
