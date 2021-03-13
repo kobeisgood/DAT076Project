@@ -74,12 +74,10 @@ export default class MonthlyTransaction extends React.Component {
                 })
         };
 
-        console.log(requestOptions.body);
 
           fetch('http://localhost:8080/frontend-react/api/transactions', requestOptions)
           .then(response => response.json())
           .then(transaction => {
-              console.log(transaction);
               this.props.parent.getDataFromAPI();
               
           });

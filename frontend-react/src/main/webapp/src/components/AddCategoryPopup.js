@@ -33,24 +33,17 @@ export default class AddCategoryPopup extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(
                 {
-                user : 1,
                 categoryName : document.getElementById("categoryName").value, 
                 color : this.state.color,
                 type : this.state.selectedType
-                
                 })
         };
 
-       
-        console.log(requestOptions.body);
-
-        
       //  var parent = this.props.parent;
 
         fetch('http://localhost:8080/frontend-react/api/category', requestOptions)
             .then(response => response.json())
             .then(transaction => {
-                console.log(transaction);
                // parent.getDataFromAPI();
                 
             });

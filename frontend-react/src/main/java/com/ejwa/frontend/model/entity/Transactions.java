@@ -58,7 +58,6 @@ public class Transactions implements Serializable {
     @NonNull
     private int amount;
     
-    @NonNull
     private String type; // INCOME, SAVINGS, EXPENSE
     
     private boolean ignore_monthly;
@@ -76,14 +75,11 @@ public class Transactions implements Serializable {
             return null;
     }
    
-    
-    
-    
     public int getAmount(){
-        if(type.equals("EXPENSE")){
+        if(category.getType().equals("EXPENSE")){
             return -amount;
         }
-        else if(type.equals("SAVING")){
+        else if(category.getType().equals("SAVING")){
             return amount;
         }
         else{ // INCOME

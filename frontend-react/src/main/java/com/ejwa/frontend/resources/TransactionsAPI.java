@@ -1,10 +1,13 @@
 package com.ejwa.frontend.resources;
 
 
+import com.ejwa.frontend.model.User;
 import com.ejwa.frontend.model.dao.*;
 import com.ejwa.frontend.model.entity.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -13,6 +16,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
@@ -30,120 +34,110 @@ public class TransactionsAPI {
     
     @EJB
     private CategoryDAO categoryDAO;
-     
-     @Inject
-        private UserTransaction databaseTX;
-
     
-    @GET
-    @Path("{tid}")
-    public Response getTransactionById(@PathParam("tid") String tid) {
-        
-         int id;
-                
-        try{
-            id = Integer.parseInt(tid);        
-        }catch(NumberFormatException e){
-             return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error("HEJDÅ" + tid))
-                    .build();
-        }
-        
-        Transactions t = transactionsDAO.find(id);
-        
-        if(t == null){
-            return Response
-                    .status(Response.Status.NO_CONTENT)
-                    .entity("{}")
-                    .build();
-        }
-        else{
-            return Response
-                    .status(Response.Status.OK)
-                    .entity(t)
-                    .build();
-        }
-        
-    }
+    @Inject
+    private User userSession;
     
     @POST
-    public Response add(JSONObject json){
-                
+    @Transactional
+    public Response addTransaction(JSONObject json){
+        
+        if(userSession.getUser() == null){
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity(API.error("No session."))
+                    .build();
+        }
+        
+        int userId = userSession.getId();
+        
         if(!json.containsKey("ignore_monthly")){
             json.appendField("ignore_monthly", false);
         }
-
-        if(!json.containsKey("date") || json.get("date") == null){
+        
+        Date date;
+        
+        if(!json.containsKey("date")){
             json.appendField("date", "CURRENT_TIMESTAMP");
+            date = null;
+        }
+        else{
+            try{
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                date = formatter.parse(json.getAsString("date"));
+            }
+            catch(ParseException e){
+                return Response
+                        .status(Response.Status.BAD_REQUEST)
+                        .entity(API.error("Bad date format."))
+                        .build();
+            }
         }
         
-        String[] data = {"description","amount","category","user","ignore_monthly","date"};
+        String[] data = {"description","amount","category","ignore_monthly","date"};
         
         String error = API.matchDataInput(data, json);
-
         
-         if(!error.isEmpty()){
+        if(!error.isEmpty()){
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity(API.error(error))
                     .build();
         }
         
-    
-       
-        int amount,userId;
+        int amount;
+        String categoryName;
+        
         try{
             amount = Integer.parseInt(json.getAsString("amount"));
-            userId = Integer.parseInt(json.getAsString("user"));
+            categoryName = json.getAsString("category");
         }catch(NumberFormatException e){
-             return Response
+            return Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity(API.error(e.getMessage()))
                     .build();
         }
-       
-     // TODO BEGIN TRANSATCION
-        CategoryPK key = new CategoryPK(json.getAsString("category"),userId);
+        
+        CategoryPK key = new CategoryPK(categoryName,userId);
         Category category = categoryDAO.find(key);
         
         if(category == null){
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error(key.toString()))
+                    .entity(API.error("No such category."))
                     .build();
         }
-                
-        try {
-            Transactions newTransaction = new Transactions(json.getAsString("description"), amount, category.getType(),category);
-            transactionsDAO.create(newTransaction);
-            if(json.getAsString("ignore_monthly").equalsIgnoreCase("true")){
-                newTransaction.setIgnore_monthly(true);
-            }
-            if(!json.get("date").equals("CURRENT_TIMESTAMP")){
-                // TODO: set date with correct format
-            }
-            
-            // COMMIT TRANSACTION
-            
-            return Response
-                    .status(Response.Status.CREATED)
-                    .entity(newTransaction)
-                    .build();
-        } catch (Exception e) { // Should not happen
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(API.error(e.getMessage()))
-                    .build();
+        
+        Transactions newTransaction = new Transactions(json.getAsString("description"), amount,category);
+        
+        transactionsDAO.create(newTransaction);
+        
+        if(json.getAsString("ignore_monthly").equalsIgnoreCase("true")){
+            newTransaction.setIgnore_monthly(true);
         }
+        if(date != null){
+            newTransaction.setDate(date);
+        }
+        
+        return Response
+                .status(Response.Status.CREATED)
+                .entity(newTransaction)
+                .build();
+        
     }
     
-    
     @PUT
+    @Transactional
     public Response updateTransaction(JSONObject json){
         
-        // Maybe add ignore_monthly and budget
-        String[] data = {"id", "description", "date", "amount"};
+        if(userSession.getUser() == null){
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity(API.error("No session."))
+                    .build();
+        }
+        
+        String[] data = {"tid","description", "date", "amount"};
         
         String error = API.matchDataInput(data, json);
         
@@ -154,140 +148,82 @@ public class TransactionsAPI {
                     .build();
         }
         
-        
-        String description, type, date;
+        String description, date;
         int transactionId, amount;
         
-         try{
-           transactionId = Integer.parseInt(json.getAsString("id"));
-           amount = Integer.parseInt(json.getAsString("amount"));
-           description = json.getAsString("description");
-           date = json.getAsString("date");
+        try{
+            transactionId = Integer.parseInt(json.getAsString("tid"));
+            amount = Integer.parseInt(json.getAsString("amount"));
+            description = json.getAsString("description");
+            date = json.getAsString("date");
         }
         catch(NumberFormatException e){
-             return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error(e.getMessage()))                            
-                    .build();
-        }
-         
-        if(!error.isEmpty()){
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error(error))
-                    .build();
-        }
-         
-        
-        
-       try {
-           databaseTX.begin();
-       
-       }
-       catch(Exception e){
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(API.error("Transaction error."))
-                    .build();     
-        }
-       
-       Transactions transaction = transactionsDAO.find(transactionId);
-       
-       if(transaction == null){
-            return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error("No such transaction."))
-                    .build();            
-        }
-        
-        try {
-        
-        
-            
-            transaction.setAmount(amount);
-            transaction.setDate(new Date());
-            transaction.setDescription(description);
-           
-            
-            transactionsDAO.flush();
-            transactionsDAO.refresh(transaction);
-            
-            databaseTX.commit();
-          
-
-            return Response
-                    .status(Response.Status.OK)
-                    .entity(transactionsDAO.find(transactionId))
-                    .build();
-        } catch (Exception e) { // should not happen
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(API.error("Server error."))
-                    .build();
-        }
-       
-    }
-    
-    @DELETE
-    @Path("{tid}")
-    public Response deleteTransaction(@PathParam("tid") String tid) {
-        
-        int id;
-        
-        try{
-            id = Integer.parseInt(tid);
-        
-        }catch(NumberFormatException e){
-             return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error("HEJ" + tid))
+                    .entity(API.error(e.getMessage()))
                     .build();
         }
         
-        Transactions transaction = transactionsDAO.find(id);
+        Transactions transaction = transactionsDAO.find(transactionId);
         
-       try {
-           databaseTX.begin();
-       
-       }
-       catch(Exception e){
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(API.error("Transaction error."))
-                    .build();     
-        }
-       
         if(transaction == null){
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity(API.error("No such transaction."))
-                    .build();            
-        }
-        
-        try {
-        
-        
-           
-            
-            transactionsDAO.remove(transaction);
-
-            transactionsDAO.flush();
-            
-            databaseTX.commit();
-          
-
-            return Response
-                    .status(Response.Status.OK)
-                    .entity(API.message("Transaction removed"))
-                    .build();
-        } catch (Exception e) { // should not happen
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(API.error("Server error."))
                     .build();
         }
         
-     
+        transaction.setAmount(amount);
+        transaction.setDate(new Date());
+        transaction.setDescription(description);
+        
+        return Response
+                .status(Response.Status.OK)
+                .entity(transaction)
+                .build();
         
     }
+    
+    @DELETE
+    @Path("{tid}")
+    @Transactional
+    public Response deleteTransaction(@PathParam("tid") String tid) {
+        
+        if(userSession.getUser() == null){
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity(API.error("No session."))
+                    .build();
+        }
+        
+        int transactionId;
+        
+        try{
+            transactionId = Integer.parseInt(tid);
+            
+        }catch(NumberFormatException e){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error(e.getMessage()))
+                    .build();
+        }
+        
+        Transactions transaction =transactionsDAO.find(transactionId);
+        
+        if(transaction == null){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("No such transaction."))
+                    .build();
+        }
+            
+        transactionsDAO.remove(transaction);
+        
+        return Response
+                .status(Response.Status.OK)
+                .entity(API.message("Transaction removed"))
+                .build();
+
+    }
+    
 }

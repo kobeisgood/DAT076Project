@@ -50,25 +50,21 @@ public class UsersDAO extends AbstractDAO<Users,Integer> {
         return query.getResultList();
         }
     
-     public List<Transactions> findAllTransactions(int userId, String from, String to) throws ParseException  {
+     public List<Transactions> findAllTransactions(int userId, Date from, Date to)  {
         TypedQuery<Transactions> query = entityManager.createQuery("SELECT t FROM Users u, Category c, Transactions t"
                 +" WHERE c.categoryUser = u AND t.category = c AND u.id = :id AND t.date BETWEEN :from AND :to"
                 ,Transactions.class);
         
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date f = formatter.parse(from);
-        Date t = formatter.parse(to);
-        
         query.setParameter("id", userId);
-        query.setParameter("from", f);
-        query.setParameter("to", t);
+        query.setParameter("from", from);
+        query.setParameter("to", to);
         
         return query.getResultList();
         }
     
     
     public List<Object[]> getDashboardInfo(int userId) {
-        TypedQuery<Object[]> query = entityManager.createQuery("SELECT FUNC('YEAR',t.date) AS y, FUNC('MONTH',t.date) AS m, c.categoryName, c.color, t.amount, t.type FROM Users u, Category c, Transactions t"
+        TypedQuery<Object[]> query = entityManager.createQuery("SELECT FUNC('YEAR',t.date) AS y, FUNC('MONTH',t.date) AS m, c.categoryName, c.color, t.amount, c.type FROM Users u, Category c, Transactions t"
                 +" WHERE c.categoryUser = u AND t.category = c AND u.id = :id "
                 ,Object[].class);
         

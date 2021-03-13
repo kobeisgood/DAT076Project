@@ -5,23 +5,15 @@ import CategorySetting from "../components/CategorySetting"
 export default class Profile extends React.Component {
 
     async componentDidMount() {
-        const url1 = "http://localhost:8080/frontend-react/api/users/1";
+        const url1 = "http://localhost:8080/frontend-react/api/users";
         const response1 = await fetch(url1);
         const data1 = await response1.json();
-        console.log(data1);
 
-
-        const url2 = "http://localhost:8080/frontend-react/api/users/1/categories";
+        const url2 = "http://localhost:8080/frontend-react/api/users/categories";
         const response2 = await fetch(url2);
         const data2 = await response2.json();
-        console.log("CAT123");
-        console.log(data2);
+
         this.setState({categoriesData:data2, nameValue: data1.firstName, lastNameValue: data1.lastName, mailValue: data1.mail});
-
-        console.log("WTF");
-        console.log(this.state.categoriesData);
-
-
 
         }
 
@@ -58,8 +50,7 @@ export default class Profile extends React.Component {
                 mail: this.state.mailValue, // CHECK MAIL!?
                 firstName: this.state.nameValue, 
                 lastName: this.state.lastNameValue,
-                password: 'qwe123',
-                id: 1
+                password: 'qwe123'
                 })
         };
 
@@ -68,10 +59,8 @@ export default class Profile extends React.Component {
 
           fetch('http://localhost:8080/frontend-react/api/users', requestOptions)
           .then(response => response.json())
-          .then(transaction => {
-              console.log(transaction);
+          .then(res => {
               // UPDATE USER INFO
-              
           });
 
       }
@@ -82,7 +71,7 @@ export default class Profile extends React.Component {
         const name = target.name;
 
         this.setState({
-        [name]: value
+            [name]: value
          });
       }
 

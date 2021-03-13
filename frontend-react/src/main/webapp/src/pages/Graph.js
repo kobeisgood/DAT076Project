@@ -109,7 +109,7 @@ chartRef2 = React.createRef();
       var from =  document.getElementById("from").value;
       var to =  document.getElementById("to").value ;
         console.log()
-      fetch('http://localhost:8080/frontend-react/api/users/1/transactions/between/'+ from +'/' + to)
+      fetch('http://localhost:8080/frontend-react/api/users/transactions/between/'+ from +'/' + to)
           .then(response => response.json())
           .then(data => {
             console.log(data);

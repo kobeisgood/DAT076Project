@@ -38,7 +38,7 @@ export default class AddTransactionPopup extends React.Component {
 
     async getCategories(){
 
-        fetch('http://localhost:8080/frontend-react/api/users/1/categories')
+        fetch('http://localhost:8080/frontend-react/api/users/categories')
         .then(response => response.json())
         .then(data => {
             var categoryOptions = [];

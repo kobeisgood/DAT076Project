@@ -33,10 +33,9 @@ export default class AddIncomePopup extends React.Component {
                 {
                 description : document.getElementById("desc").value,
                 amount : document.getElementById("amount").value, 
-                user : 1, // TODO: GET FROM LOGIN
-                category : document.getElementById("add-income-popup").getAttribute("category"), // TODO: GET FROM FORM/DIV
+                category : document.getElementById("add-income-popup").getAttribute("category"), 
                 ignore_monthly: false, // DEFAULT, NOT IMPLEMENTED FOR TRUE
-                date: document.getElementById("transactionDate").value // TODO: ADD INPUT FIELD
+                date: document.getElementById("transactionDate").value 
                 })
         };
 
@@ -45,13 +44,11 @@ export default class AddIncomePopup extends React.Component {
         document.getElementById("transactionDate").value = null;
         console.log(requestOptions.body);
 
-        
         var parent = this.props.parent;
 
         fetch('http://localhost:8080/frontend-react/api/transactions', requestOptions)
             .then(response => response.json())
             .then(transaction => {
-                console.log(transaction);
                 parent.getDataFromAPI();
                 
             });
