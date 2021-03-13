@@ -69,7 +69,7 @@ export default class MonthlyTransaction extends React.Component {
                 {
                 amount: Math.abs(this.state.amountValue),
                 description: this.state.descriptionValue,
-                id: this.props.data.transactionId, 
+                tid: this.props.data.transactionId, 
                 date: this.props.data.date // from db
                 })
         };
