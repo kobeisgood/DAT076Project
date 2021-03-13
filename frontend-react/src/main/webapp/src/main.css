@@ -14,7 +14,9 @@ and open the template in the editor.
   --color-income: #5cff80;
   --color-card-bg: white;
   --color-expense-light: #ffa5a5;
-  --color-income-light: #c1ffcf;
+  --color-income-light: #3dc25c;
+  --color-cashit-standard: #060b26;
+  --color-cashit-standard-hover: #101a52;
 }
 
 html {
@@ -44,6 +46,7 @@ body {
   fill: var(--color-income-light);
   color: var(--color-income-light);
   stroke: var(--color-income-light);
+  font-size: 65px;
 }
 
 .color-no-money-left {
@@ -68,4 +71,8 @@ body {
 
 .left-to-spend > p {
   margin: 0px;
+}
+
+.hover-transition {
+  transition: 0.2s;
 }
