@@ -7,12 +7,6 @@ import '../css/Sidebar.css';
 
 function Sidebar() {
     return(
-        /*
-        <nav className={"nav-menu"}>
-            <ul className="nav-menu-items">
-                
-            </ul>
-        </nav>*/
         <nav className={'nav-menu'}>
             <h1 className='logo'> CashIT </h1>
             <ul className="nav-menu-items">
