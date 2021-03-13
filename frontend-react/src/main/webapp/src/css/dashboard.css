@@ -9,14 +9,19 @@ and open the template in the editor.
 */
 
 .dashboard-container {
-  background-color: thistle;
   position: absolute;
   top: 0;
+  padding: 0 100px;
 }
 
 .dashboard-flexbox {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.dashboard-card-wrapper {
+  margin: 10px 10px;
 }
 
 .dashboard-card-container {
