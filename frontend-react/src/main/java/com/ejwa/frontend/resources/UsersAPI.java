@@ -45,11 +45,16 @@ public class UsersAPI {
     @EJB
     private UsersDAO usersDAO;
        
+     boolean hasNoUserSession(){
+//        return userSession.getUser() == null;
+        return false; // ONLY FOR TESTING IN VS CODE
+    }
+    
     @GET
     @Path("/session")
     public Response isLoggedIn(){
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             return Response
                     .status(Response.Status.OK)
                     .entity(false)
@@ -67,7 +72,7 @@ public class UsersAPI {
     @Transactional
     public Response getUser() throws IOException  {
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             
             return Response
                     .status(Response.Status.FORBIDDEN)
@@ -88,7 +93,7 @@ public class UsersAPI {
     @Transactional
     public Response getUserCategories(@PathParam("uid") String uid)  {
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             return Response
                     .status(Response.Status.FORBIDDEN)
                     .entity(API.error("No session."))
@@ -155,7 +160,7 @@ public class UsersAPI {
     @Path("logout")
     public Response logout(JSONObject json) throws IOException  {
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             
             return Response
                     .status(Response.Status.BAD_REQUEST)
@@ -180,7 +185,7 @@ public class UsersAPI {
     public Response getUserTransactions(@PathParam("year") String year, @PathParam("month") String month) {
         
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             
             return Response
                     .status(Response.Status.FORBIDDEN)
@@ -240,7 +245,7 @@ public class UsersAPI {
     @Transactional
     public Response getUserTransactionsBetween(@PathParam("from") String from, @PathParam("to") String to) {
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             return Response
                     .status(Response.Status.FORBIDDEN)
                     .entity(API.error("No session."))
@@ -310,7 +315,7 @@ public class UsersAPI {
     @Transactional
     public Response getUserDashboard() {
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             return Response
                     .status(Response.Status.FORBIDDEN)
                     .entity(API.error("No session."))
@@ -416,7 +421,7 @@ public class UsersAPI {
     @Transactional
     public Response updateUser(JSONObject json) {
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             return Response
                     .status(Response.Status.FORBIDDEN)
                     .entity(API.error("No session."))

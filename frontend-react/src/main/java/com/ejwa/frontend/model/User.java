@@ -25,6 +25,11 @@ public class User implements Serializable{
     }
     
     public int getId(){
+
+        // ONLY FOR TESTING IN VS CODE
+        if(user == null)
+            return 1;
+                    
         return user.getId();
     }
     

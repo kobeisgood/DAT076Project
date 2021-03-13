@@ -38,11 +38,16 @@ public class TransactionsAPI {
     @Inject
     private User userSession;
     
+    boolean hasNoUserSession(){
+//        return userSession.getUser() == null;
+        return true; // ONLY FOR TESTING IN VS CODE
+    }
+    
     @POST
     @Transactional
     public Response addTransaction(JSONObject json){
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             return Response
                     .status(Response.Status.FORBIDDEN)
                     .entity(API.error("No session."))
@@ -130,7 +135,7 @@ public class TransactionsAPI {
     @Transactional
     public Response updateTransaction(JSONObject json){
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             return Response
                     .status(Response.Status.FORBIDDEN)
                     .entity(API.error("No session."))
@@ -189,7 +194,7 @@ public class TransactionsAPI {
     @Transactional
     public Response deleteTransaction(@PathParam("tid") String tid) {
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             return Response
                     .status(Response.Status.FORBIDDEN)
                     .entity(API.error("No session."))

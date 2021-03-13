@@ -38,11 +38,16 @@ public class CategoryAPI {
     @Inject
     private User userSession;
     
+    boolean hasNoUserSession(){
+//        return userSession.getUser() == null;
+        return true; // ONLY FOR TESTING IN VS CODE
+    }
+    
     @POST
     @Transactional
     public Response addCategory(JSONObject json) throws IOException  {
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             return Response
                     .status(Response.Status.FORBIDDEN)
                     .entity(API.error("No session."))
@@ -74,6 +79,7 @@ public class CategoryAPI {
             Category newCategory = new Category(name, user, color,type);
             categoryDAO.create(newCategory);
             
+            
             categoryDAO.flush();
 
             return Response
@@ -92,7 +98,7 @@ public class CategoryAPI {
     @Transactional
     public Response updateCategory(JSONObject json) throws IOException  {
         
-        if(userSession.getUser() == null){
+        if(hasNoUserSession()){
             return Response
                     .status(Response.Status.FORBIDDEN)
                     .entity(API.error("No session."))
