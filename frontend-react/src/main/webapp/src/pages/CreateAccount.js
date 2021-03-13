@@ -35,8 +35,7 @@ export default class CreateAccount extends React.Component {
                 'Content-Type': 'application/json'
             }
         };
-
-
+        
         fetch('http://localhost:8080/frontend-react/api/users/',requestOptions)
         .then(response => response.json())
           .then(response => {
@@ -45,14 +44,9 @@ export default class CreateAccount extends React.Component {
                 // SAVE USER ID
                 alert("Account created successfully!<br>" + response);
 
-                //GO TO DASHBOARD
-              }
-              
+                //GO TO LOGIN
+              }   
           });
-
-
-       
-        console.log('The email input was:', data.get('email'))
     }
 
     render() {

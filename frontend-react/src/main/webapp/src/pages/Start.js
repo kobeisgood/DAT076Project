@@ -33,20 +33,11 @@ export default class Start extends React.Component {
         fetch('http://localhost:8080/frontend-react/api/users/login',requestOptions)
         .then(response => response.json())
           .then(response => {
-              console.log(response);
               if(response.id != null){
-                // SAVE USER ID
                 alert("Login success!");
-
                 //GO TO DASHBOARD
-
-              }
-              
+              }           
           });
-
-
-
-        console.log('The email input was:', data.get('email'))
     }
 
     render() {

@@ -24,5 +24,8 @@ public class User implements Serializable{
         return user!= null;
     }
     
+    public int getId(){
+        return user.getId();
+    }
     
 }

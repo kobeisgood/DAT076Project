@@ -1,6 +1,7 @@
 package com.ejwa.frontend.resources;
 
 import com.ejwa.frontend.model.dao.*;
+import com.ejwa.frontend.model.*;
 import com.ejwa.frontend.model.entity.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -30,20 +31,27 @@ public class CategoryAPI {
     
     @EJB
     private CategoryDAO categoryDAO;
- 
+    
     @EJB
     private UsersDAO usersDAO;
     
-    
     @Inject
-    private UserTransaction databaseTX;
-
- 
+    private User userSession;
+    
     @POST
     @Transactional
     public Response addCategory(JSONObject json) throws IOException  {
-
-        String[] data = {"user","categoryName","color","type"};
+        
+        if(userSession.getUser() == null){
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity(API.error("No session."))
+                    .build();
+        }
+        
+        int userId = userSession.getId();
+        
+        String[] data = {"categoryName","color","type"};
         
         String error = API.matchDataInput(data, json);
         
@@ -55,48 +63,22 @@ public class CategoryAPI {
         }
         
         String name,color,type;
-        int userId;
         
-        try{
-           name = json.getAsString("categoryName");
-           type = json.getAsString("type");
-           userId = Integer.parseInt(json.getAsString("user"));
-           color = json.getAsString("color");
-             
-        }
-        catch(NumberFormatException e){
-             return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error(e.getMessage()))                            
-                    .build();
-        }
+        name = json.getAsString("categoryName");
+        type = json.getAsString("type");
+        color = json.getAsString("color");
         
         Users user = usersDAO.find(userId);
-        
-        CategoryPK key = new CategoryPK(name, userId);
-
-                
-        if(user == null){
-            return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error("No such user."))
-                    .build();            
-        }
-        
-        
-    
-        
         
         try {
             Category newCategory = new Category(name, user, color,type);
             categoryDAO.create(newCategory);
             
             categoryDAO.flush();
-            
-            
+
             return Response
                     .status(Response.Status.OK)
-                    .entity(categoryDAO.find(key))
+                    .entity(newCategory)
                     .build();
         } catch (Exception e) {
             return Response
@@ -107,9 +89,19 @@ public class CategoryAPI {
     }
     
     @PUT
+    @Transactional
     public Response updateCategory(JSONObject json) throws IOException  {
-
-        String[] data = {"user","categoryName","color","type"};
+        
+        if(userSession.getUser() == null){
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity(API.error("No session."))
+                    .build();
+        }
+        
+        int userId = userSession.getId();
+        
+        String[] data = {"categoryName","color","type"};
         
         String error = API.matchDataInput(data, json);
         
@@ -121,59 +113,29 @@ public class CategoryAPI {
         }
         
         String name,color,type;
-        int userId;
         
-        try{
-           name = json.getAsString("categoryName");
-           type = json.getAsString("type");
-           userId = Integer.parseInt(json.getAsString("user"));
-           color = json.getAsString("color");
-        }
-        catch(NumberFormatException e){
-             return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error(e.getMessage()))                            
-                    .build();
-        }
+        name = json.getAsString("categoryName");
+        type = json.getAsString("type");
+        color = json.getAsString("color");
         
-     
         CategoryPK key = new CategoryPK(name, userId);
         
-        try{
-            databaseTX.begin();
-        }
-        catch(Exception e){
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(API.error("Transaction error."))
-                    .build();     
-        }
         Category category = categoryDAO.find(key);
-
+        
         if(category == null){
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity(API.error("No such category."))
-                    .build();            
+                    .build();
         }
         
-        try {
-            category.setColor(color);
-            categoryDAO.flush();
-            categoryDAO.refresh(category);
-            databaseTX.commit();
-
-            return Response
-                    .status(Response.Status.OK)
-                    .entity(category)
-                    .build();
-        } catch (Exception e) { // SHould not happen
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(API.error("Server error."))
-                    .build();
-        }
+        category.setColor(color);
+        
+        return Response
+                .status(Response.Status.OK)
+                .entity(category)
+                .build();
+        
     }
-    
     
 }

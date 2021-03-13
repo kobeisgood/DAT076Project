@@ -7,7 +7,7 @@ export default class Dashboard extends React.Component {
 	};
 
 	async componentDidMount() {
-		const url = "http://localhost:8080/frontend-react/api/users/1/dashboard";
+		const url = "http://localhost:8080/frontend-react/api/users/dashboard";
 		const response = await fetch(url);
 		const data = await response.json();
 		console.log(data);
