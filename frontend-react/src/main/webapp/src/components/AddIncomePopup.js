@@ -66,7 +66,7 @@ export default class AddIncomePopup extends React.Component {
             <div id="add-income-popup" className="full-page-container">
                 <div className="flexbox-container">
                     <div className="add-income-popup">
-                        <h3 id="incomePopupHeader">Add new transaction to <h3 id="incomePopupCategory" ></h3> </h3>
+                        <h3 id="incomePopupHeader"> </h3>
                         <br></br>
                         <div className="add-income-input-container">
                             <input id="desc" className="add-income-name-input add-income-input" placeholder="Description (e.g. Bought Groceries at Willys)"></input>
