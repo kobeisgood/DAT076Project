@@ -100,6 +100,7 @@ export default class AddCategoryPopup extends React.Component {
                 <div className="flexbox-container">
                     <div className="add-popup">
                         <h3>Add New Category</h3>
+                        <br></br>
                         <div className="add-category-name-input-container">
                             <input id="categoryName" className="add-category-name-input add-input" placeholder="Category Name (e.g. Food)"></input>
                             <br></br>
