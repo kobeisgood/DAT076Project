@@ -38,21 +38,3 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-/*
-<BrowserRouter>
-  <div className="general-styling">
-	<div className="row">
-	  <div className="col-2">
-		<Sidebar/>
-	  </div>
-	  <div className="col-10">
-		<Route path="/frontend-react/dashboard" component={Dashboard}></Route>
-		<Route path="/frontend-react/monthly" component={Monthly}></Route>
-		<Route path="/frontend-react/graph" component={Graph}></Route>
-		<Route path="/frontend-react/start" component={Start}></Route>
-		<Route path="/frontend-react/sign-up" component={CreateAccount}></Route>
-		<Route path="/frontend-react/profile" component={Profile}></Route>
-	  </div>
-	</div>
-  </div>
-</BrowserRouter>*/
