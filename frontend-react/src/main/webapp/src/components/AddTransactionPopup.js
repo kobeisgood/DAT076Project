@@ -20,6 +20,10 @@ export default class AddTransactionPopup extends React.Component {
     cancelAddTransaction() {
         var element = document.getElementById("add-transaction-popup");
         element.style.visibility = "hidden";
+
+        // Make floatings button visible again
+        document.getElementById("newCategoryFloat").style.visibility = "visible"
+        document.getElementById("newTransactionFloat").style.visibility = "visible"
     }
 
     addTransaction() {

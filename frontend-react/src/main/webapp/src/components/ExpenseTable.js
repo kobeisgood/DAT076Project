@@ -32,6 +32,10 @@ export default class ExpenseTable extends React.Component {
         var element = document.getElementById("add-income-popup");
         element.setAttribute("category",this.state.category);
         element.style.visibility = "visible";
+
+        // Hide floating buttons 
+        document.getElementById("newTransactionFloat").style.visibility = "hidden"
+        document.getElementById("newCategoryFloat").style.visibility = "hidden"
     }
 
     createCategoryCards(){
@@ -61,9 +65,10 @@ export default class ExpenseTable extends React.Component {
                                 <div className="card-header collapsed" id={this.props.id} data-toggle="collapse" data-target={this.state.dataTarget} aria-expanded="false">
 
                                     <div className="row">
-                                        <div className="col-6"> {this.props.title} <i className="fa fa-chevron-down"></i> </div>
-                                        <div className="col-3"> Amount</div>
-                                        <div className="col-3"> Edit/Delete a Transaction</div>
+                                        <div className="col-4"> {this.props.title} <i className="fa fa-chevron-down"></i> </div>
+                                        <div className="col-2"> Amount</div>
+                                        <div className="col-2"> Date</div>
+                                        <div className="col-2"> Edit/Delete a Transaction</div>
                                     </div>
 
                                 </div>
