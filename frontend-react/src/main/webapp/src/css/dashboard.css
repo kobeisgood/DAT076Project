@@ -8,6 +8,17 @@ and open the template in the editor.
     Author     : theok
 */
 
+.dashboard-container {
+  background-color: thistle;
+  position: absolute;
+  top: 0;
+}
+
+.dashboard-flexbox {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .dashboard-card-container {
   width: 200px;
   background-color: var(--color-card-bg);
@@ -23,7 +34,6 @@ and open the template in the editor.
 
 .sum-text {
   font-size: 1.7em;
-  margin-top: 10px;
 }
 
 .dashboard-card-name {
@@ -43,4 +53,8 @@ and open the template in the editor.
   color: white;
   text-decoration: none;
   background-color: var(--color-cashit-standard-hover);
+}
+
+.dashboard-card-margin-elements {
+  margin-top: 15px;
 }

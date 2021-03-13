@@ -80,9 +80,9 @@ export default class DashBoardCard extends React.Component {
 			<div className="dashboard-card-container box-shadow">
 				<div className="dashboard-card-flexbox">
 					<p class="dashboard-card-name">{this.monthToName(this.props.data.month)} {this.props.data.year}</p>
-					<canvas className="chartStyling" id="doughnutChart" ref={this.chartRef2}></canvas>
-					<p class={this.sum() > 0 ? "color-money-left sum-text" : "color-no-money-left sum-text"}>{this.sumToString(this.sum())}</p>
-					<Link className="dashboard-card-button hover-transition" to="/frontend-react/monthly">Go to view</Link>
+					<canvas className="chartStyling dashboard-card-margin-elements" id="doughnutChart" ref={this.chartRef2}></canvas>
+					<p class={this.sum() > 0 ? "color-money-left sum-text dashboard-card-margin-elements" : "color-no-money-left sum-text"}>{this.sumToString(this.sum())}</p>
+					<Link className="dashboard-card-button hover-transition dashboard-card-margin-elements" to="/frontend-react/monthly">Go to view</Link>
 				</div>
 			</div>
 		);
