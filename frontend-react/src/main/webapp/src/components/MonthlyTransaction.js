@@ -4,7 +4,7 @@
 import React from "react";
 import '../css/monthlyTransaction.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faEdit, faThumbsDown} from '@fortawesome/free-solid-svg-icons';
+import {faEdit} from '@fortawesome/free-solid-svg-icons';
 import {faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 
 
