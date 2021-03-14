@@ -9,3 +9,65 @@
 .text-sorting {
     font-size: 30px;
 }
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-top: 5vh;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+}
+
+.page-header h2 {
+  font-size: 1.2rem;
+  margin-top: 2vh
+}
+
+.date-container {
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-evenly;
+  margin-top: 6vh;
+}
+
+.date-picker-container {
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 11%
+}
+
+.date-picker-container p{
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.button-row-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.see-data-button {
+  background-color: #ec6113;
+  height: 8vh;
+  width: 30vh;
+  margin-top: 2vh;
+  text-align: center;
+  font-size: 2rem;
+  color: white;
+  border-radius:  12vh;
+  padding: 2.2rem;
+  transition: opacity 0.2s ease-out;
+}
+
+.see-data-button:hover {
+  cursor: pointer;
+  opacity: 70%;
+}
