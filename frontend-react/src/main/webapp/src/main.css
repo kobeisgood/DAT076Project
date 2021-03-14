@@ -12,7 +12,7 @@ and open the template in the editor.
   --color-savings: #8f85ff;
   --color-expense: #ff7777;
   --color-income: #5cff80;
-  --color-card-bg: white;
+  --color-card-bg: rgb(252, 246, 246);
   --color-expense-light: #ffa5a5;
   --color-income-light: #3dc25c;
   --color-cashit-standard: #060b26;
