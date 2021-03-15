@@ -3,6 +3,13 @@ import React from "react";
 import '../css/start.css';
 import { Link } from 'react-router-dom';
 
+export async function isLoggedIn() {
+    const url = "http://localhost:8080/frontend-react/api/users/session";
+    const response = await fetch(url);
+    const data = await response.json();
+    return data
+}
+
 export default class Start extends React.Component {
 
     constructor() {
@@ -10,7 +17,9 @@ export default class Start extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
+   
+ 
+     handleSubmit(event) {
         if (!event.target.checkValidity()) {
             return;
         }
@@ -34,7 +43,26 @@ export default class Start extends React.Component {
         .then(response => response.json())
           .then(response => {
               if(response.id != null){
+                console.log(response)
                 alert("Login success!");
+                console.log(isLoggedIn())
+                .then()
+                if(isLoggedIn() ) {
+                    console.log(this.props)
+                    console.log(this.props.sidebar)
+                   // this.props.sidebar.update();
+                    this.props.history.push("/frontend-react/dashboard")
+                }
+
+                
+                // we want to check in "http://localhost:8080/frontend-react/api/users/session", and see if true, similar thing done in
+                // sidebar
+                // use Link to route to frontend-react/dashboard
+                // implement protected route in dashboard 
+                // implement 404 not found for when user isnt logged in
+
+                //  this.props.history.push("/frontend-react/dashboard") // this doesnt load the page, it simply redirects it here so 
+                // no state in dashboard is loaded 
                 //GO TO DASHBOARD
               }           
           });

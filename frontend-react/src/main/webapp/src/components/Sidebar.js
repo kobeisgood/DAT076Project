@@ -7,23 +7,37 @@ import {faChartBar} from '@fortawesome/free-solid-svg-icons';
 import {faUserCircle} from '@fortawesome/free-solid-svg-icons';
 import {faHome} from '@fortawesome/free-solid-svg-icons';
 import '../css/Sidebar.css';
+import {isLoggedIn} from '../pages/Start'
 
 
 export default class Sidebar extends React.Component {
 
- state = {SidebarData:[]}
+    constructor(props) {
+        super(props);
+        this.update = this.update.bind(this);
+        this.state = {
+            isAuthenticated: false,
+            SidebarData: []
+        };
+        
+    }
  
+ async componentDidMount(){
+ this.update()}
   
 
-async componentDidMount() {
+async update() {
 
+  /*
     const url = "http://localhost:8080/frontend-react/api/users/session";
     const response = await fetch(url);
-    const data = await response.json();
-
+    const data = await response.json();*/
+    const loggedIn = await isLoggedIn();
+    this.setState({isAuthenticated: loggedIn})
+    console.log(loggedIn);
     var SidebarData;
-    if(data){ // logged in
-        SidebarData = [
+    if(loggedIn){ // logged in
+        this.setState({ SidebarData : [
             {
                 title: "Dashboard",
                 path: "/frontend-react/dashboard",
@@ -54,10 +68,10 @@ async componentDidMount() {
                 icon: <FontAwesomeIcon icon={faSignOutAlt} color='white' size='lg'/>,
                 cName: "nav-text"
             }
-        ];
+        ]});
     }
     else{
-        SidebarData = [
+        this.setState({SidebarData : [
             
             {
                 title: "Start",
@@ -65,12 +79,13 @@ async componentDidMount() {
                 icon: <FontAwesomeIcon icon={faHome} color='white' size='lg'/>,
                 cName: "nav-text"
             }
-        ];
+        ]});
+        
     }
 
     
     console.log(SidebarData);
-    this.setState({SidebarData});
+    //this.setState({SidebarData});
 
     }
 

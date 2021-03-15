@@ -9,8 +9,12 @@ export default class Dashboard extends React.Component {
 	async componentDidMount() {
 		const url = "http://localhost:8080/frontend-react/api/users/dashboard";
 		const response = await fetch(url);
-		const data = await response.json();
+		var data = await response.json();
 		console.log(data);
+		if(data.error){
+			alert("Error loading data")
+			data = []
+		}
 		this.setState({ cards: data });
 	}
 
