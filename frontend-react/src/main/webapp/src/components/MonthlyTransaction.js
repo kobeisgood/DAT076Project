@@ -4,7 +4,7 @@
 import React from "react";
 import '../css/monthlyTransaction.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faEdit, faThumbsDown} from '@fortawesome/free-solid-svg-icons';
+import {faEdit} from '@fortawesome/free-solid-svg-icons';
 import {faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 
 
@@ -69,7 +69,7 @@ export default class MonthlyTransaction extends React.Component {
                 {
                 amount: Math.abs(this.state.amountValue),
                 description: this.state.descriptionValue,
-                id: this.props.data.transactionId, 
+                tid: this.props.data.transactionId, 
                 date: this.props.data.date // from db
                 })
         };

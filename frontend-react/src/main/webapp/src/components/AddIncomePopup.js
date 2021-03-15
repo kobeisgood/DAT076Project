@@ -25,7 +25,6 @@ export default class AddIncomePopup extends React.Component {
     // Adds transaction in a category card 
     addIncome() {
 
-        
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -59,6 +58,7 @@ export default class AddIncomePopup extends React.Component {
         // Make floating buttons visible again 
         document.getElementById("newTransactionFloat").style.visibility = "visible"
         document.getElementById("newCategoryFloat").style.visibility = "visible"
+
     }
 
     render() {
@@ -66,7 +66,8 @@ export default class AddIncomePopup extends React.Component {
             <div id="add-income-popup" className="full-page-container">
                 <div className="flexbox-container">
                     <div className="add-income-popup">
-                        <h3>Add income to {this.state.category}</h3>
+                        <h3 id="incomePopupHeader"> </h3>
+                        <br></br>
                         <div className="add-income-input-container">
                             <input id="desc" className="add-income-name-input add-income-input" placeholder="Description (e.g. Bought Groceries at Willys)"></input>
                             <br></br>

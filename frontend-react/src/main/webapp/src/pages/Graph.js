@@ -126,28 +126,24 @@ chartRef2 = React.createRef();
     return(
 
     <div>
-        <div class='row'>
-        <div class="col-1"></div>
-          <div class='col-1'>
-            <p class="text-sorting" >2021</p>
-             
-              
+      <div class="page-header">
+        <h1> Choose Between Two Dates to See Your Expenses, Incomes and Savings for That Time Period </h1>
+        <br></br>
+        <h2> Pick The "From" and "To" Dates and Then Press "See Statistics" To Get an Overview </h2>
+      </div>
+
+      <div class="date-container">
+          <div class="date-picker-container">
+          <p>From: </p> <input id="from" type="date"></input>
           </div>
-
-          <div class='col-1'>
-            <p class="text-sorting" >January</p>
-            <div class="dropdown">
-             
-              </div>
+          <div class="date-picker-container">
+            <p>To: </p> <input id="to" type="date"></input>
           </div>
-        </div>
-        <div class='row'>
+      </div>
 
-        <input id="from" type="date"></input>
-        <input id="to" type="date"></input>
-              <button type="button" className="btn btn-cancel" onClick={this.fetchData}>Cancel</button>
-              </div>
-
+      <div class="button-row-container">
+        <div class="see-data-button" onClick={this.fetchData}> See Statistics </div>
+      </div>
 
         <div class='row'>
         <div class="col-1"></div>
@@ -158,6 +154,7 @@ chartRef2 = React.createRef();
            <canvas id="doughnutChart" ref={this.chartRef2}></canvas>
         </div>
        </div>
+
     </div>
    )
  };

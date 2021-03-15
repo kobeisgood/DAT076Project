@@ -8,7 +8,7 @@ export default class AddTransactionPopup extends React.Component {
         super(props);
         
     this.cancelAddCategory = this.cancelAddTransaction.bind(this)
-    this.addCategory = this.addTransaction.bind(this)
+    this.addTransaction = this.addTransaction.bind(this)
     this.getCategories = this.getCategories.bind(this)
     }
 
@@ -46,10 +46,12 @@ export default class AddTransactionPopup extends React.Component {
         document.getElementById("newTransactionDate").value = null;
         console.log(requestOptions.body);
 
-        fetch('http://localhost:8080/frontend-react/api//transactions', requestOptions)
+        fetch('http://localhost:8080/frontend-react/api/transactions', requestOptions)
             .then(response => response.json())
             .then(transaction => {
-                console.log(transaction)
+                console.log(transaction);
+                console.log(this.props.parent);
+                this.props.parent.getDataFromAPI();
             });
 
         var element = document.getElementById("add-transaction-popup");
@@ -87,6 +89,7 @@ export default class AddTransactionPopup extends React.Component {
                 <div className="flexbox-container">
                     <div className="add-popup">
                         <h3>Add New Transaction</h3>
+                        <br></br>
                         <div className="add-transaction-input-container">
 
                         <select id="newTransactionCategoryName" name="categoryName">

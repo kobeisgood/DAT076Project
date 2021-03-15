@@ -32,6 +32,7 @@ export default class ExpenseTable extends React.Component {
     openAddIncome() {
         var element = document.getElementById("add-income-popup");
         element.setAttribute("category",this.state.category);
+        document.getElementById("incomePopupHeader").innerHTML = "Add New Transaction to " + this.state.category;
         element.style.visibility = "visible";
 
         // Hide floating buttons 
