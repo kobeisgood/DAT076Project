@@ -1,5 +1,6 @@
 .profile-page-container {
-  padding: 5% 40px;
+  padding: 0 40px;
+  padding-top: 5%;
   width: 100%;
   height: 100%;
   display: flex;
@@ -75,6 +76,12 @@
 
 .edit-profile-button {
   width: auto;
+  background-color: var(--color-button);
+  border-radius: 10px;
+}
+
+.edit-profile-button:hover {
+  opacity: 50%;
 }
 
 .vertical-splitter-line {
@@ -89,5 +96,4 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: lightcyan;
 }

@@ -30,7 +30,6 @@ export default class Profile extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.saveInfo = this.saveInfo.bind(this)
         this.getCategories = this.getCategories.bind(this)
-
     }
 
     setEditState() {
@@ -117,10 +116,8 @@ export default class Profile extends React.Component {
                         </div>
                     </div>
 
-                    
-
                     <div className="profile-categories-container">
-                    <div className="profile-title-container">
+                        <div className="profile-title-container">
                             <h3>Categories</h3>
                             <div className="content-splitter-line"></div>
                             {this.getCategories()}

@@ -5,7 +5,7 @@
 	bottom:40px;
 	right:40px;
 	/*background-color:#0C9;*/
-    background-color: #ec6113;
+    background-color: var(--color-button);
 	color:#FFF;
 	border-radius:50px;
 	text-align:center;
@@ -22,7 +22,7 @@
 	bottom:140px;
 	right:40px;
 	/*background-color:#0C9;*/
-    background-color: #ec6113;
+    background-color: var(--color-button);
 	color:#FFF;
 	border-radius:50px;
 	text-align:center;
@@ -34,10 +34,10 @@
 
 .float1:hover {
     cursor:pointer;
-    opacity: 50%
+    opacity: var(--opacity-button-hover);
 }
 
 .float2:hover {
     cursor:pointer;
-    opacity: 50%
+    opacity: var(--opacity-button-hover);
 }

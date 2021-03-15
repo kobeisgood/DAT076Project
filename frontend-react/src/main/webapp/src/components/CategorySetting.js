@@ -2,73 +2,61 @@
 // functionality for editing and deleting the transaction in the db
 
 import React from "react";
-import '../css/monthlyTransaction.css';
-import { ChromePicker } from 'react-color'
+import '../css/category-setting.css';
+import { ChromePicker } from 'react-color';
 
 
-export default class MonthlyTransaction extends React.Component {
+export default class CategorySetting extends React.Component {
 
-  
+	componentDidMount() {
+		if (this.state.color == null)
+			this.setState({ color: this.props.data.color });
+		console.log("HMM")
+	}
+	state = {
+		displayColorPicker: false,
+		color: null
+	};
 
-    componentDidMount(){
-        if(this.state.color == null)
-            this.setState({color:this.props.data.color});
-        console.log("HMM")
-    }
-    state = {
-        displayColorPicker: false,
-        color: null
-      };
-    
-      handleClick = () => {
-        this.setState({ displayColorPicker: !this.state.displayColorPicker })
-        console.log(this.state.color)
-      };
-    
-      handleClose = () => {
-        this.setState({ displayColorPicker: false })
-      };
+	handleClick = () => {
+		this.setState({ displayColorPicker: !this.state.displayColorPicker })
+		console.log(this.state.color)
+	};
 
-      handleChange = (color) => {
-        this.setState({ color: color.hex })
-      };
-    
-  
+	handleClose = () => {
+		this.setState({ displayColorPicker: false })
+	};
 
-    render() {
-        const popover = {
-            position: 'absolute',
-            zIndex: '2',
-          }
-          const cover = {
-            position: 'fixed',
-            top: '0px',
-            right: '0px',
-            bottom: '0px',
-            left: '0px',
-          }
-          return (
-            <div className="category-setting-container">
-                                {this.props.data.categoryName}{this.props.data.type}
+	handleChange = (color) => {
+		this.setState({ color: color.hex })
+	};
 
-              <div className="category-circle-picker" style={{backgroundColor: this.state.color}} onClick={ this.handleClick }></div>
-              { this.state.displayColorPicker ? <div style={ popover }>
-                <div style={ cover } onClick={ this.handleClose }/>
-                <ChromePicker color={this.state.color} onChange={this.handleChange}  />
-              </div> : null }
-              
-             
-            </div>
-          )
-        
+	render() {
+		const popover = {
+			position: 'absolute',
+			zIndex: '2',
+		}
+		const cover = {
+			position: 'fixed',
+			top: '0px',
+			right: '0px',
+			bottom: '0px',
+			left: '0px',
+		}
+		return (
+			<div className="category-setting-container">
+				<div className="category-setting-type-text">{this.props.data.type}</div>
+				<div className="category-row-flexbox">
+					<div className="category-setting-name-text">{this.props.data.categoryName}</div>
 
-            
-
-
-         
-    
-    
-    }
-
-
+					<div className="category-circle-picker" style={{ backgroundColor: this.state.color }} onClick={this.handleClick}>
+						{this.state.displayColorPicker ? <div style={popover}>
+							<div style={cover} onClick={this.handleClose} />
+							<ChromePicker color={this.state.color} onChange={this.handleChange} />
+						</div> : null}
+					</div>
+				</div>
+			</div>
+		)
+	}
 }
