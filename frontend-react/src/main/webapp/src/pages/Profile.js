@@ -101,18 +101,30 @@ export default class Profile extends React.Component {
                         </div>
                         <div className="profile-card-value-container">
                             <p className="profile-card-info-text">First name</p>
-                            <p className="profile-card-value-text">Edward</p>
+                            {this.state.editState === false ?
+                                <p className="profile-card-value-text">{this.state.nameValue}</p> :
+                                <input type="text" name="nameValue" value={this.state.nameValue} onChange={this.handleChange} />
+                            }
                         </div>
                         <div className="profile-card-value-container">
                             <p className="profile-card-info-text">Last name</p>
-                            <p className="profile-card-value-text">Blom</p>
+                            {this.state.editState === false ?
+                                <p className="profile-card-value-text">{this.state.lastNameValue}</p> :
+                                <input type="text" name="lastNameValue" value={this.state.lastNameValue} onChange={this.handleChange} />
+                            }
                         </div>
                         <div className="profile-card-value-container">
                             <p className="profile-card-info-text">Email address</p>
-                            <p className="profile-card-value-text">edwardblom@gmail.com</p>
+                            {this.state.editState === false ?
+                                <p className="profile-card-value-text">{this.state.mailValue}</p> :
+                                <input type="text" name="mailValue" value={this.state.mailValue} onChange={this.handleChange} />
+                            }
                         </div>
                         <div className="edit-profile-button-container">
-                            <button className="edit-profile-button">Edit profile</button>
+                            {this.state.editState === false ?
+                                <button className="edit-profile-button" onClick={() => this.setEditState()}>Edit profile</button> :
+                                <button className="edit-profile-button" onClick={() => this.saveInfo()}>Save</button>
+                            }
                         </div>
                     </div>
 

@@ -78,6 +78,7 @@
   width: auto;
   background-color: var(--color-button);
   border-radius: 10px;
+  transition: 0.2s;
 }
 
 .edit-profile-button:hover {
