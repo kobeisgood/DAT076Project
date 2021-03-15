@@ -17,6 +17,8 @@ and open the template in the editor.
   --color-income-light: #3dc25c;
   --color-cashit-standard: #060b26;
   --color-cashit-standard-hover: #101a52;
+  --color-button: #ec6113;
+  --opacity-button-hover: 50%;
 }
 
 html {
