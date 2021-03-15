@@ -96,7 +96,7 @@ export default class Profile extends React.Component {
 
                 <div className="profile-edit-content-flexbox">
                     <div className="profile-card-container">
-                        <div className="profile-card-header-container">
+                        <div className="profile-title-container">
                             <h3>Account settings</h3>
                             <div className="content-splitter-line"></div>
                         </div>
@@ -117,17 +117,21 @@ export default class Profile extends React.Component {
                         </div>
                     </div>
 
-                    <div className="vertical-splitter-line"></div>
+                    
 
                     <div className="profile-categories-container">
-                        {this.getCategories()}
+                    <div className="profile-title-container">
+                            <h3>Categories</h3>
+                            <div className="content-splitter-line"></div>
+                            {this.getCategories()}
+                        </div>
                     </div>
                 </div>
             </div>
         )
     };
 }
-
+/*{this.getCategories()}*/
 /*
 <div className="profile-card-container">
                     <div className="profile-pic"></div>
