@@ -1,5 +1,11 @@
 # DAT076 project CashIt
 
+JaoK - Joakim Ohlsson  
+kobeisgood - Theo Khademi  
+danielkarlkvist - Daniel Karlkvist  
+Macishh - Marcus Axelsson  
+robinrepowecklauf - Robin Repo Wecklauf  
+
 ## File organization
 
 The final project can be found in the folder "frontend-react", the other folders are previous labs and drafts.   
@@ -20,11 +26,3 @@ DAT076Project/frontend-react/src/main/java/com/ejwa/frontend/model/entity/ - Con
 DAT076Project/frontend-react/src/main/java/com/ejwa/frontend/resources/ - Contains all the APIs.  
 
 ### The report
-
-### Team members
-
-JaoK - Joakim Ohlsson  
-kobeisgood - Theo Khademi  
-danielkarlkvist - Daniel Karlkvist  
-Macishh - Marcus Axelsson  
-robinrepowecklauf - Robin Repo Wecklauf  
