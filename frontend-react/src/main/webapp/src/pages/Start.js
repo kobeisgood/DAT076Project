@@ -43,7 +43,7 @@ export default class Start extends React.Component {
         .then(response => response.json())
           .then(response => {
               if(response.id != null){
-                alert("Login success!");
+               // alert("Login success!");
                 if(isLoggedIn() ) {
                     console.log("LOGIN SUCCESS")
                     this.props.handleLogIn()

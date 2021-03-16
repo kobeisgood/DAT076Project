@@ -3,7 +3,6 @@
 
 import React from "react";
 import '../css/category-setting.css';
-import { ChromePicker } from 'react-color';
 
 
 export default class CategorySetting extends React.Component {
@@ -31,17 +30,7 @@ export default class CategorySetting extends React.Component {
 	};
 
 	render() {
-		const popover = {
-			position: 'absolute',
-			zIndex: '2',
-		}
-		const cover = {
-			position: 'fixed',
-			top: '0px',
-			right: '0px',
-			bottom: '0px',
-			left: '0px',
-		}
+		
 		return (
 			<div className="category-setting-container">
 				<div className="category-setting-type-text">{this.props.data.type}</div>

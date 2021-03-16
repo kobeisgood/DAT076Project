@@ -6,12 +6,12 @@ export default class AddIncomePopup extends React.Component {
 
     constructor(props) {
         super(props);
-        
+
         this.addIncome = this.addIncome.bind(this);
         this.cancelAddIncome = this.cancelAddIncome.bind(this);
     }
 
-    state = {category:null};
+    state = { category: null };
 
     cancelAddIncome() {
         var element = document.getElementById("add-income-popup");
@@ -30,10 +30,10 @@ export default class AddIncomePopup extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(
                 {
-                description : document.getElementById("desc").value,
-                amount : document.getElementById("amount").value, 
-                category : document.getElementById("add-income-popup").getAttribute("category"), 
-                date: document.getElementById("transactionDate").value 
+                    description: document.getElementById("desc").value,
+                    amount: document.getElementById("amount").value,
+                    category: document.getElementById("add-income-popup").getAttribute("category"),
+                    date: document.getElementById("transactionDate").value
                 })
         };
 
@@ -48,9 +48,9 @@ export default class AddIncomePopup extends React.Component {
             .then(response => response.json())
             .then(transaction => {
                 parent.getDataFromAPI();
-                
+
             });
-            
+
         var element = document.getElementById("add-income-popup");
         element.style.visibility = "hidden";
 
@@ -61,7 +61,7 @@ export default class AddIncomePopup extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div id="add-income-popup" className="full-page-container">
                 <div className="flexbox-container">
                     <div className="add-income-popup">
