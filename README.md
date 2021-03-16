@@ -23,8 +23,8 @@ DAT076Project/frontend-react/src/main/java/com/ejwa/frontend/resources/ - Contai
 
 ### Team members
 
-JaoK - Jaokim Ohlsson
-kobeisgood - Theo Khademi
-danielkarlkvist - Daniel Karlkvist
-Macishh - Marcus Axelsson
-robinrepowecklauf - Robin Repo Wecklauf
+JaoK - Jaokim Ohlsson  
+kobeisgood - Theo Khademi  
+danielkarlkvist - Daniel Karlkvist  
+Macishh - Marcus Axelsson  
+robinrepowecklauf - Robin Repo Wecklauf  
