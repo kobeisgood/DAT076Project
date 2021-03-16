@@ -40,7 +40,6 @@ public class TransactionsAPI {
     
     boolean hasNoUserSession(){
         return userSession.getUser() == null;
-//        return false; // ONLY FOR TESTING IN VS CODE
     }
     
     
@@ -64,7 +63,7 @@ public class TransactionsAPI {
         
         Date date;
         
-        if(!json.containsKey("date")){
+        if(!json.containsKey("date") || json.get("date").equals("")){
             json.appendField("date", "CURRENT_TIMESTAMP");
             date = null;
         }

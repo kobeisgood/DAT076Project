@@ -52,7 +52,6 @@ public class UsersAPI {
     
     boolean hasNoUserSession(){
         return userSession.getUser() == null;
-        // return false; // ONLY FOR TESTING IN VS CODE
        
     }
     

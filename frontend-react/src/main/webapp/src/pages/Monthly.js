@@ -25,7 +25,7 @@ export default class Monthly extends React.Component {
 
   async getDataFromAPI() {
 
-    const url1 = "http://localhost:8080/frontend-react/api/users/transactions/2021/3"; // TODO: Fixa så att månad inte är hårdkodad
+    const url1 = "http://localhost:8080/frontend-react/api/users/transactions/"+this.props.year + "/" + this.props.month; // TODO: Fixa så att månad inte är hårdkodad
     const response1 = await fetch(url1);
     const transactionsData = await response1.json();
 
@@ -72,13 +72,19 @@ export default class Monthly extends React.Component {
         this.setState({chartComponent});
     }
 
+    monthToName(month) {
+
+      var months = ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"];
+      return months[month - 1];
+  
+    }
 
   render() {
     return (
       <div>
         <div className="row">
           <div className="col-1"></div>
-          <h1 className="month-title-text">January 2021</h1> {/* TODO: Fixa så att månad inte är hårdkodad*/}
+          <h1 id="monthlyMonth">{this.monthToName(this.props.month)} {this.props.year}</h1> 
         </div>
         <div className="row">
           <div className="col-1"></div>

@@ -105,3 +105,11 @@ and open the template in the editor.
   border-radius: 10px;
   transition: 0.2s;
 }
+
+h1{
+  font-size: 2rem
+}
+
+#monthlyMonth{
+  margin: 3vh 0vh;
+}

@@ -19,7 +19,6 @@ export default class CreateAccount extends React.Component {
 
 
         if(data.get("repeatpassword") !== data.get('password')){
-            // TODO
             alert("PASSWORD MISSMATCH!");
             return;
         }
@@ -43,8 +42,11 @@ export default class CreateAccount extends React.Component {
               console.log(response);
               if(response.id != null){
                 // SAVE USER ID
-                alert("Account created successfully!<br>" + response);
-
+                for (var key of data.keys()) {
+                    data.delete(key)
+                    }
+                console.log("CLEARED")
+                this.props.history.push("/frontend-react/start")
                 //GO TO LOGIN
               }   
           });

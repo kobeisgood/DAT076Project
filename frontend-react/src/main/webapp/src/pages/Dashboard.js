@@ -24,23 +24,8 @@ export default class Dashboard extends React.Component {
 
 		var ret = [];
 		for (let card of this.state.cards) {
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
-			ret.push(<div class="dashboard-card-wrapper"><DashboardCard data={card} /></div>);
+			ret.push(<div class="dashboard-card-wrapper"><DashboardCard handleDashboardCardClick={this.props.handleDashboardClick} data={card} /></div>);
+			
 		}
 		return ret;
 	}

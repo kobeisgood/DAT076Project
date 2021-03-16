@@ -14,12 +14,15 @@ export default class DashBoardCard extends React.Component {
 		super();
 		this.props = props;
 		if (!this.props.data.summary.INCOME)
-			this.props.data.summary.INCOME = Math.floor(Math.random() * 2500);  ///////////////////// TESTING! Should be 0!
+			this.props.data.summary.INCOME = 0
 		if (!this.props.data.summary.EXPENSE)
-			this.props.data.summary.EXPENSE = Math.floor(Math.random() * 2500); ///////////////////// TESTING! Should be 0!
+			this.props.data.summary.EXPENSE = 0
 		if (!this.props.data.summary.SAVINGS)
-			this.props.data.summary.SAVINGS = Math.floor(Math.random() * 2500); ///////////////////// TESTING! Should be 0!
-	}
+			this.props.data.summary.SAVINGS = 0
+	
+		this.setMonth = this.setMonth.bind(this);
+
+		}
 
 	chartRef2 = React.createRef();
 
@@ -79,6 +82,10 @@ export default class DashBoardCard extends React.Component {
 	}
 
 
+	setMonth(){
+		this.props.handleDashboardCardClick(this.props.data.month,this.props.data.year)
+	}
+
 
 	render() {
 
@@ -88,7 +95,7 @@ export default class DashBoardCard extends React.Component {
 					<p class="dashboard-card-name">{this.monthAndYearString(this.props.data.month, this.props.data.year)}</p>
 					<canvas className="chartStyling dashboard-card-margin-elements" id="doughnutChart" ref={this.chartRef2}></canvas>
 					<p class={this.sum() > 0 ? "color-money-left sum-text dashboard-card-margin-elements" : "color-no-money-left sum-text"}>{this.sumToString(this.sum())}</p>
-					<Link className="dashboard-card-button hover-transition dashboard-card-margin-elements" to="/frontend-react/monthly">Go to view</Link>
+					<Link className="dashboard-card-button hover-transition dashboard-card-margin-elements" onClick={this.setMonth} to="/frontend-react/monthly">Go to view</Link>
 				</div>
 			</div>
 		);

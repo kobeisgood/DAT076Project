@@ -43,13 +43,12 @@ export default class Start extends React.Component {
         .then(response => response.json())
           .then(response => {
               if(response.id != null){
-                console.log(response)
                 alert("Login success!");
-                console.log(isLoggedIn())
                 if(isLoggedIn() ) {
-                    console.log(this.props)
-                    console.log(this.props.sidebar.props = {update: true})
-                    this.props.sidebar.props = {update: true}
+                    console.log("LOGIN SUCCESS")
+                    this.props.handleLogIn()
+                 //   console.log(this.props.sidebar.props = {update: true})
+                 //   this.props.sidebar.props = {update: true}
                    // this.props.sidebar.update();
                     this.props.history.push("/frontend-react/dashboard")
                 }

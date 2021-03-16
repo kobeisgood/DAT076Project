@@ -4,5 +4,6 @@
     <jta-data-source>jdbc/Lab3database</jta-data-source>
     <properties>
     </properties>
+    
   </persistence-unit>
 </persistence>

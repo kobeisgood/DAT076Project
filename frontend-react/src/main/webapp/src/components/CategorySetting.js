@@ -11,7 +11,6 @@ export default class CategorySetting extends React.Component {
 	componentDidMount() {
 		if (this.state.color == null)
 			this.setState({ color: this.props.data.color });
-		console.log("HMM")
 	}
 	state = {
 		displayColorPicker: false,
@@ -49,11 +48,8 @@ export default class CategorySetting extends React.Component {
 				<div className="category-row-flexbox">
 					<div className="category-setting-name-text">{this.props.data.categoryName}</div>
 
-					<div className="category-circle-picker" style={{ backgroundColor: this.state.color }} onClick={this.handleClick}>
-						{this.state.displayColorPicker ? <div style={popover}>
-							<div style={cover} onClick={this.handleClose} />
-							<ChromePicker color={this.state.color} onChange={this.handleChange} />
-						</div> : null}
+					<div className="category-circle-picker" style={{ backgroundColor: this.state.color }} >
+						
 					</div>
 				</div>
 			</div>
