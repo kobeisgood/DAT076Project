@@ -32,6 +32,8 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.asset.Asset;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
@@ -44,16 +46,21 @@ public class UsersAPI {
     
     @EJB
     private UsersDAO usersDAO;
-       
-     boolean hasNoUserSession(){
+
+    
+    
+    
+    boolean hasNoUserSession(){
         return userSession.getUser() == null;
-        
-        //return false; // ONLY FOR TESTING IN VS CODE
+        // return false; // ONLY FOR TESTING IN VS CODE
+       
     }
     
     @GET
     @Path("/session")
     public Response isLoggedIn(){
+        
+        
         
         if(hasNoUserSession()){
             return Response
@@ -70,11 +77,10 @@ public class UsersAPI {
     }
     
     @GET
-    @Transactional
     public Response getUser() throws IOException  {
         
+        
         if(hasNoUserSession()){
-            
             return Response
                     .status(Response.Status.FORBIDDEN)
                     .entity(API.error("No session."))
@@ -138,7 +144,7 @@ public class UsersAPI {
                 
                 return Response
                         .status(Response.Status.OK)
-                        .entity(user)
+                        .entity(userSession.getUser())
                         .build();
             }else{
                 return Response
@@ -159,7 +165,7 @@ public class UsersAPI {
     
     @GET
     @Path("logout")
-    public Response logout(JSONObject json) throws IOException  {
+    public Response logout() throws IOException  {
         
         if(hasNoUserSession()){
             
@@ -319,12 +325,12 @@ public class UsersAPI {
         if(hasNoUserSession()){
             return Response
                     .status(Response.Status.FORBIDDEN)
-                    .entity(API.error("No session."))
+                    .entity(new API().error("No session."))
                     .build();
         }
         
         int id = userSession.getId();
-         
+        
         Map<String,List<String>> lables = new HashMap<String, List<String>>();
         Map<String,List<String>> colors = new HashMap<String, List<String>>();
         Map<String,List<Integer>> data = new HashMap<String, List<Integer>>();
@@ -400,24 +406,37 @@ public class UsersAPI {
                     .build();
         }
         
-        try {
-            Users newUser = new Users(json.getAsString("mail"),json.getAsString("firstName"),json.getAsString("lastName"),json.getAsString("password"));
-
-            usersDAO.create(newUser);
-            
+        String mailRegex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        
+        if(!json.getAsString("mail").matches(mailRegex)){
             return Response
-                    .status(Response.Status.OK)
-                    .entity(newUser)
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("Not a valid mail."))
                     .build();
-        } catch (Exception e) {
+        }
+        
+        
+        if(usersDAO.findAccountByMail(json.getAsString("mail")) != null){
             return Response
                     .status(Response.Status.CONFLICT)
                     .entity(API.error("Duplicate mail."))
                     .build();
         }
         
+        
+        Users newUser = new Users(json.getAsString("mail"),json.getAsString("firstName"),json.getAsString("lastName"),json.getAsString("password"));
+        
+        usersDAO.create(newUser);
+        
+        return Response
+                .status(Response.Status.OK)
+                .entity(newUser)
+                .build();
+        
+        
+        
     }
-     
+    
     @PUT
     @Transactional
     public Response updateUser(JSONObject json) {
@@ -430,7 +449,7 @@ public class UsersAPI {
         }
         
         int userId = userSession.getId();
-           
+        
         String[] data = {"mail","password","firstName","lastName"};
         
         String error = API.matchDataInput(data, json);
@@ -441,16 +460,27 @@ public class UsersAPI {
                     .entity(API.error(error))
                     .build();
         }
-          
+        
         String firstName,lastName,mail,password;
-
+        
         firstName = json.getAsString("firstName");
         lastName = json.getAsString("lastName");
         mail = json.getAsString("mail");
         password = json.getAsString("password");
-            
+        
+        
+        
+        String mailRegex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        
+        if(!mail.matches(mailRegex)){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("Not a valid mail."))
+                    .build();
+        }
+        
         Users user = usersDAO.find(userId);
-
+        
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setMail(mail);
@@ -463,7 +493,7 @@ public class UsersAPI {
                 .status(Response.Status.OK)
                 .entity(usersDAO.find(userId))
                 .build();
-             
-    } 
+        
+    }
     
 }

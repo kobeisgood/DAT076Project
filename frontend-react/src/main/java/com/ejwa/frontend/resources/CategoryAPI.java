@@ -39,8 +39,8 @@ public class CategoryAPI {
     private User userSession;
     
     boolean hasNoUserSession(){
-//        return userSession.getUser() == null;
-        return false; // ONLY FOR TESTING IN VS CODE
+        return userSession.getUser() == null;
+//       return false; // ONLY FOR TESTING IN VS CODE
     }
     
     @POST
@@ -70,8 +70,26 @@ public class CategoryAPI {
         String name,color,type;
         
         name = json.getAsString("categoryName");
+        
+        
         type = json.getAsString("type");
+        
+        if(!(type.equals("INCOME") || type.equals("EXPENSE") || type.equals("SAVINGS"))){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("Wrong type."))
+                    .build();
+        }
+        
         color = json.getAsString("color");
+
+        if(!color.matches("^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$")){ // hexacedimal color #abcdef
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("Not a hexadecimal color."))
+                    .build();
+        }
+        
         
         Users user = usersDAO.find(userId);
         
@@ -123,6 +141,23 @@ public class CategoryAPI {
         name = json.getAsString("categoryName");
         type = json.getAsString("type");
         color = json.getAsString("color");
+        
+                
+        if(!(type.equals("INCOME") || type.equals("EXPENSE") || type.equals("SAVINGS"))){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("Wrong type."))
+                    .build();
+        }
+        
+
+        if(!color.matches("^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$")){ // hexacedimal color #abcdef
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(API.error("Not a hexadecimal color."))
+                    .build();
+        }
+        
         
         CategoryPK key = new CategoryPK(name, userId);
         
