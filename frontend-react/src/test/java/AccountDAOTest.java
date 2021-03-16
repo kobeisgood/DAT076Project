@@ -283,7 +283,8 @@ public class AccountDAOTest {
                 .request(MediaType.APPLICATION_JSON)
                 .cookie("JSESSIONID",JSESSIONID)
                 .put(Entity.entity(JSONUser, MediaType.APPLICATION_JSON));
-        
+        JSONUser.put("mail",mail);
+
         
         Response updateUser = client.target(deploymentURL + "api/users")
                 .request(MediaType.APPLICATION_JSON)
@@ -295,7 +296,6 @@ public class AccountDAOTest {
         
         JSONUser.appendField("id", id);
         
-        JSONUser.put("mail",mail);
         
         // Check session after login
         boolean loggedInBoolean = client.target(deploymentURL + "api/users/session")
