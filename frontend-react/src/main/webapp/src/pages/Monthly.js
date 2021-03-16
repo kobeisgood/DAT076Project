@@ -78,7 +78,7 @@ export default class Monthly extends React.Component {
       <div>
         <div className="row">
           <div className="col-1"></div>
-          <h1>January 2021</h1> {/* TODO: Fixa så att månad inte är hårdkodad*/}
+          <h1 className="month-title-text">January 2021</h1> {/* TODO: Fixa så att månad inte är hårdkodad*/}
         </div>
         <div className="row">
           <div className="col-1"></div>
