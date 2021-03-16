@@ -4,7 +4,9 @@ import com.ejwa.frontend.model.dao.*;
 import com.ejwa.frontend.model.*;
 import com.ejwa.frontend.model.entity.*;
 import com.ejwa.frontend.resources.*;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,237 +48,759 @@ public class AccountDAOTest {
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class)
-                .addClasses(User.class,API.class,JAXRSConfiguration.class,UsersAPI.class,CategoryDAO.class, Category.class, UsersDAO.class, Users.class, BudgetDAO.class, Budget.class, TransactionDAO.class,Transactions.class, BudgetPK.class, CategoryPK.class)
+                .addClasses(User.class,API.class,JAXRSConfiguration.class,UsersAPI.class,TransactionsAPI.class,CategoryAPI.class,CategoryDAO.class, Category.class, UsersDAO.class, Users.class, TransactionDAO.class,Transactions.class, CategoryPK.class)
                 .addAsResource("META-INF/persistence.xml")
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-        }
+    }
     
     @ArquillianResource
-    private URL deploymentURL;
+    private static URL deploymentURL;
     
     @EJB
     private CategoryDAO categoryDAO;
+    
     @EJB
     private UsersDAO usersDAO;
-    @EJB
-    private BudgetDAO budgetDAO;
+    
     @EJB
     private TransactionDAO transactionDAO;
     
-    @Inject
-    private UserTransaction databaseTX;
+    static Client client;
+    static int year,month,day;
+    static String mail,firstName,lastName,password,JSESSIONID,currentDate,fromDate,toDate;
+    static JSONObject JSONUser,JSONCategory1,JSONCategory2,JSONCategory3,JSONCategory4,JSONTransaction1,JSONTransaction2,
+            JSONTransaction3,JSONTransaction4,JSONTransaction5,JSONTransaction6;
     
-    Client client = ClientBuilder.newClient();
+    static Users user;
+    static Category c1,c2,c3,c4;
     
+    @BeforeClass
+    public static void before(){
+        
+        user = new Users();
+        
+        client = ClientBuilder.newClient();
+        
+        mail = "jjaokk@gmail.com";
+        firstName = "Joakim";
+        lastName = "Ohlsson";
+        password = "qwe123";
+        JSONUser = new JSONObject();
+        
+        year = 2021;
+        month = 3;
+        day = 16;
+        
+        currentDate = year+"-"+month+"-"+day;
+        fromDate = year+"-"+month+"-"+(day-1);
+        toDate = year+"-"+month+"-"+(day);
+        
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setMail(mail);
+        user.setPassword(password);
+        user.setCategories(new ArrayList<Category>());
+        
+        JSONUser.appendField("password",password);
+        JSONUser.appendField("firstName",firstName);
+        JSONUser.appendField("lastName",lastName);
+        
+        JSONCategory1 = new JSONObject();
+        JSONCategory2 = new JSONObject();
+        JSONCategory3 = new JSONObject();
+        JSONCategory4 = new JSONObject();
+        
+        JSONTransaction1 = new JSONObject();
+        JSONTransaction2 = new JSONObject();
+        JSONTransaction3 = new JSONObject();
+        JSONTransaction4 = new JSONObject();
+        JSONTransaction5 = new JSONObject();
+        JSONTransaction6 = new JSONObject();
+        
+        JSONCategory1.appendField("categoryName", "Mat");
+        JSONCategory1.appendField("color", "#000000");
+        JSONCategory1.appendField("type", "EXPENSE");
+        
+        JSONCategory2.appendField("categoryName", "Hyra");
+        JSONCategory2.appendField("color", "#abcdef");
+        JSONCategory2.appendField("type", "EXPENSE");
+        
+        JSONCategory3.appendField("categoryName", "Lön");
+        JSONCategory3.appendField("color", "#111111");
+        JSONCategory3.appendField("type", "INCOME");
+        
+        JSONCategory4.appendField("categoryName", "Utlandsresa");
+        JSONCategory4.appendField("color", "#222222");
+        JSONCategory4.appendField("type", "SAVINGS");
+        
+        JSONTransaction1.appendField("amount",500);
+        JSONTransaction1.appendField("description","Wyllis");
+        JSONTransaction1.appendField("category",JSONCategory1.get("categoryName"));
+        
+        JSONTransaction2.appendField("amount",5000);
+        JSONTransaction2.appendField("description","Hyra");
+        JSONTransaction2.appendField("category",JSONCategory2.get("categoryName"));
+        
+        JSONTransaction3.appendField("amount",669);
+        JSONTransaction3.appendField("description","Elräkning");
+        JSONTransaction3.appendField("category",JSONCategory2.get("categoryName"));
+        
+        JSONTransaction4.appendField("amount",5000);
+        JSONTransaction4.appendField("description","Till Resa");
+        JSONTransaction4.appendField("category",JSONCategory4.get("categoryName"));
+        
+        JSONTransaction5.appendField("amount",25000);
+        JSONTransaction5.appendField("description","Lön");
+        JSONTransaction5.appendField("category",JSONCategory3.get("categoryName"));
+        
+        JSONTransaction6.appendField("amount",3000);
+        JSONTransaction6.appendField("description","Aktier");
+        JSONTransaction6.appendField("category",JSONCategory3.get("categoryName"));
+        
+        
+    }
     
-    String mail = "jjaokk2@gmail.com";
-    String firstName = "Joakim";
-    String lastName = "Joakim";
-    String password = "qwe123";
-    JSONObject JSONUser;
     
     @Test
     @InSequence(0)
     @RunAsClient
+    public void getSessionIdTest() throws Exception{
+        
+        
+        
+        Response sessionIdResponse = client.target(deploymentURL + "api/users/session")
+                .request(MediaType.TEXT_PLAIN)
+                .get();
+        
+        JSESSIONID = sessionIdResponse.getHeaders().get("Set-Cookie").get(0).toString().substring(11,11+28);
+        
+        assertEquals(sessionIdResponse.getStatus(), 200);
+        
+    }
+    
+    @Test
+    @InSequence(1)
+    @RunAsClient
     public void createAccountTest() throws Exception{
         
-        JSONUser = new JSONObject();
-        JSONUser.appendField("mail",mail);
-        JSONUser.appendField("firstName",firstName);
-        JSONUser.appendField("lastName",lastName);
         
-        Response response = client.target(deploymentURL + "api/users")
+        
+        // Register with missing attribute (password)
+        Response missingMailResponse = client.target(deploymentURL + "api/users")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(JSONUser, MediaType.APPLICATION_JSON));
         
-        // Missing password
-        assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
+        JSONUser.appendField("mail","test@asdasd");
+        // Register with missing attribute (password)
+        Response wrongMailFormat = client.target(deploymentURL + "api/users")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(JSONUser, MediaType.APPLICATION_JSON));
         
-        JSONUser.appendField("password",password);
         
-        JSONObject responseUser = client.target(deploymentURL + "api/users")
+        // Register new user
+        JSONUser.put("mail",mail);
+        JSONObject newUserResponse = client.target(deploymentURL + "api/users")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(JSONUser, MediaType.APPLICATION_JSON),JSONObject.class);
         
-        JSONUser.appendField("id", responseUser.get("id"));
-        
-        assertEquals(responseUser,JSONUser);
-        
-        
-        /*
-        // Send same user info again
-        response = client.target(deploymentURL + "api/users")
+        // Send same user info again (Duplicate mail)
+        Response sameMailResponse = client.target(deploymentURL + "api/users")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(JSONUser, MediaType.APPLICATION_JSON));
         
-        // Duplicate mail
-        assertEquals(response.getStatusInfo(), Response.Status.CONFLICT);
-        */
-                
         
+        
+        
+        // Append generated id to user JSONObject
+        JSONUser.appendField("id", newUserResponse.get("id"));
+        user.setId(Integer.parseInt(newUserResponse.get("id").toString()));
+        
+        
+        assertEquals(missingMailResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
+        assertEquals(wrongMailFormat.getStatusInfo(), Response.Status.BAD_REQUEST);
+        assertEquals(sameMailResponse.getStatusInfo(), Response.Status.CONFLICT);
+        assertEquals(newUserResponse,JSONUser);
+        
+    }
+    
+    @Test
+    @InSequence(2)
+    @RunAsClient
+    public void loginTest() throws Exception{
+        
+        // Check session before login
+        boolean notLoggedInBoolean = client.target(deploymentURL + "api/users/session")
+                .request(MediaType.TEXT_PLAIN)
+                .get(Boolean.class);
+        
+        JSONObject loginUser = new JSONObject();
+        loginUser.appendField("mail",mail + "WRONG");
+        
+        // Login with missing attribute (password)
+        Response missingPasswordResponse = client.target(deploymentURL + "api/users/login")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(loginUser, MediaType.APPLICATION_JSON));
+        
+        // Login with wrong mail
+        loginUser.appendField("password",password);
+        Response wrongMailResponse = client.target(deploymentURL + "api/users/login")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(loginUser, MediaType.APPLICATION_JSON));
+        
+        // Login with wrong password
+        loginUser.replace("mail", mail); // correct mail
+        loginUser.replace("password",password + "WRONG");
+        Response wrongPasswordResponse = client.target(deploymentURL + "api/users/login")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(loginUser, MediaType.APPLICATION_JSON));
+        
+        // Login with correct credentials
+        loginUser.replace("password", password);
+        Response correctLoginResponse = client.target(deploymentURL + "api/users/login")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(loginUser, MediaType.APPLICATION_JSON));
+        
+        Users getUser = client.target(deploymentURL + "api/users")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get(Users.class);
+        
+        Response updateUserWrong = client.target(deploymentURL + "api/users")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONUser, MediaType.APPLICATION_JSON));
+        
+        
+        
+        
+        int id = JSONUser.getAsNumber("id").intValue();
+        String mail = JSONUser.getAsString("mail");
+        JSONUser.remove("id");
+        
+        JSONUser.put("mail","test");
+        Response wrongMailFormat = client.target(deploymentURL + "api/users")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONUser, MediaType.APPLICATION_JSON));
+        
+        
+        Response updateUser = client.target(deploymentURL + "api/users")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONUser, MediaType.APPLICATION_JSON));
+        
+        
+        
+        
+        JSONUser.appendField("id", id);
+        
+        JSONUser.put("mail",mail);
+        
+        // Check session after login
+        boolean loggedInBoolean = client.target(deploymentURL + "api/users/session")
+                .request(MediaType.TEXT_PLAIN)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get(Boolean.class);
+        
+        assertEquals(notLoggedInBoolean,false);
+        assertEquals(missingPasswordResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
+        assertEquals(wrongMailResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
+        assertEquals(wrongPasswordResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
+        assertEquals(updateUserWrong.getStatusInfo(), Response.Status.BAD_REQUEST);
+        assertEquals(updateUser.getStatusInfo(), Response.Status.OK);
+        assertEquals(wrongMailFormat.getStatusInfo(), Response.Status.BAD_REQUEST);
+        assertEquals(correctLoginResponse.getStatusInfo(), Response.Status.OK);
+        
+        assertEquals(getUser.getMail(), mail);
+        assertEquals(loggedInBoolean,true);
+        
+    }
+    
+    @Test
+    @InSequence(3)
+    @RunAsClient
+    public void addCategoriesTest() throws Exception{
+        
+        
+        
+        
+        
+        JSONCategory1.appendField("extra", "test");
+        Response addCategoryWrongAruments = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONCategory1, MediaType.APPLICATION_JSON));
+        JSONCategory1.remove("extra");
+        
+        String type = JSONCategory1.getAsString("type");
+        JSONCategory1.put("type", "WRONG");
+        Response addCategoryWrongType = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONCategory1, MediaType.APPLICATION_JSON));
+        JSONCategory1.put("type", type);
+        
+        String color = JSONCategory1.getAsString("color");
+        JSONCategory1.put("color", "#hexade");
+        Response addCategoryWrongColor = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONCategory1, MediaType.APPLICATION_JSON));
+        JSONCategory1.put("color", color);
+        
+        
+        
+        Category addCategory1 = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONCategory1, MediaType.APPLICATION_JSON), Category.class);
+        
+        Category addCategory2 = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONCategory2, MediaType.APPLICATION_JSON), Category.class);
+        
+        Category addCategory3 = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONCategory3, MediaType.APPLICATION_JSON), Category.class);
+        
+        Category addCategory4 = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONCategory4, MediaType.APPLICATION_JSON), Category.class);
+        
+        Response addCategory4Again = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONCategory4, MediaType.APPLICATION_JSON));
+        
+        addCategory1.setCategoryUser(user);
+        addCategory2.setCategoryUser(user);
+        addCategory3.setCategoryUser(user);
+        addCategory4.setCategoryUser(user);
+        
+        user.getCategories().add(addCategory1);
+        user.getCategories().add(addCategory2);
+        user.getCategories().add(addCategory3);
+        user.getCategories().add(addCategory4);
+        
+        c1 = addCategory1;
+        c2 = addCategory2;
+        c3 = addCategory3;
+        c4 = addCategory4;
+        
+        user.getCategories().add(c1);
+        user.getCategories().add(c2);
+        user.getCategories().add(c3);
+        user.getCategories().add(c4);
+        
+        List<Category> getUserCategorys = client.target(deploymentURL + "api/users/categories")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get(List.class);
+        
+        
+        
+        assertEquals(addCategoryWrongAruments.getStatus(), 400);
+        assertEquals(addCategoryWrongType.getStatus(), 400);
+        assertEquals(addCategoryWrongColor.getStatus(), 400);
+        assertEquals(addCategory4Again.getStatus(), 409);
+        
+        
+        //TODO: fixa lämpliga asserts
+        
+    }
+    @Test
+    @InSequence(4)
+    @RunAsClient
+    public void updateCategoriesTest() throws Exception{
+        
+        
+        
+        JSONCategory4.appendField("test", "test");
+        Response updateCategoryWrongArgs = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONCategory4, MediaType.APPLICATION_JSON));
+        JSONCategory4.remove("test");
+        
+        String color = JSONCategory4.getAsString("color");
+        JSONCategory4.put("color", "test");
+        Response updateCategoryWrongColor = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONCategory4, MediaType.APPLICATION_JSON));
+        JSONCategory4.put("color",color);
+        
+        String type = JSONCategory4.getAsString("type");
+        JSONCategory4.put("type", "test");
+        Response updateCategoryWrongType = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONCategory4, MediaType.APPLICATION_JSON));
+        JSONCategory4.put("type",type);
+        
+        
+        
+        String categoryName = JSONCategory4.getAsString("categoryName");
+        JSONCategory4.put("categoryName", "categoryName");
+        Response updateCategoryWrongName = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONCategory4, MediaType.APPLICATION_JSON));
+        JSONCategory4.put("categoryName",categoryName);
+        
+        
+        
+        Response updateCategory = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONCategory4, MediaType.APPLICATION_JSON));
+        
+        
+        
+        assertEquals(updateCategoryWrongArgs.getStatus(), 400);
+        assertEquals(updateCategoryWrongColor.getStatus(), 400);
+        assertEquals(updateCategoryWrongType.getStatus(), 400);
+        assertEquals(updateCategoryWrongName.getStatus(), 400);
+        assertEquals(updateCategory.getStatus(), 200);
         
     }
     
     
     @Test
-    @InSequence(1)
+    @InSequence(5)
     @RunAsClient
-    public void loginTest() throws Exception{
-            
-         boolean login = client.target(deploymentURL + "api/users/session")
-                .request(MediaType.TEXT_PLAIN)
-                .get(Boolean.class);
-       
-        // Not logged in
-        assertEquals(login,false);
+    public void addTransactionsTest() {
         
-        JSONObject user = new JSONObject();
-        user.appendField("mail",mail + "WRONG");
-
         
-        Response response = client.target(deploymentURL + "api/users/login")
+        
+        
+        
+        JSONTransaction1.put("test", "test");
+        Response addTransactionWrongArgs = client.target(deploymentURL + "api/transactions")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONTransaction1, MediaType.APPLICATION_JSON));
+        JSONTransaction1.remove("test");
         
-        // Missing password
-        assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
-            
-        user.appendField("password",password + "WRONG");
-
-        response = client.target(deploymentURL + "api/users/login")
+        
+        
+        
+        
+        
+        int amount = JSONTransaction1.getAsNumber("amount").intValue();
+        JSONTransaction1.put("amount", "wrong");
+        Response addTransactionWrongAmount = client.target(deploymentURL + "api/transactions")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONTransaction1, MediaType.APPLICATION_JSON));
+        JSONTransaction1.put("amount", amount);
         
-        // Wrong mail
-        assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
-
-        user.replace("mail", mail);
-        
-        
-        response = client.target(deploymentURL + "api/users/login")
+        JSONTransaction1.put("date", "wrong");
+        Response addTransactionWrongDate = client.target(deploymentURL + "api/transactions")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONTransaction1, MediaType.APPLICATION_JSON));
+        JSONTransaction1.put("date", fromDate);
         
-        // Wrong password
-        assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
-
-        user.replace("password", password);
-
-        response = client.target(deploymentURL + "api/users/login")
-                .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
         
-        // Success
-        assertEquals(response.getStatusInfo(), Response.Status.OK);
-/*
-        JSONObject json = client.target(deploymentURL + "api/users")
+        JSONTransaction1.put("category", "test");
+        Response addTransactionWrongCategory = client.target(deploymentURL + "api/transactions")
                 .request(MediaType.APPLICATION_JSON)
-                .get(JSONObject.class);
-       
-        // Session should be same
-        assertEquals(json,JSONUser);
-    */
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONTransaction1, MediaType.APPLICATION_JSON));
+        JSONTransaction1.put("category", JSONCategory1.get("categoryName"));
+        
+        
+        Transactions addTransaction1 = client.target(deploymentURL + "api/transactions")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONTransaction1, MediaType.APPLICATION_JSON), Transactions.class);
+        JSONTransaction1.appendField("tid", addTransaction1.getTransactionId());
+        
+        
+        
+        
+        
+        
+        Transactions addTransaction2 = client.target(deploymentURL + "api/transactions")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONTransaction2, MediaType.APPLICATION_JSON), Transactions.class);
+        JSONTransaction2.appendField("tid", addTransaction2.getTransactionId());
+        
+        Transactions addTransaction3 = client.target(deploymentURL + "api/transactions")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONTransaction3, MediaType.APPLICATION_JSON), Transactions.class);
+        JSONTransaction3.appendField("tid", addTransaction3.getTransactionId());
+        
+        Transactions addTransaction4 = client.target(deploymentURL + "api/transactions")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONTransaction4, MediaType.APPLICATION_JSON), Transactions.class);
+        JSONTransaction4.appendField("tid", addTransaction4.getTransactionId());
+        
+        Transactions addTransaction5 = client.target(deploymentURL + "api/transactions")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONTransaction5, MediaType.APPLICATION_JSON), Transactions.class);
+        JSONTransaction5.appendField("tid", addTransaction5.getTransactionId());
+        
+        Transactions addTransaction6 = client.target(deploymentURL + "api/transactions")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONTransaction6, MediaType.APPLICATION_JSON), Transactions.class);
+        JSONTransaction6.appendField("tid", addTransaction6.getTransactionId());
+        
+        
+        assertEquals(addTransactionWrongDate.getStatus(), 400);
+        assertEquals(addTransactionWrongCategory.getStatus(), 400);
+        assertEquals(addTransactionWrongAmount.getStatus(), 400);
+        assertEquals(addTransactionWrongArgs.getStatus(), 400);
+        
+        
     }
-      
+    
+    @Test
+    @InSequence(6)
+    @RunAsClient
+    public void transactionUpdateTest() {
+        
+        Response updateTransactionWrongArguments = client.target(deploymentURL + "api/transactions")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONTransaction6, MediaType.APPLICATION_JSON));
+        
+        JSONTransaction6.put("amount", "test");
+        JSONTransaction6.put("date", currentDate);
+        JSONTransaction6.remove("category");
+        
+        Response updateTransactionWrongAmount = client.target(deploymentURL + "api/transactions")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONTransaction6, MediaType.APPLICATION_JSON));
+        
+        JSONTransaction6.put("amount", 5000);
+        int tid = JSONTransaction6.getAsNumber("tid").intValue();
+        JSONTransaction6.put("tid", 123456);
+        
+        Response updateTransactionWrongId = client.target(deploymentURL + "api/transactions")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONTransaction6, MediaType.APPLICATION_JSON));
+        
+        JSONTransaction6.put("tid", tid);
+        
+        
+        Response updateTransaction6 = client.target(deploymentURL + "api/transactions")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONTransaction6, MediaType.APPLICATION_JSON));
+        
+        
+        
+        
+        assertEquals(updateTransactionWrongArguments.getStatus(), 400);
+        assertEquals(updateTransactionWrongAmount.getStatus(), 400);
+        assertEquals(updateTransactionWrongId.getStatus(), 400);
+        assertEquals(updateTransaction6.getStatus(), 200);
+        
+    }
+    
+    @Test
+    @InSequence(7)
+    @RunAsClient
+    public void transactionDeleteTest() {
+        
+        Response deleteTransactionWrong = client.target(deploymentURL + "api/transactions/asd")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .delete();
+        
+        
+        Response deleteTransaction6 = client.target(deploymentURL + "api/transactions/" + JSONTransaction6.getAsString("tid"))
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .delete();
+        
+        Response deleteTransactionNotExists = client.target(deploymentURL + "api/transactions/123456")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .delete();
+        
+        assertEquals(deleteTransactionWrong.getStatus(), 400);
+        assertEquals(deleteTransactionNotExists.getStatus(), 400);
+        assertEquals(deleteTransaction6.getStatus(), 200);
+        
+    }
+    @Test
+    @InSequence(8)
+    @RunAsClient
+    public void dashboardTest() {
+        
+        List<JSONObject> dashboardInfo = client.target(deploymentURL + "api/users/dashboard")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get(List.class);
+        
+        HashMap<String,BigDecimal> summary =((HashMap<String,BigDecimal>) (new JSONObject(dashboardInfo.get(0)).get("summary")));
+        
+        assertEquals(summary.get("INCOME"), new BigDecimal(25000));
+        assertEquals(summary.get("SAVINGS"), new BigDecimal(5000));
+        assertEquals(summary.get("EXPENSE"), new BigDecimal(6169));
+        
+    }
+    
+    
+    @Test
+    @InSequence(9)
+    @RunAsClient
+    public void monthlyTest() {
+        
+        Response transactionsMonthWrong = client.target(deploymentURL + "api/users/transactions/asd/asd")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get();
+        
+        
+        
+        Response transactionsMonth = client.target(deploymentURL + "api/users/transactions/"+year+"/"+month)
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get();
+        
+        
+        assertEquals(transactionsMonthWrong.getStatus(),400);
+        assertEquals(transactionsMonth.getStatus(),200);
+        
+    }
+    
+    
+    
+    @Test
+    @InSequence(10)
+    @RunAsClient
+    public void graphTest() {
+        
+        Response transactionsGraphWrong = client.target(deploymentURL + "api/users/transactions/between/asd/asd")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get();
+        
+        
+        
+        Response transactionsGraph = client.target(deploymentURL + "api/users/transactions/between/"+fromDate+"/"+toDate)
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get();
+        
+        
+        assertEquals(transactionsGraphWrong.getStatus(),400);
+        assertEquals(transactionsGraph.getStatus(),200);
+        
+    }
+    
+    
+    
+    @Test
+    @InSequence(20)
+    @RunAsClient
+    public void logoutTest() {
+        
+        Response logoutResponse = client.target(deploymentURL + "api/users/logout")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get();
+        
+        Response logoutAgainResponse = client.target(deploymentURL + "api/users/logout")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get();
+        
+        
+        
+        // TODO: ADD ALL CALLS FORBIDDEN
+        
+        
+        Response deleteTransactionForbidden = client.target(deploymentURL + "api/transactions/1")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .delete();
+        
+        Response addTransactionForbidden = client.target(deploymentURL + "api/transactions")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONTransaction6, MediaType.APPLICATION_JSON));
+        
+        Response updateTransactionForbidden = client.target(deploymentURL + "api/transactions")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONTransaction6, MediaType.APPLICATION_JSON));
+        
+        Response addCategoryForbidden = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .post(Entity.entity(JSONCategory1, MediaType.APPLICATION_JSON));
+        
+        Response updateCategoryForbidden = client.target(deploymentURL + "api/category")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONCategory1, MediaType.APPLICATION_JSON));
+        
+        
+        
+        
+        Response getCategoryForbidden = client.target(deploymentURL + "api/users/categories")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get();
+        
+        Response getUserForbidden = client.target(deploymentURL + "api/users")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get();
+        
+        Response updateUserForbidden = client.target(deploymentURL + "api/users")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .put(Entity.entity(JSONUser, MediaType.APPLICATION_JSON));
+        
+        Response getDashboardForbidden = client.target(deploymentURL + "api/users/dashboard")
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get();
+        
+        
+        Response transactionsGraphForbidden = client.target(deploymentURL + "api/users/transactions/between/"+fromDate+"/"+toDate)
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get();
+        Response transactionsMonthForbidden = client.target(deploymentURL + "api/users/transactions/" + year + "/" + month)
+                .request(MediaType.APPLICATION_JSON)
+                .cookie("JSESSIONID",JSESSIONID)
+                .get();
+        
+        assertEquals(logoutResponse.getStatus(), 200);
+        assertEquals(logoutAgainResponse.getStatus(), 400);
+        
+        // FORBIDDEN
+        assertEquals(deleteTransactionForbidden.getStatus(), 403);
+        assertEquals(addTransactionForbidden.getStatus(), 403);
+        assertEquals(updateTransactionForbidden.getStatus(), 403);
+        assertEquals(addCategoryForbidden.getStatus(), 403);
+        assertEquals(updateCategoryForbidden.getStatus(), 403);
+        assertEquals(getCategoryForbidden.getStatus(), 403);
+        assertEquals(getUserForbidden.getStatus(), 403);
+        assertEquals(transactionsMonthForbidden.getStatus(), 403);
+        assertEquals(transactionsGraphForbidden.getStatus(), 403);
+        assertEquals(updateUserForbidden.getStatus(), 403);
+        assertEquals(getDashboardForbidden.getStatus(), 403);
+        
+        
+    }
+    
 }
-/*  databaseTX.begin(); // begin Transaction
-
-// Create 1 Users
-Users u1 = new Users("jjaokk@gmail.com","Joakim","Ohlsson","qwe123");
-usersDAO.create(u1); // add to database
-usersDAO.flush(); // force the commit inside the Transacion
-
-// Entity exists in DAO
-assertEquals(true,usersDAO.contains(usersDAO.findAccountByMail("jjaokk@gmail.com")));
-
-// Equal entity in databse
-assertEquals(true,u1.equals(usersDAO.findAccountByMail("jjaokk@gmail.com")));
-
-databaseTX.commit();// end Transaction
-}
-
-@Test
-@InSequence(1)
-public void createCategoriesTest() throws Exception{
-databaseTX.begin(); // begin Transaction
-
-// Create 2 Categories
-Category c1 = new Category("Mat",usersDAO.findAccountByMail("jjaokk@gmail.com"),"#ffffff");
-Category c2 = new Category("Nöje",usersDAO.findAccountByMail("jjaokk@gmail.com"),"#000000");
-categoryDAO.create(c1);
-categoryDAO.create(c2);
-categoryDAO.flush();
-
-// Does entitys exists in DAO
-assertEquals(true,categoryDAO.contains(categoryDAO.find(new CategoryPK("Mat",usersDAO.findAccountByMail("jjaokk@gmail.com").getId()))));
-assertEquals(true,categoryDAO.contains(categoryDAO.find(new CategoryPK("Nöje",usersDAO.findAccountByMail("jjaokk@gmail.com").getId()))));
-
-// Does user has 2 categories
-usersDAO.refresh(usersDAO.findAccountByMail("jjaokk@gmail.com"));
-assertEquals(2,usersDAO.findAccountByMail("jjaokk@gmail.com").getCategories().size());
-
-databaseTX.commit();// end Transaction
-
-}
-
-@Test
-@InSequence(2)
-public void createBudgetsTest() throws Exception{
-databaseTX.begin(); // begin Transaction
-
-// Create 2 Budgets
-Budget b1 = new Budget("Resa",usersDAO.findAccountByMail("jjaokk@gmail.com"));
-Budget b2 = new Budget("Husbygge",usersDAO.findAccountByMail("jjaokk@gmail.com"));
-budgetDAO.create(b1);
-budgetDAO.create(b2);
-budgetDAO.flush();
-
-assertEquals(true,budgetDAO.contains(budgetDAO.find(new BudgetPK("Resa",usersDAO.findAccountByMail("jjaokk@gmail.com").getId()))));
-assertEquals(true,budgetDAO.contains(budgetDAO.find(new BudgetPK("Husbygge",usersDAO.findAccountByMail("jjaokk@gmail.com").getId()))));
-
-// Does user has 2 budgets
-usersDAO.refresh(usersDAO.findAccountByMail("jjaokk@gmail.com"));
-assertEquals(2,usersDAO.findAccountByMail("jjaokk@gmail.com").getBudgets().size());
-
-databaseTX.commit();// end Transaction
-}
-
-
-@Test
-@InSequence(3)
-public void createTransactionsTest() throws Exception{
-
-int currentMonth = 3;
-int currentYear = 2021;
-
-databaseTX.begin(); // begin Transaction
-
-Transactions t1 = new Transactions("Hemköp",100,"EXPENSE",categoryDAO.find(new CategoryPK("Mat",usersDAO.findAccountByMail("jjaokk@gmail.com").getId())));
-Transactions t2 = new Transactions("Bio",200,"EXPENSE",categoryDAO.find(new CategoryPK("Nöje",usersDAO.findAccountByMail("jjaokk@gmail.com").getId())));
-Transactions t3 = new Transactions("Sparande",5000,"SAVINGS",categoryDAO.find(new CategoryPK("Mat",usersDAO.findAccountByMail("jjaokk@gmail.com").getId())));
-t3.setIgnore_monthly(true);
-Transactions t4 = new Transactions("Borrmaskin",1599,"EXPENSE",categoryDAO.find(new CategoryPK("Mat",usersDAO.findAccountByMail("jjaokk@gmail.com").getId())));
-t4.setBudget(budgetDAO.find(new BudgetPK("Husbygge",usersDAO.findAccountByMail("jjaokk@gmail.com").getId())));
-t4.setIgnore_monthly(true);
-transactionDAO.create(t1);
-transactionDAO.create(t2);
-transactionDAO.create(t3);
-transactionDAO.create(t4);
-transactionDAO.flush();
-
-// Should be 4 Transactions in DAO
-assertEquals(4,transactionDAO.findAll().size());
-
-usersDAO.refresh(usersDAO.findAccountByMail("jjaokk@gmail.com"));
-int sum = 0;
-for(Transactions t : usersDAO.findAllTransactions(usersDAO.findAccountByMail("jjaokk@gmail.com").getId(),currentYear,currentMonth)){
-sum += t.getAmount();
-}
-assertEquals(-1899+5000,sum);
-
-databaseTX.commit();// end Transaction
-}
-
-
-}
-*/
