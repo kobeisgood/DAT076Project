@@ -37,26 +37,33 @@ export default class AddIncomePopup extends React.Component {
                 })
         };
 
-        document.getElementById("amount").value = null;
-        document.getElementById("desc").value = null;
-        document.getElementById("transactionDate").value = null;
-        console.log(requestOptions.body);
-
+       
         var parent = this.props.parent;
 
         fetch('http://localhost:8080/frontend-react/api/transactions', requestOptions)
             .then(response => response.json())
             .then(transaction => {
-                parent.getDataFromAPI();
+                if(transaction.transactionId != null){
+
+                    document.getElementById("amount").value = null;
+                    document.getElementById("desc").value = null;
+                    document.getElementById("transactionDate").value = null;
+            
+                    parent.getDataFromAPI();
+                    var element = document.getElementById("add-income-popup");
+                    element.style.visibility = "hidden";
+            
+                    // Make floating buttons visible again 
+                    document.getElementById("newTransactionFloat").style.visibility = "visible"
+                    document.getElementById("newCategoryFloat").style.visibility = "visible"
+    
+                }else{
+                    alert(transaction.error)
+                }
 
             });
 
-        var element = document.getElementById("add-income-popup");
-        element.style.visibility = "hidden";
-
-        // Make floating buttons visible again 
-        document.getElementById("newTransactionFloat").style.visibility = "visible"
-        document.getElementById("newCategoryFloat").style.visibility = "visible"
+       
 
     }
 
@@ -68,9 +75,9 @@ export default class AddIncomePopup extends React.Component {
                         <h3 id="incomePopupHeader"> </h3>
                         <br></br>
                         <div className="add-income-input-container">
-                            <input id="desc" className="add-income-name-input add-income-input" placeholder="Description (e.g. Bought Groceries at Willys)"></input>
+                            <input id="desc" type="text" className="add-income-name-input add-income-input" placeholder="Description (e.g. Bought Groceries at Willys)" required></input>
                             <br></br>
-                            <input id="amount" className="add-income-amount-input add-income-input" placeholder="Amount (SEK)"></input>
+                            <input id="amount" type="number" className="add-income-amount-input add-income-input" placeholder="Amount (SEK)" required></input>
                             <br></br>
                             <input id="transactionDate" type="date"></input>
                         </div>

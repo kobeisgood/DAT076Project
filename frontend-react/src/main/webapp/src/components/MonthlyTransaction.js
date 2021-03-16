@@ -66,14 +66,19 @@ export default class MonthlyTransaction extends React.Component {
                     amount: Math.abs(this.state.amountValue),
                     description: this.state.descriptionValue,
                     tid: this.props.data.transactionId,
-                    date: this.props.data.date 
+                    date: this.props.data.date // from db
                 })
         };
 
         fetch('http://localhost:8080/frontend-react/api/transactions', requestOptions)
             .then(response => response.json())
             .then(transaction => {
-                this.props.parent.getDataFromAPI();
+                if(transaction.transactionId != null){
+                    this.props.parent.getDataFromAPI();
+                }
+                else{
+                    alert(transaction.error)
+                }
             });
     }
 

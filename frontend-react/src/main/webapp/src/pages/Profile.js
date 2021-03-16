@@ -5,12 +5,10 @@ import CategorySetting from "../components/CategorySetting"
 export default class Profile extends React.Component {
 
     async componentDidMount() {
-        // Fetch data from the user
         const url1 = "http://localhost:8080/frontend-react/api/users";
         const response1 = await fetch(url1);
         const data1 = await response1.json();
 
-        // Fetch data from the categories of the user
         const url2 = "http://localhost:8080/frontend-react/api/users/categories";
         const response2 = await fetch(url2);
         const data2 = await response2.json();
@@ -18,28 +16,41 @@ export default class Profile extends React.Component {
         this.setState({ categoriesData: data2, nameValue: data1.firstName, lastNameValue: data1.lastName, mailValue: data1.mail });
     }
 
+    async updateInfo(){
+        const url1 = "http://localhost:8080/frontend-react/api/users";
+        const response1 = await fetch(url1);
+        const data1 = await response1.json();
+
+
+        this.setState({ nameValue: data1.firstName, lastNameValue: data1.lastName, mailValue: data1.mail });
+    }
+
     constructor(props) {
         super(props);
         this.state = {
             editState: false,
-            nameValue: '',
-            lastNameValue: '', 
-            mailValue: '', 
+            nameValue: '', // first name from db
+            lastNameValue: '', // last name from db
+            mailValue: '', // mail from db
             categoriesData: null,
             categories: null
         };
+        this.updateInfo = this.updateInfo.bind(this);
         this.setEditState = this.setEditState.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.saveInfo = this.saveInfo.bind(this)
         this.getCategories = this.getCategories.bind(this)
     }
 
+
+
+
     setEditState() {
         this.setState({ editState: true })
+        //console.log("edit state is now " + this.state.editState)
     }
 
     saveInfo() {
-        this.setState({ editState: false })
 
         const requestOptions = {
             method: 'PUT',
@@ -48,17 +59,24 @@ export default class Profile extends React.Component {
                 {
                     mail: this.state.mailValue, 
                     firstName: this.state.nameValue,
-                    lastName: this.state.lastNameValue,
-                    password: 'qwe123'
+                    lastName: this.state.lastNameValue
                 })
         };
 
+        console.log(requestOptions.body);
 
-        // Update the users info
         fetch('http://localhost:8080/frontend-react/api/users', requestOptions)
             .then(response => response.json())
             .then(res => {
+                if(res.id == null){
+                    alert(res.error)
+                    this.updateInfo();
+                }else{
+                    this.setState({ editState: false })
+                }
             });
+
+
     }
 
     handleChange(event) {

@@ -199,7 +199,7 @@ public class TransactionsAPI {
         }catch(NumberFormatException e){
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity(API.error(e.getMessage()))
+                    .entity(API.error("Wrong amount"))
                     .build();
         }
         

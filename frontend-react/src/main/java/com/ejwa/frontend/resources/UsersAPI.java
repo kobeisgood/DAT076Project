@@ -411,7 +411,7 @@ public class UsersAPI {
 
         int userId = userSession.getId();
 
-        String[] data = {"mail", "password", "firstName", "lastName"};
+        String[] data = {"mail", "firstName", "lastName"};
 
         String error = API.matchDataInput(data, json);
 
@@ -427,7 +427,6 @@ public class UsersAPI {
         firstName = json.getAsString("firstName");
         lastName = json.getAsString("lastName");
         mail = json.getAsString("mail");
-        password = json.getAsString("password");
 
         String mailRegex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
@@ -437,13 +436,22 @@ public class UsersAPI {
                     .entity(API.error("Not a valid mail."))
                     .build();
         }
-
+        
         Users user = usersDAO.find(userId);
+
+                
+        if (!user.getMail().equals(mail) && usersDAO.findAccountByMail(mail) != null) {
+            return Response
+                    .status(Response.Status.CONFLICT)
+                    .entity(API.error("Duplicate mail."))
+                    .build();
+        }
+        
+
 
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setMail(mail);
-        user.setPassword(password);
 
         usersDAO.flush();
         usersDAO.refresh(user);
