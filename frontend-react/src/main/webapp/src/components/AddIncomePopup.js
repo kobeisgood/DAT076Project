@@ -33,7 +33,6 @@ export default class AddIncomePopup extends React.Component {
                 description : document.getElementById("desc").value,
                 amount : document.getElementById("amount").value, 
                 category : document.getElementById("add-income-popup").getAttribute("category"), 
-                ignore_monthly: false, // DEFAULT, NOT IMPLEMENTED FOR TRUE
                 date: document.getElementById("transactionDate").value 
                 })
         };
