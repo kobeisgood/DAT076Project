@@ -46,24 +46,14 @@ export default class Start extends React.Component {
                 console.log(response)
                 alert("Login success!");
                 console.log(isLoggedIn())
-                .then()
                 if(isLoggedIn() ) {
                     console.log(this.props)
-                    console.log(this.props.sidebar)
+                    console.log(this.props.sidebar.props = {update: true})
+                    this.props.sidebar.props = {update: true}
                    // this.props.sidebar.update();
                     this.props.history.push("/frontend-react/dashboard")
                 }
 
-                
-                // we want to check in "http://localhost:8080/frontend-react/api/users/session", and see if true, similar thing done in
-                // sidebar
-                // use Link to route to frontend-react/dashboard
-                // implement protected route in dashboard 
-                // implement 404 not found for when user isnt logged in
-
-                //  this.props.history.push("/frontend-react/dashboard") // this doesnt load the page, it simply redirects it here so 
-                // no state in dashboard is loaded 
-                //GO TO DASHBOARD
               }           
           });
     }
@@ -76,11 +66,9 @@ export default class Start extends React.Component {
                 width: "25rem"
             }}>
                 <form onSubmit={this.handleSubmit}>
-                    {/* TODO:   connect button to home page
-                            connect this start page to db
+                    {/* TODO:
                             make this the starting page
-                            connect don't have an account yet 
-                            add noValidate to form and create own error messages */}
+                    */}
                     <h4><b>Log in</b></h4>
 
                     <label htmlFor="email"><b>Email</b></label>

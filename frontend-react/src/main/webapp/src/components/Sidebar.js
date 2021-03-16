@@ -23,19 +23,32 @@ export default class Sidebar extends React.Component {
     }
  
  async componentDidMount(){
- this.update()}
+    this.update()
+}
+
+componentDidUpdate(prevProps, prevState){
+   if (this.props.update && !prevProps.update){
+       this.update();
+   }
+}
+
+
+// Works but is illegal according to Matti
+/*
+ componentDidUpdate(prevProps, prevState) {
+     if (prevState.SidebarData[0].title !== this.state.SideBarData[0].title)
+     if (prevState.SidebarData !== this.state.SidebarData) {
+         this.update();
+     }
+ }*/
   
 
 async update() {
 
-  /*
-    const url = "http://localhost:8080/frontend-react/api/users/session";
-    const response = await fetch(url);
-    const data = await response.json();*/
     const loggedIn = await isLoggedIn();
     this.setState({isAuthenticated: loggedIn})
     console.log(loggedIn);
-    var SidebarData;
+    var SidebarData = this.state.SidebarData;
     if(loggedIn){ // logged in
         this.setState({ SidebarData : [
             {
@@ -85,16 +98,11 @@ async update() {
 
     
     console.log(SidebarData);
-    //this.setState({SidebarData});
 
     }
 
 
  render() {
-
-
-
-
 
     return(
         <nav className={'nav-menu'}>
