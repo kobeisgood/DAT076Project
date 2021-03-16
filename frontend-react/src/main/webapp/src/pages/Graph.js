@@ -22,7 +22,9 @@ export default class Graph extends React.Component {
 		return max;
 	}
 
+	// Reference to bar chart
 	chartRef1 = React.createRef();
+	// Reference to doughnut chart
 	chartRef2 = React.createRef();
 
 	componentDidUpdate() {

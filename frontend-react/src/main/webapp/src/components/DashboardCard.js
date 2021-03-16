@@ -19,11 +19,12 @@ export default class DashBoardCard extends React.Component {
 			this.props.data.summary.EXPENSE = 0
 		if (!this.props.data.summary.SAVINGS)
 			this.props.data.summary.SAVINGS = 0
-	
+
 		this.setMonth = this.setMonth.bind(this);
 
-		}
+	}
 
+	// Reference for the doughnut chart 
 	chartRef2 = React.createRef();
 
 	componentDidMount() {
@@ -82,8 +83,8 @@ export default class DashBoardCard extends React.Component {
 	}
 
 
-	setMonth(){
-		this.props.handleDashboardCardClick(this.props.data.month,this.props.data.year)
+	setMonth() {
+		this.props.handleDashboardCardClick(this.props.data.month, this.props.data.year)
 	}
 
 

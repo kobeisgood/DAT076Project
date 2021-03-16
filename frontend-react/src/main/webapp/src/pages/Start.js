@@ -17,9 +17,9 @@ export default class Start extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-   
- 
-     handleSubmit(event) {
+
+
+    handleSubmit(event) {
         if (!event.target.checkValidity()) {
             return;
         }
@@ -39,22 +39,18 @@ export default class Start extends React.Component {
         };
 
 
-        fetch('http://localhost:8080/frontend-react/api/users/login',requestOptions)
-        .then(response => response.json())
-          .then(response => {
-              if(response.id != null){
-               // alert("Login success!");
-                if(isLoggedIn() ) {
-                    console.log("LOGIN SUCCESS")
-                    this.props.handleLogIn()
-                 //   console.log(this.props.sidebar.props = {update: true})
-                 //   this.props.sidebar.props = {update: true}
-                   // this.props.sidebar.update();
-                    this.props.history.push("/frontend-react/dashboard")
-                }
+        fetch('http://localhost:8080/frontend-react/api/users/login', requestOptions)
+            .then(response => response.json())
+            .then(response => {
+                if (response.id != null) {
+                    if (isLoggedIn()) {
+                        console.log("LOGIN SUCCESS")
+                        this.props.handleLogIn()
+                        this.props.history.push("/frontend-react/dashboard")
+                    }
 
-              }           
-          });
+                }
+            });
     }
 
     render() {
@@ -65,9 +61,6 @@ export default class Start extends React.Component {
                 width: "25rem"
             }}>
                 <form onSubmit={this.handleSubmit}>
-                    {/* TODO:
-                            make this the starting page
-                    */}
                     <h4><b>Log in</b></h4>
 
                     <label htmlFor="email"><b>Email</b></label>

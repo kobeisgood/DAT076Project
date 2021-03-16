@@ -11,8 +11,7 @@ import CashIT from "./pages/CashIT";
 
 
 ReactDOM.render(
-		<CashIT />
-	,
+	<CashIT />,
 	document.getElementById('root')
 );
 

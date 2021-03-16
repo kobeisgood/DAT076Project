@@ -14,100 +14,82 @@ export default class Sidebar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loggedIn: 
-            [
-                {
-                    title: "Dashboard",
-                    path: "/frontend-react/dashboard",
-                    icon: <FontAwesomeIcon icon={faTachometerAlt} color='white' size='lg'/>,
-                    cName: "nav-text"
-                },
-                {
-                    title: "Monthly",
-                    path: "/frontend-react/monthly",
-                    icon: <FontAwesomeIcon icon={faCalendarAlt} color='white' size='lg'/>,
-                    cName: "nav-text"
-                },
-                {
-                    title: "Graph",
-                    path: "/frontend-react/graph",
-                    icon: <FontAwesomeIcon icon={faChartBar} color='white' size='lg'/>,
-                    cName: "nav-text"
-                },
-                {
-                    title: "Profile",
-                    path: "/frontend-react/profile",
-                    icon: <FontAwesomeIcon icon={faUserCircle} color='white' size='lg'/>,
-                    cName: "nav-text"
-                },
-                {
-                    title: "Sign out",
-                    path: "/frontend-react/logout",
-                    icon: <FontAwesomeIcon icon={faSignOutAlt} color='white' size='lg'/>,
-                    cName: "nav-text"
-                }
-            ],
+            loggedIn:
+                [
+                    {
+                        title: "Dashboard",
+                        path: "/frontend-react/dashboard",
+                        icon: <FontAwesomeIcon icon={faTachometerAlt} color='white' size='lg' />,
+                        cName: "nav-text"
+                    },
+                    {
+                        title: "Monthly",
+                        path: "/frontend-react/monthly",
+                        icon: <FontAwesomeIcon icon={faCalendarAlt} color='white' size='lg' />,
+                        cName: "nav-text"
+                    },
+                    {
+                        title: "Graph",
+                        path: "/frontend-react/graph",
+                        icon: <FontAwesomeIcon icon={faChartBar} color='white' size='lg' />,
+                        cName: "nav-text"
+                    },
+                    {
+                        title: "Profile",
+                        path: "/frontend-react/profile",
+                        icon: <FontAwesomeIcon icon={faUserCircle} color='white' size='lg' />,
+                        cName: "nav-text"
+                    },
+                    {
+                        title: "Sign out",
+                        path: "/frontend-react/logout",
+                        icon: <FontAwesomeIcon icon={faSignOutAlt} color='white' size='lg' />,
+                        cName: "nav-text"
+                    }
+                ],
             loggedOut: [
-            
+
                 {
                     title: "Start",
                     path: "/frontend-react/start",
-                    icon: <FontAwesomeIcon icon={faHome} color='white' size='lg'/>,
+                    icon: <FontAwesomeIcon icon={faHome} color='white' size='lg' />,
                     cName: "nav-text"
                 }
             ]
         };
-        
-    }
- 
- componentDidMount(){
-    console.log("SIDEBAR MOUNT " + this.props.loggedIn)
 
-
-
-}
-
-componentDidUpdate(){
-  console.log("SIDEBAR UPDATE " + this.props.loggedIn)
-
-  
-
-}
-
-
-
- render() {
-
-    var sidebarData;
-    if(this.props.loggedIn){
-        sidebarData = this.state.loggedIn
-        console.log("LOGGED IN DATA")
-    }
-    else{
-        sidebarData = this.state.loggedOut
-        console.log("LOGGED OUT DATA")
     }
 
-    return(
-        <nav className={'nav-menu'}>
-            <h1 className='logo'> CashIT </h1>
-            <ul className="nav-menu-items">
-                 
-                {sidebarData.map((item, index) => {
-                    return (
-                        <li key={index} className={item.cName}>
-                            <Link to={item.path}>
-                                {item.icon}
-                                <span className="nav-menu-item-title">
-                                    {item.title}
-                                </span>
-                            </Link>
-                        </li>
-                    )
-                })}
-            </ul>
-        </nav>
-        
-    )
-}
+    render() {
+
+        var sidebarData;
+        if (this.props.loggedIn) {
+            sidebarData = this.state.loggedIn
+        }
+        else {
+            sidebarData = this.state.loggedOut
+        }
+
+        return (
+            <nav className={'nav-menu'}>
+                <h1 className='logo'> CashIT </h1>
+                <ul className="nav-menu-items">
+
+                    {sidebarData.map((item, index) => {
+                        return (
+                            <li key={index} className={item.cName}>
+                                <Link to={item.path}>
+                                    {item.icon}
+                                    <span className="nav-menu-item-title">
+                                        {item.title}
+                                    </span>
+                                </Link>
+                            </li>
+                        )
+                    })}
+                </ul>
+            </nav>
+
+        )
+    }
 }

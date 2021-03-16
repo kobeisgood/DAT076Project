@@ -30,7 +30,7 @@ export default class CategorySetting extends React.Component {
 	};
 
 	render() {
-		
+
 		return (
 			<div className="category-setting-container">
 				<div className="category-setting-type-text">{this.props.data.type}</div>
@@ -38,7 +38,7 @@ export default class CategorySetting extends React.Component {
 					<div className="category-setting-name-text">{this.props.data.categoryName}</div>
 
 					<div className="category-circle-picker" style={{ backgroundColor: this.state.color }} >
-						
+
 					</div>
 				</div>
 			</div>

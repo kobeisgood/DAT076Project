@@ -5,7 +5,6 @@ export default class MonthlyFloatingButtons extends React.Component {
 
     openAddCategoryPopup() {
         var element = document.getElementById("add-category-popup");
-        // element.setAttribute("category",this.state.category);
         element.style.visibility = "visible";
 
         // Hide floating buttons
@@ -16,7 +15,6 @@ export default class MonthlyFloatingButtons extends React.Component {
 
     openAddTransactionPopup() {
         var element = document.getElementById("add-transaction-popup");
-        // element.setAttribute("category",this.state.category);
         element.style.visibility = "visible";
 
         // Hide floating buttons

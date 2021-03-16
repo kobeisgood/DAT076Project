@@ -5,10 +5,12 @@ import CategorySetting from "../components/CategorySetting"
 export default class Profile extends React.Component {
 
     async componentDidMount() {
+        // Fetch data from the user
         const url1 = "http://localhost:8080/frontend-react/api/users";
         const response1 = await fetch(url1);
         const data1 = await response1.json();
 
+        // Fetch data from the categories of the user
         const url2 = "http://localhost:8080/frontend-react/api/users/categories";
         const response2 = await fetch(url2);
         const data2 = await response2.json();
@@ -20,9 +22,9 @@ export default class Profile extends React.Component {
         super(props);
         this.state = {
             editState: false,
-            nameValue: '', // first name from db
-            lastNameValue: '', // last name from db
-            mailValue: '', // mail from db
+            nameValue: '',
+            lastNameValue: '', 
+            mailValue: '', 
             categoriesData: null,
             categories: null
         };
@@ -34,7 +36,6 @@ export default class Profile extends React.Component {
 
     setEditState() {
         this.setState({ editState: true })
-        //console.log("edit state is now " + this.state.editState)
     }
 
     saveInfo() {
@@ -45,20 +46,18 @@ export default class Profile extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(
                 {
-                    mail: this.state.mailValue, // CHECK MAIL!?
+                    mail: this.state.mailValue, 
                     firstName: this.state.nameValue,
                     lastName: this.state.lastNameValue,
                     password: 'qwe123'
                 })
         };
 
-        console.log(requestOptions.body);
-        //console.log("edit state is now " + this.state.editState)
 
+        // Update the users info
         fetch('http://localhost:8080/frontend-react/api/users', requestOptions)
             .then(response => response.json())
             .then(res => {
-                // UPDATE USER INFO
             });
     }
 

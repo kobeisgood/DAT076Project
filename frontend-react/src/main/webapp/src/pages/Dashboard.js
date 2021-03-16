@@ -11,7 +11,7 @@ export default class Dashboard extends React.Component {
 		const response = await fetch(url);
 		var data = await response.json();
 		console.log(data);
-		if(data.error){
+		if (data.error) {
 			alert("Error loading data")
 			data = []
 		}
@@ -25,7 +25,7 @@ export default class Dashboard extends React.Component {
 		var ret = [];
 		for (let card of this.state.cards) {
 			ret.push(<div class="dashboard-card-wrapper"><DashboardCard handleDashboardCardClick={this.props.handleDashboardClick} data={card} /></div>);
-			
+
 		}
 		return ret;
 	}
@@ -37,6 +37,6 @@ export default class Dashboard extends React.Component {
 					{this.createCards()}
 				</div>
 			</div>
-      	)
+		)
 	};
 }

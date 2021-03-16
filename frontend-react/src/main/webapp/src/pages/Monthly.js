@@ -25,10 +25,12 @@ export default class Monthly extends React.Component {
 
   async getDataFromAPI() {
 
-    const url1 = "http://localhost:8080/frontend-react/api/users/transactions/" + this.props.year + "/" + this.props.month; // TODO: Fixa så att månad inte är hårdkodad
+    // Fetching transaction data
+    const url1 = "http://localhost:8080/frontend-react/api/users/transactions/" + this.props.year + "/" + this.props.month;
     const response1 = await fetch(url1);
     const transactionsData = await response1.json();
 
+    // Fetching data from the dashboard
     const url2 = "http://localhost:8080/frontend-react/api/users/dashboard";
     const response2 = await fetch(url2);
     const chartData = await response2.json();
@@ -67,7 +69,7 @@ export default class Monthly extends React.Component {
     this.setState({ chartComponent });
 
     for (let month of this.state.chart) {
-      if (month.month === this.props.month && month.year === this.props.year) 
+      if (month.month === this.props.month && month.year === this.props.year)
         chartComponent = <DoughnutChartComponent title="test" data={month.data} lables={month.lables} colors={month.colors} />;
     }
     this.setState({ chartComponent });

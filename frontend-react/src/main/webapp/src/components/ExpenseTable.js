@@ -13,8 +13,8 @@ export default class ExpenseTable extends React.Component {
             dataTarget: "#collapse" + this.props.title,
             accordion: "accordion" + this.props.title,
             dataParent: "#accordion" + this.props.title,
-            categoryCards:null,
-            category:this.props.title
+            categoryCards: null,
+            category: this.props.title
         };
 
         this.openAddIncome = this.openAddIncome.bind(this);
@@ -24,14 +24,15 @@ export default class ExpenseTable extends React.Component {
 
         this.createCategoryCards();
 
-        }
+    }
 
-    
-        
 
+
+
+    // Opens the add new transaction popup for the button inside an expense table 
     openAddIncome() {
         var element = document.getElementById("add-income-popup");
-        element.setAttribute("category",this.state.category);
+        element.setAttribute("category", this.state.category);
         document.getElementById("incomePopupHeader").innerHTML = "Add New Transaction to " + this.state.category;
         element.style.visibility = "visible";
 
@@ -40,22 +41,22 @@ export default class ExpenseTable extends React.Component {
         document.getElementById("newCategoryFloat").style.visibility = "hidden"
     }
 
-    createCategoryCards(){
-        if(!this.props.data)
-          return;
+    createCategoryCards() {
+        if (!this.props.data)
+            return;
 
         var categoryCards = [];
         var sum = 0;
-        for(let transaction of this.props.data){
+        for (let transaction of this.props.data) {
             sum += transaction.amount;
-            categoryCards.push(<MonthlyTransaction parent={this.props.parent} data={transaction}/>);
+            categoryCards.push(<MonthlyTransaction parent={this.props.parent} data={transaction} />);
         }
 
-        this.setState({sum,categoryCards});
+        this.setState({ sum, categoryCards });
 
 
 
-      }
+    }
 
     render() {
         return (
