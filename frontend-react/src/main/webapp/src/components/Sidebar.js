@@ -7,23 +7,50 @@ import {faChartBar} from '@fortawesome/free-solid-svg-icons';
 import {faUserCircle} from '@fortawesome/free-solid-svg-icons';
 import {faHome} from '@fortawesome/free-solid-svg-icons';
 import '../css/Sidebar.css';
+import {isLoggedIn} from '../pages/Start'
 
 
 export default class Sidebar extends React.Component {
 
- state = {SidebarData:[]}
+    constructor(props) {
+        super(props);
+        this.update = this.update.bind(this);
+        this.state = {
+            isAuthenticated: false,
+            SidebarData: []
+        };
+        
+    }
  
+ async componentDidMount(){
+    this.update()
+}
+
+componentDidUpdate(prevProps, prevState){
+   if (this.props.update && !prevProps.update){
+       this.update();
+   }
+}
+
+
+// Works but is illegal according to Matti
+/*
+ componentDidUpdate(prevProps, prevState) {
+     if (prevState.SidebarData[0].title !== this.state.SideBarData[0].title)
+     if (prevState.SidebarData !== this.state.SidebarData) {
+         this.update();
+     }
+ }*/
   
 
-async componentDidMount() {
+async update() {
 
-    const url = "http://localhost:8080/frontend-react/api/users/session";
-    const response = await fetch(url);
-    const data = await response.json();
-
-    var SidebarData;
-    if(data){ // logged in
-        SidebarData = [
+    const loggedIn = await isLoggedIn();
+    this.setState({isAuthenticated: loggedIn})
+    console.log(loggedIn);
+    var SidebarData = this.state.SidebarData;
+    if(loggedIn){ // logged in
+        this.setState({ SidebarData : [
             {
                 title: "Dashboard",
                 path: "/frontend-react/dashboard",
@@ -54,10 +81,10 @@ async componentDidMount() {
                 icon: <FontAwesomeIcon icon={faSignOutAlt} color='white' size='lg'/>,
                 cName: "nav-text"
             }
-        ];
+        ]});
     }
     else{
-        SidebarData = [
+        this.setState({SidebarData : [
             
             {
                 title: "Start",
@@ -65,21 +92,17 @@ async componentDidMount() {
                 icon: <FontAwesomeIcon icon={faHome} color='white' size='lg'/>,
                 cName: "nav-text"
             }
-        ];
+        ]});
+        
     }
 
     
     console.log(SidebarData);
-    this.setState({SidebarData});
 
     }
 
 
  render() {
-
-
-
-
 
     return(
         <nav className={'nav-menu'}>

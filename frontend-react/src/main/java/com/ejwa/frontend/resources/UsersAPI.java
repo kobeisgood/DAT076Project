@@ -46,8 +46,9 @@ public class UsersAPI {
     private UsersDAO usersDAO;
        
      boolean hasNoUserSession(){
-//        return userSession.getUser() == null;
-        return false; // ONLY FOR TESTING IN VS CODE
+        return userSession.getUser() == null;
+        
+        //return false; // ONLY FOR TESTING IN VS CODE
     }
     
     @GET

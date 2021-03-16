@@ -3,6 +3,13 @@ import React from "react";
 import '../css/start.css';
 import { Link } from 'react-router-dom';
 
+export async function isLoggedIn() {
+    const url = "http://localhost:8080/frontend-react/api/users/session";
+    const response = await fetch(url);
+    const data = await response.json();
+    return data
+}
+
 export default class Start extends React.Component {
 
     constructor() {
@@ -10,7 +17,9 @@ export default class Start extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
+   
+ 
+     handleSubmit(event) {
         if (!event.target.checkValidity()) {
             return;
         }
@@ -34,8 +43,17 @@ export default class Start extends React.Component {
         .then(response => response.json())
           .then(response => {
               if(response.id != null){
+                console.log(response)
                 alert("Login success!");
-                //GO TO DASHBOARD
+                console.log(isLoggedIn())
+                if(isLoggedIn() ) {
+                    console.log(this.props)
+                    console.log(this.props.sidebar.props = {update: true})
+                    this.props.sidebar.props = {update: true}
+                   // this.props.sidebar.update();
+                    this.props.history.push("/frontend-react/dashboard")
+                }
+
               }           
           });
     }
@@ -48,11 +66,9 @@ export default class Start extends React.Component {
                 width: "25rem"
             }}>
                 <form onSubmit={this.handleSubmit}>
-                    {/* TODO:   connect button to home page
-                            connect this start page to db
+                    {/* TODO:
                             make this the starting page
-                            connect don't have an account yet 
-                            add noValidate to form and create own error messages */}
+                    */}
                     <h4><b>Log in</b></h4>
 
                     <label htmlFor="email"><b>Email</b></label>
