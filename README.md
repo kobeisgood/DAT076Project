@@ -21,12 +21,11 @@ DAT076Project/frontend-react/src/main/webapp/src/css/ - Contains all the css fil
 
 ### Backend
 
-DAT076Project/frontend-react/src/main/java/com/ejwa/frontend/ - Contains the backend. 
-DAT076Project/frontend-react/src/main/java/com/ejwa/frontend/model/User.java - This file is used store a session for a user 
+DAT076Project/frontend-react/src/main/java/com/ejwa/frontend/ - Contains the backend.  
+DAT076Project/frontend-react/src/main/java/com/ejwa/frontend/model/User.java - This file is used store a session for a user.  
 DAT076Project/frontend-react/src/main/java/com/ejwa/frontend/model/dao/ - Contains all the DAO files.  
 DAT076Project/frontend-react/src/main/java/com/ejwa/frontend/model/entity/ - Contains all the entity files.  
 DAT076Project/frontend-react/src/main/java/com/ejwa/frontend/resources/ - Contains all the APIs.  
 DAT076Project/frontend-react/src/test/java/AccountDAOTest.java - Contains all the tests.  
-DAT076Project/frontend-react/src/main/java/com/ejwa/frontend/model/User.java - ???.  
 
 ### The report
