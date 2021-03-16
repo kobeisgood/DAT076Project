@@ -62,7 +62,7 @@ export default class DashBoardCard extends React.Component {
 
 	sumToString(sum) {
 		var sumString = sum.toString();
-		return sum >= 0 ? "+".concat(sumString) : "-".concat(sumString);
+		return sumString.concat(" kr");
 	}
 
 	monthToName(month) {
@@ -72,6 +72,12 @@ export default class DashBoardCard extends React.Component {
 
 	}
 
+	monthAndYearString(month, year) {
+		var monthString = this.monthToName(month);
+		var yearString = year.toString();
+		return monthString.concat(" ").concat(yearString);
+	}
+
 
 
 	render() {
@@ -79,7 +85,7 @@ export default class DashBoardCard extends React.Component {
 		return (
 			<div className="dashboard-card-container box-shadow">
 				<div className="dashboard-card-flexbox">
-					<p class="dashboard-card-name">{this.monthToName(this.props.data.month)} {this.props.data.year}</p>
+					<p class="dashboard-card-name">{this.monthAndYearString(this.props.data.month, this.props.data.year)}</p>
 					<canvas className="chartStyling dashboard-card-margin-elements" id="doughnutChart" ref={this.chartRef2}></canvas>
 					<p class={this.sum() > 0 ? "color-money-left sum-text dashboard-card-margin-elements" : "color-no-money-left sum-text"}>{this.sumToString(this.sum())}</p>
 					<Link className="dashboard-card-button hover-transition dashboard-card-margin-elements" to="/frontend-react/monthly">Go to view</Link>
