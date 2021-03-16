@@ -16,16 +16,12 @@ import lombok.Data;
  */
 @Data
 @SessionScoped
-public class User implements Serializable{
-    
-    Users user;
-        
-    public int getId(){
+public class User implements Serializable {
 
-       
-         
-                 
+    Users user;
+
+    public int getId() {
         return user.getId();
     }
-    
+
 }

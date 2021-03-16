@@ -28,75 +28,70 @@ import org.eclipse.persistence.exceptions.DatabaseException;
 @Path("category")
 @RequestScoped
 public class CategoryAPI {
-    
+
     @EJB
     private CategoryDAO categoryDAO;
-    
+
     @EJB
     private UsersDAO usersDAO;
-    
+
     @Inject
     private User userSession;
-    
-    boolean hasNoUserSession(){
+
+    boolean hasNoUserSession() {
         return userSession.getUser() == null;
     }
-    
+
     @POST
     @Transactional
-    public Response addCategory(JSONObject json) throws IOException  {
-        
-        if(hasNoUserSession()){
+    public Response addCategory(JSONObject json) throws IOException {
+        if (hasNoUserSession()) {
             return Response
                     .status(Response.Status.FORBIDDEN)
                     .entity(API.error("No session."))
                     .build();
         }
-        
+
         int userId = userSession.getId();
-        
-        String[] data = {"categoryName","color","type"};
-        
+
+        String[] data = {"categoryName", "color", "type"};
+
         String error = API.matchDataInput(data, json);
-        
-        if(!error.isEmpty()){
+
+        if (!error.isEmpty()) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity(API.error(error))
                     .build();
         }
-        
-        String name,color,type;
-        
+
+        String name, color, type;
+
         name = json.getAsString("categoryName");
-        
-        
+
         type = json.getAsString("type");
-        
-        if(!(type.equals("INCOME") || type.equals("EXPENSE") || type.equals("SAVINGS"))){
+
+        if (!(type.equals("INCOME") || type.equals("EXPENSE") || type.equals("SAVINGS"))) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity(API.error("Wrong type."))
                     .build();
         }
-        
+
         color = json.getAsString("color");
 
-        if(!color.matches("^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$")){ // hexacedimal color #abcdef
+        if (!color.matches("^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$")) { // hexacedimal color #abcdef
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity(API.error("Not a hexadecimal color."))
                     .build();
         }
-        
-        
+
         Users user = usersDAO.find(userId);
-        
+
         try {
-            Category newCategory = new Category(name, user, color,type);
+            Category newCategory = new Category(name, user, color, type);
             categoryDAO.create(newCategory);
-            
-            
             categoryDAO.flush();
 
             return Response
@@ -110,72 +105,68 @@ public class CategoryAPI {
                     .build();
         }
     }
-    
+
     @PUT
     @Transactional
-    public Response updateCategory(JSONObject json) throws IOException  {
-        
-        if(hasNoUserSession()){
+    public Response updateCategory(JSONObject json) throws IOException {
+
+        if (hasNoUserSession()) {
             return Response
                     .status(Response.Status.FORBIDDEN)
                     .entity(API.error("No session."))
                     .build();
         }
-        
+
         int userId = userSession.getId();
-        
-        String[] data = {"categoryName","color","type"};
-        
+
+        String[] data = {"categoryName", "color", "type"};
+
         String error = API.matchDataInput(data, json);
-        
-        if(!error.isEmpty()){
+
+        if (!error.isEmpty()) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity(API.error(error))
                     .build();
         }
-        
-        String name,color,type;
-        
+
+        String name, color, type;
+
         name = json.getAsString("categoryName");
         type = json.getAsString("type");
         color = json.getAsString("color");
-        
-                
-        if(!(type.equals("INCOME") || type.equals("EXPENSE") || type.equals("SAVINGS"))){
+
+        if (!(type.equals("INCOME") || type.equals("EXPENSE") || type.equals("SAVINGS"))) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity(API.error("Wrong type."))
                     .build();
         }
-        
 
-        if(!color.matches("^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$")){ // hexacedimal color #abcdef
+        if (!color.matches("^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$")) { // hexacedimal color #abcdef
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity(API.error("Not a hexadecimal color."))
                     .build();
         }
-        
-        
+
         CategoryPK key = new CategoryPK(name, userId);
-        
+
         Category category = categoryDAO.find(key);
-        
-        if(category == null){
+
+        if (category == null) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity(API.error("No such category."))
                     .build();
         }
-        
+
         category.setColor(color);
-        
+
         return Response
                 .status(Response.Status.OK)
                 .entity(category)
                 .build();
-        
     }
-    
+
 }

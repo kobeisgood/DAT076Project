@@ -23,7 +23,7 @@ import lombok.ToString;
 
 /**
  *
- * @author jjaok
+ * @author danielkarlkvist
  */
 @Data
 @Entity
@@ -32,23 +32,25 @@ import lombok.ToString;
 @IdClass(CategoryPK.class)
 public class Category implements Serializable {
 
-    @Id @NonNull 
+    @Id
+    @NonNull
     private String categoryName;
-    
-    @Id @ManyToOne @NonNull
+
+    @Id
+    @ManyToOne
+    @NonNull
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Users categoryUser;
-    
-    @NonNull 
+
+    @NonNull
     private String color;
-    
+
     @NonNull
     private String type; // INCOME, SAVINGS, EXPENSE
-    
-    
+
     @JsonbTransient
     @OneToMany(mappedBy = "category", cascade = CascadeType.REFRESH) // ,orphanRemoval = true 
-    private List<Transactions> transactions;    
-    
+    private List<Transactions> transactions;
+
 }

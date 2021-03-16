@@ -2,7 +2,7 @@
 * To change this license header, choose License Headers in Project Properties.
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
-*/
+ */
 package com.ejwa.frontend.model.entity;
 
 import java.io.Serializable;
@@ -28,42 +28,39 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Transactions implements Serializable {
-    
+
     @PrePersist
-    private void prePersist(){
+    private void prePersist() {
         date = new Date(System.currentTimeMillis());
     }
-    
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     private int transactionId;
-    
+
     @NonNull
     private String description;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    
+
     @NonNull
     private int amount;
-    
+
     private String type; // INCOME, SAVINGS, EXPENSE
-        
-    @NonNull @ManyToOne
-    private Category category;   
-   
-    public int getAmount(){
-        if(category.getType().equals("EXPENSE")){
+
+    @NonNull
+    @ManyToOne
+    private Category category;
+
+    public int getAmount() {
+        if (category.getType().equals("EXPENSE")) {
             return -amount;
-        }
-        else if(category.getType().equals("SAVINGS")){
+        } else if (category.getType().equals("SAVINGS")) {
             return amount;
-        }
-        else{ // INCOME
+        } else { // INCOME
             return amount;
         }
     }
-    
-    
-    
-    
+
 }

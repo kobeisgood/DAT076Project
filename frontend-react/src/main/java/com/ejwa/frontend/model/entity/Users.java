@@ -32,29 +32,27 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class Users implements Serializable {
 
-    @Id @GeneratedValue 
+    @Id
+    @GeneratedValue
     private int id;
-    
-    @Column(unique=true)
-    @NonNull 
+
+    @Column(unique = true)
+    @NonNull
     private String mail;
-    
-    @NonNull 
+
+    @NonNull
     private String firstName;
-    
-    @NonNull 
+
+    @NonNull
     private String lastName;
-        
-    // @JsonbTransient  ??????? 
+
     @NonNull
     private String password;
-    
+
     @JsonbTransient
     @OneToMany(mappedBy = "categoryUser", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Category> categories;
-    
-     
-    
+
 }
