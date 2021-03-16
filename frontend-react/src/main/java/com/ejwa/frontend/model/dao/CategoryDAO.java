@@ -9,13 +9,13 @@ import javax.persistence.Query;
 import lombok.Getter;
 
 @Stateless
-public class CategoryDAO extends AbstractDAO<Category,CategoryPK> {
-       @Getter @PersistenceContext(unitName = "Lab3database")
-       private EntityManager entityManager;
-       public CategoryDAO() {
-                    super(Category.class);
-        }
+public class CategoryDAO extends AbstractDAO<Category, CategoryPK> {
 
+    @Getter
+    @PersistenceContext(unitName = "Lab3database")
+    private EntityManager entityManager;
 
-
+    public CategoryDAO() {
+        super(Category.class);
+    }
 }

@@ -42,9 +42,6 @@ public class TransactionsAPI {
         return userSession.getUser() == null;
     }
     
-    
-   
-    
     @POST
     @Transactional
     public Response addTransaction(JSONObject json){
@@ -59,8 +56,6 @@ public class TransactionsAPI {
         
         int userId = userSession.getId();
         
-       
-        
         Date date;
         
         if(!json.containsKey("date") || json.get("date").equals("")){
@@ -72,7 +67,6 @@ public class TransactionsAPI {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 date = formatter.parse(json.getAsString("date"));
                 json.appendField("date", date);
-
             }
             catch(ParseException e){
                 return Response
@@ -120,7 +114,6 @@ public class TransactionsAPI {
         
         transactionsDAO.create(newTransaction);
         
-        
         if(date != null){
             newTransaction.setDate(date);
         }
@@ -129,13 +122,11 @@ public class TransactionsAPI {
                 .status(Response.Status.CREATED)
                 .entity(newTransaction)
                 .build();
-        
     }
     
     @PUT
     @Transactional
     public Response updateTransaction(JSONObject json){
-        
         if(hasNoUserSession()){
             return Response
                     .status(Response.Status.FORBIDDEN)
@@ -187,14 +178,12 @@ public class TransactionsAPI {
                 .status(Response.Status.OK)
                 .entity(transaction)
                 .build();
-        
     }
     
     @DELETE
     @Path("{tid}")
     @Transactional
     public Response deleteTransaction(@PathParam("tid") String tid) {
-        
         if(hasNoUserSession()){
             return Response
                     .status(Response.Status.FORBIDDEN)
@@ -229,7 +218,6 @@ public class TransactionsAPI {
                 .status(Response.Status.OK)
                 .entity(API.message("Transaction removed"))
                 .build();
-
     }
     
 }

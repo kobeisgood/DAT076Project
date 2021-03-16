@@ -9,18 +9,14 @@ import javax.persistence.TypedQuery;
 import lombok.Getter;
 
 @Stateless
-public class TransactionDAO extends AbstractDAO<Transactions,Integer> {
-       @Getter @PersistenceContext(unitName = "Lab3database")
-       private EntityManager entityManager;
-       public TransactionDAO() {
-                    super(Transactions.class);
-        }
-       
-       
-       
-       
-      
-      
-       
+public class TransactionDAO extends AbstractDAO<Transactions, Integer> {
+
+    @Getter
+    @PersistenceContext(unitName = "Lab3database")
+    private EntityManager entityManager;
+
+    public TransactionDAO() {
+        super(Transactions.class);
+    }
 
 }

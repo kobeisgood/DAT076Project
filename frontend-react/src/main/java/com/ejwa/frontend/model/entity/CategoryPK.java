@@ -7,11 +7,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+// författare marckus akselson
 
 @AllArgsConstructor
-public class CategoryPK implements Serializable  {
+public class CategoryPK implements Serializable {
+
     @Id
     private String categoryName;
     @Id
     private int categoryUser;
+    
 }
