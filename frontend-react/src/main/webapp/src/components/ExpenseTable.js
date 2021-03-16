@@ -67,10 +67,9 @@ export default class ExpenseTable extends React.Component {
                                 <div className="card-header collapsed" id={this.props.id} data-toggle="collapse" data-target={this.state.dataTarget} aria-expanded="false">
 
                                     <div className="row">
-                                        <div className="col-4"><b>{this.props.title}</b>  <i className="fa fa-chevron-down"></i> </div>
+                                        <div className="col-4"><b>{this.props.title}</b></div>
                                         <div className="col-2"> Amount</div>
                                         <div className="col-2"> Date</div>
-                                        <div className="col-2 ml-auto"> Edit/Delete a Transaction</div>
                                     </div>
 
                                 </div>
@@ -78,7 +77,6 @@ export default class ExpenseTable extends React.Component {
                                 <div id={this.state.collapse} className="collapse" aria-labelledby={this.props.id} data-parent={this.state.dataParent} >
                                     <div className="card-body" id="income">
                                         {this.state.categoryCards}
-
                                     </div>
                                 </div>
 
@@ -97,7 +95,7 @@ export default class ExpenseTable extends React.Component {
                             </div>
                             <hr />
                             <div className="row">
-                                <div className="col"><button type="button" className="btn btn-success" onClick={this.openAddIncome}>Add new transaction</button></div>
+                                <div className="col add-transaction-button-container"><button type="button" className="add-transaction-button" onClick={this.openAddIncome}>Add new transaction</button></div>
                             </div>
                         </div>
                     </div>

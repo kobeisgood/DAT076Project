@@ -86,3 +86,15 @@ and open the template in the editor.
   padding-left:0.4vw;
   padding-top: 1vh;
 }
+
+.add-transaction-button-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.add-transaction-button {
+  background-color: var(--color-button);
+  width: 200px;
+  border-radius: 10px;
+}
