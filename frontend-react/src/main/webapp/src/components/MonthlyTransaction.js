@@ -40,10 +40,7 @@ export default class MonthlyTransaction extends React.Component {
         });
     }
 
-
-
     deleteTransaction() {
-
         const requestOptions = {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
@@ -55,7 +52,6 @@ export default class MonthlyTransaction extends React.Component {
             .then(response => response.json())
             .then(transaction => {
                 this.props.parent.getDataFromAPI();
-
             });
     }
 
@@ -74,14 +70,11 @@ export default class MonthlyTransaction extends React.Component {
                 })
         };
 
-
         fetch('http://localhost:8080/frontend-react/api/transactions', requestOptions)
             .then(response => response.json())
             .then(transaction => {
                 this.props.parent.getDataFromAPI();
-
             });
-
     }
 
     render() {
@@ -96,7 +89,7 @@ export default class MonthlyTransaction extends React.Component {
                             <input type="text" name="descriptionValue" value={this.state.descriptionValue} onChange={this.handleChange} />
                         </div>}
 
-                    {this.state.editState === false ? 
+                    {this.state.editState === false ?
                         <div className="col-2">{this.props.data.amount}</div> :
                         <div className="col-2">
                             <p> <b>Edit amount:</b></p>

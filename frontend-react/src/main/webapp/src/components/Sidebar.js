@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from "react-router-dom";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSignOutAlt, faTachometerAlt} from '@fortawesome/free-solid-svg-icons';
-import {faCalendarAlt} from '@fortawesome/free-solid-svg-icons';
-import {faChartBar} from '@fortawesome/free-solid-svg-icons';
-import {faUserCircle} from '@fortawesome/free-solid-svg-icons';
-import {faHome} from '@fortawesome/free-solid-svg-icons';
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faChartBar } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 import '../css/Sidebar.css';
 import {isLoggedIn} from '../pages/Start'
 
@@ -99,7 +99,11 @@ async update() {
     
     console.log(SidebarData);
 
-    }
+    render() {
+        return (
+            <nav className={'nav-menu'}>
+                <h1 className='logo'> CashIT </h1>
+                <ul className="nav-menu-items">
 
 
  render() {
@@ -125,6 +129,4 @@ async update() {
         </nav>
         
     )
-}
-
 }
