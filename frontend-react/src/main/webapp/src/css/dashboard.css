@@ -49,7 +49,7 @@ and open the template in the editor.
 
 .dashboard-card-button {
   border-radius: 10px;
-  background-color: var(--color-cashit-standard);
+  background-color: var(--color-button);
   text-align: center;
   padding: 15px 25px;
   color: white;
@@ -58,7 +58,7 @@ and open the template in the editor.
 .dashboard-card-button:hover {
   color: white;
   text-decoration: none;
-  background-color: var(--color-cashit-standard-hover);
+  opacity: var(--opacity-button-hover);
 }
 
 .dashboard-card-margin-elements {
