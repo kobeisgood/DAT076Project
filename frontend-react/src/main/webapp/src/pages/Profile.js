@@ -90,7 +90,7 @@ export default class Profile extends React.Component {
         return (
             <div className="profile-page-container">
                 <div className="profile-picture-container">
-                    <img src="http://www.gstatic.com/tv/thumb/persons/711832/711832_v9_ba.jpg" alt="Profile picture"></img>
+                    <img src="http://www.gstatic.com/tv/thumb/persons/711832/711832_v9_ba.jpg" alt="Profile"></img>
                 </div>
 
                 <div className="profile-edit-content-flexbox">
