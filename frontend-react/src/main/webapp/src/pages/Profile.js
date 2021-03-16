@@ -140,36 +140,3 @@ export default class Profile extends React.Component {
         )
     };
 }
-/*{this.getCategories()}*/
-/*
-<div className="profile-card-container">
-                    <div className="profile-pic"></div>
-                    <div className="profile-info">
-                        <div className="info-row">
-
-                            {this.state.editState === false ? <span className="left-info-item"> Name:</span> : <span className="left-info-item"> New name: </span> }
-
-                            {this.state.editState === false ? <span className="right-info-item"> {this.state.nameValue} </span>
-                            : <input type="text" name="nameValue" value={this.state.nameValue} onChange={this.handleChange}/> }
-
-                        </div>
-                        <div className="info-row">
-                            {this.state.editState === false ? <span className="left-info-item">Last name:</span> : <span className="left-info-item"> New last name: </span>}
-
-                            {this.state.editState === false ? <span className="right-info-item">{this.state.lastNameValue}</span>
-                            : <input type="text" name="lastNameValue" value={this.state.lastNameValue} onChange={this.handleChange}/> }
-                        </div>
-                        <div className="info-row">
-                            {this.state.editState === false ? <span className="left-info-item">Email:</span> : <span className="left-info-item"> New mail: </span> }
-
-                            {this.state.editState === false ? <span className="right-info-item">{this.state.mailValue}</span>
-                            : <input type="mail" name="mailValue" value={this.state.mailValue} onChange={this.handleChange}/>  }
-                        </div>
-                    </div>
-                    {this.state.editState === false ? < div className="edit-container" onClick={() => this.setEditState()}>
-                        <p>Edit profile</p>
-                    </div> : < div className="save-container" onClick={() => this.saveInfo()}>
-                        <p>Save</p>
-                    </div> }
-                </div>
-                */
