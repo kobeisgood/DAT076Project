@@ -97,4 +97,5 @@ and open the template in the editor.
   background-color: var(--color-button);
   width: 200px;
   border-radius: 10px;
+  transition: 0.2s;
 }
