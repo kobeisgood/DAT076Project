@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 import '../css/start.css';
 
@@ -35,7 +36,7 @@ export default class CreateAccount extends React.Component {
                 'Content-Type': 'application/json'
             }
         };
-        
+
         fetch('http://localhost:8080/frontend-react/api/users/',requestOptions)
         .then(response => response.json())
           .then(response => {
@@ -83,6 +84,9 @@ export default class CreateAccount extends React.Component {
                     <input type="password" name="repeatpassword" placeholder="Repeat password" required />
                     <button type="submit">Create Account</button>
                 </form >
+                <Link to="/frontend-react/start">
+                    Already have an account?
+                </Link>
             </div >
         )
     };

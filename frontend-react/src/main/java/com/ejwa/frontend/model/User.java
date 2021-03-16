@@ -19,17 +19,14 @@ import lombok.Data;
 public class User implements Serializable{
     
     Users user;
-    
-    public boolean isLoggedIn(){
-        return user!= null;
-    }
-    
+        
     public int getId(){
 
-        // ONLY FOR TESTING IN VS CODE
+        /* //ONLY FOR TESTING IN VS CODE
         if(user == null)
             return 1;
-                    
+         */
+                 
         return user.getId();
     }
     
