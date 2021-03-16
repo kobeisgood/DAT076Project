@@ -1,5 +1,6 @@
 # DAT076 project CashIt
 
+## Team members
 JaoK - Joakim Ohlsson  
 kobeisgood - Theo Khademi  
 danielkarlkvist - Daniel Karlkvist  
