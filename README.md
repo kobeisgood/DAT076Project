@@ -29,3 +29,5 @@ DAT076Project/frontend-react/src/main/java/com/ejwa/frontend/resources/ - Contai
 DAT076Project/frontend-react/src/test/java/AccountDAOTest.java - Contains all the tests.  
 
 ### The report
+
+DAT076Project/Report_DAT076.pdf - The report can be found here.  
