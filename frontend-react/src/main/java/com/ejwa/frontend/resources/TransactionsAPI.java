@@ -39,13 +39,17 @@ public class TransactionsAPI {
     private User userSession;
     
     boolean hasNoUserSession(){
-//        return userSession.getUser() == null;
-        return false; // ONLY FOR TESTING IN VS CODE
+        return userSession.getUser() == null;
+//        return false; // ONLY FOR TESTING IN VS CODE
     }
+    
+    
+   
     
     @POST
     @Transactional
     public Response addTransaction(JSONObject json){
+        
         
         if(hasNoUserSession()){
             return Response
@@ -56,9 +60,7 @@ public class TransactionsAPI {
         
         int userId = userSession.getId();
         
-        if(!json.containsKey("ignore_monthly")){
-            json.appendField("ignore_monthly", false);
-        }
+       
         
         Date date;
         
@@ -70,6 +72,8 @@ public class TransactionsAPI {
             try{
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 date = formatter.parse(json.getAsString("date"));
+                json.appendField("date", date);
+
             }
             catch(ParseException e){
                 return Response
@@ -79,7 +83,7 @@ public class TransactionsAPI {
             }
         }
         
-        String[] data = {"description","amount","category","ignore_monthly","date"};
+        String[] data = {"description","amount","category","date"};
         
         String error = API.matchDataInput(data, json);
         
@@ -117,9 +121,7 @@ public class TransactionsAPI {
         
         transactionsDAO.create(newTransaction);
         
-        if(json.getAsString("ignore_monthly").equalsIgnoreCase("true")){
-            newTransaction.setIgnore_monthly(true);
-        }
+        
         if(date != null){
             newTransaction.setDate(date);
         }
@@ -213,7 +215,7 @@ public class TransactionsAPI {
                     .build();
         }
         
-        Transactions transaction =transactionsDAO.find(transactionId);
+        Transactions transaction = transactionsDAO.find(transactionId);
         
         if(transaction == null){
             return Response
