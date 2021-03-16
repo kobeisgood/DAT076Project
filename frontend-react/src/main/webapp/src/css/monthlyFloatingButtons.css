@@ -1,15 +1,13 @@
 .add-popup-button {
 	position:fixed;
-	width:300px;
-	height:65px;
+	width: 20vw;
 	right:40px;
     background-color: var(--color-button);
-	color:#FFF;
-	border-radius:50px;
+	color:white;
+	border-radius: 50px;
 	text-align:center;
 	box-shadow: 2px 2px 3px #999;
-    transition: opacity 0.2s ease-out;
-    padding: 1rem;
+    transition: 0.2s;
     font-size: 1.5em;
 }
 

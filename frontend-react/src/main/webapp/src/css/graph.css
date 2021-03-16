@@ -55,16 +55,14 @@
 }
 
 .see-data-button {
-  background-color: #ec6113;
-  height: 8vh;
-  width: 30vh;
-  margin-top: 2vh;
+  background-color: var(--color-button);
+  width: 300px;
+  margin-top: 30px;
   text-align: center;
-  font-size: 2rem;
+  font-size: 30px;
   color: white;
   border-radius:  12vh;
-  padding: 2.2rem;
-  transition: opacity 0.2s ease-out;
+  transition: 0.2s;
 }
 
 .see-data-button:hover {
